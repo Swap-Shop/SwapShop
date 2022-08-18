@@ -1,5 +1,7 @@
 # SwapShop
 
+![image](SwapShop/screens/image.png)
+
 ## What is SwapShop?
 
 In an effort to avoid waste and grow communities, many people have begun operating swap shops, where people swap food, clothes, furniture, etc. This application
