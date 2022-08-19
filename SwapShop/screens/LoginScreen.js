@@ -1,5 +1,8 @@
 import { placeholder } from '@babel/types';
 import React, { useState, useEffect, useCallback } from 'react'; 
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { useNavigation } from '@react-navigation/native';
 import {
     View,
     Text,
@@ -15,10 +18,10 @@ import {
 const LoginScreen = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-
+    const navigation = useNavigation();
   return (
     <View style={style.container}>
-      <Image style={style.logo} source={require('./image.png')}/>
+      <Image style={style.logo} source={require('../assests/Images/image.png')}/>
 
       <TextInput placeholder='Username' 
       style = {style.input} 
@@ -36,11 +39,11 @@ const LoginScreen = () => {
       <Text style = {style.text2}> Forgot Password? </Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style = {style.button} onPress = {() => alert("Sign in success")}>
+      <TouchableOpacity style = {style.button} onPress = {() => navigation.navigate('Navigate')}>
         <Text style = {style.text}> Login </Text>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress = {() => alert("Sign up page")}>
+      <TouchableOpacity onPress = {() => navigation.navigate('Signup')}>
         <Text style = {style.text3}> Don't have an account? Sign up here. </Text>
       </TouchableOpacity>
 

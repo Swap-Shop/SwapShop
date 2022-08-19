@@ -12,7 +12,7 @@ import {
   } from 'react-native';
 
 
-const SignUpScreen = () => {
+const SignUpScreen = ({navigation}) => {
 
   return (
     <View style={style.container}>
@@ -35,7 +35,7 @@ const SignUpScreen = () => {
       placeholderTextColor={"#808080"}
       secureTextEntry={true}
       />
-      <TouchableOpacity style = {style.button} onPress = {() => alert("Sign in success")}>
+      <TouchableOpacity style = {style.button} onPress = {() => navigation.navigate('Login')}>
         <Text style = {style.text}> Sign Up </Text>
       </TouchableOpacity>
     </View>
