@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "460782746734",
+    "project_id": "swapshop-6bd9b",
+    "storage_bucket": "swapshop-6bd9b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:460782746734:android:16f5753d0e5c9483f8fa7f",
+        "android_client_info": {
+          "package_name": "com.swapshop"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "460782746734-the1jdur2c8eni8ofanmup0kc4a87vh2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDk2XArwtPpm2bNZUzNLUMr4P-E7LmdNQw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "460782746734-the1jdur2c8eni8ofanmup0kc4a87vh2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

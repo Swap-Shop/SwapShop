@@ -3,6 +3,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
+import auth from '@react-native-firebase/auth';
 import {
     View,
     Text,
@@ -14,11 +15,50 @@ import {
     TextInput
   } from 'react-native';
 
+
   
 const LoginScreen = () => {
+
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const navigation = useNavigation();
+
+    const LoginFunction = () => {
+
+      auth()
+      .signInWithEmailAndPassword(username.trim(), password.trim())
+      .then(() => {
+        console.log('Sign Successful');
+        navigation.navigate('Navigate')
+      })
+      .catch(error => {
+        if (error.code === 'auth/email-already-in-use') {
+          console.log('That email address is already in use!');
+          alert("That email address is already in use!")
+        }
+    
+        if (error.code === 'auth/invalid-email') {
+          console.log('That email address is invalid!');
+          alert("That email address is invalid!")
+        }
+    
+        console.error(error);
+      });
+    }
+
+    const checkLogin = () =>{
+      if(!username.trim() || !password.trim()){
+        alert("Please enter all the fields")
+      }
+      if(password.length < 6){
+        alert("Password should be 6 or more characters")
+      }
+      else{
+          LoginFunction()
+      }
+
+    }
+
   return (
     <View style={style.container}>
       <Image style={style.logo} source={require('../assests/Images/image.png')}/>
@@ -26,25 +66,24 @@ const LoginScreen = () => {
       <TextInput placeholder='Username' 
       style = {style.input} 
       placeholderTextColor={"#808080"}
-      
+      value = {username}
+      onChangeText = {value => setUsername(value)}
       />
 
       <TextInput placeholder='Password' 
       style = {style.input} 
       placeholderTextColor={"#808080"}
       secureTextEntry={true}
+      value = {password}
+      onChangeText = {value => setPassword(value)}
       />
 
       <TouchableOpacity onPress = {() => alert("Password forgotten")}>
       <Text style = {style.text2}> Forgot Password? </Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style = {style.button} onPress = {() => navigation.navigate('Navigate')}>
+      <TouchableOpacity style = {style.button} onPress = {() => checkLogin()}>
         <Text style = {style.text}> Login </Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity onPress = {() => navigation.navigate('Signup')}>
-        <Text style = {style.text3}> Don't have an account? Sign up here. </Text>
       </TouchableOpacity>
 
     </View>
