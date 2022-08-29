@@ -1,100 +1,123 @@
-import { placeholder } from '@babel/types';
-import React, { useState, useEffect, useCallback } from 'react'; 
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import React, { useState} from 'react'; 
+
 import { useNavigation } from '@react-navigation/native';
 import auth from '@react-native-firebase/auth';
-import {
-    View,
-    Text,
-    TouchableOpacity,
-    Image,
-    Platform,
-    StyleSheet,
-    ScrollView,
-    TextInput
-  } from 'react-native';
+import {View,Text, TouchableOpacity,SafeAreaView,StyleSheet, ImageBackground, TextInput, LogBox ,Modal} from 'react-native';
 
 
   
 const LoginScreen = () => {
-
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
-    const navigation = useNavigation();
+  LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
+  LogBox.ignoreAllLogs();//Ignore all log notifications
+  const [data, setData] = useState({
+    username: '',
+    password: '',
+  });
+  const navigation = useNavigation();
+  const user = auth().currentUser; 
+  
 
     const LoginFunction = () => {
 
       auth()
-      .signInWithEmailAndPassword(username.trim(), password.trim())
+      .signInWithEmailAndPassword(data.username.trim().toLowerCase(), data.password.trim().toLowerCase())
       .then(() => {
         console.log('Sign Successful');
+        alert ('Sign successful')
         navigation.navigate('Navigate')
       })
       .catch(error => {
-        if (error.code === 'auth/email-already-in-use') {
-          console.log('That email address is already in use!');
-          alert("That email address is already in use!")
+        if (error.code === 'auth/wrong-password') {
+          console.log('password is invalid for the given email');
+          alert("Incorrect password")
         }
-    
-        if (error.code === 'auth/invalid-email') {
-          console.log('That email address is invalid!');
-          alert("That email address is invalid!")
+
+        if (error.code === 'auth/user-not-found') {
+          console.log('there is no user corresponding to the given email');
+          alert("This account does not exist, please sign up")
         }
     
         console.error(error);
       });
     }
 
+    const ResetPassword = () =>{
+      auth()
+      .sendPasswordResetEmail(user.email)
+      .then(() => {
+        alert("A reset link has been sent to your email")
+      })
+      .catch(error => {
+        console.error(error);
+      });
+    }
+
     const checkLogin = () =>{
-      if(!username.trim() || !password.trim()){
+      if(data.username.length == 0 || data.password.length == 0){
         alert("Please enter all the fields")
       }
-      if(password.length < 6){
+      else if(data.password.length < 6){
         alert("Password should be 6 or more characters")
       }
       else{
           LoginFunction()
       }
+    }
 
+    const GetTextInput = (val) =>{
+      setData({
+        ...data,
+        username:val,
+      })
+    }
+  
+    const GetPasswordInput = (val) =>{
+      setData({
+        ...data,
+        password: val,
+      })
     }
 
   return (
     <View style={style.container}>
-      <Image style={style.logo} source={require('../assests/Images/image.png')}/>
+      <ImageBackground source={require('../assets/Image/gradient.jpg')} style={{flex:1}}>
+      
+            <SafeAreaView style={{ alignSelf: 'center',justifyContent: 'center',alignItems: 'center',
+                backgroundColor: '#fff',height: 490,width: 350,borderRadius: 20,marginTop: '30%',
+                opacity:2,shadowColor: '#000',shadowOffset: {width: 0,height: 0.5}}}>
 
-      <TextInput placeholder='Username' 
-      style = {style.input} 
-      placeholderTextColor={"#808080"}
-      value = {username}
-      onChangeText = {value => setUsername(value)}
-      />
+                <Text style = {style.heading} >Login</Text>
 
-      <TextInput placeholder='Password' 
-      style = {style.input} 
-      placeholderTextColor={"#808080"}
-      secureTextEntry={true}
-      value = {password}
-      onChangeText = {value => setPassword(value)}
-      />
+                <TextInput placeholder='Email' 
+                style = {style.input} 
+                placeholderTextColor={"#808080"}
+                onChangeText = {(e) => GetTextInput(e)}
+                />
 
-      <TouchableOpacity onPress = {() => alert("Password forgotten")}>
-      <Text style = {style.text2}> Forgot Password? </Text>
-      </TouchableOpacity>
+                <TextInput placeholder='Password' 
+                style = {style.input} 
+                placeholderTextColor={"#808080"}
+                secureTextEntry={true}
+                onChangeText = {(e) => GetPasswordInput(e)}
+                />
 
-      <TouchableOpacity style = {style.button} onPress = {() => checkLogin()}>
-        <Text style = {style.text}> Login </Text>
-      </TouchableOpacity>
+                
+                <Text style = {{  color: '#2596be',marginLeft:140}} onPress={() => navigation.navigate('password')} > 
+                Forgot Password? </Text>
 
+                <TouchableOpacity style = {style.button} onPress = {() => checkLogin()}>
+                  <Text style = {style.text}> Login </Text>
+                </TouchableOpacity>
+            </SafeAreaView>
+
+      </ImageBackground>
     </View>
   );
 };
 
 const style = StyleSheet.create({
   container: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '515052'
+    flex: 2,
   },
   input: {
     borderWidth: 1,
@@ -103,16 +126,33 @@ const style = StyleSheet.create({
     top:130,
     margin:20,
   },
+  input: {
+    marginLeft:15,
+    borderWidth: 3,
+    borderRadius: 15,
+    borderColor:'#A9A9A9',
+    width:250,
+    backgroundColor:'#FFFFFF',
+    margin:10,
+  },
+  heading:{
+    width: 375,
+    height: 100, 
+    fontSize: 60,
+    fontStyle:'italic',
+    fontWeight:'bold',
+    color:'#A9A9A9',
+    marginLeft: 220,
+  },
   button: {
     margin: 15,
     padding: 15,
     width: 250,
     alignItems: 'center',
     alignSelf:'center',
-    top:130,
     justifyContent: 'center',
-    borderRadius: 30,
-    backgroundColor: '#2596be',
+    borderRadius: 10,
+    backgroundColor: '#A9A9A9',
   },
   logo:{
     width: 375,
@@ -121,14 +161,12 @@ const style = StyleSheet.create({
     top:100
   },
   text: { 
-    color: 'black',
+    color: 'white',
     fontSize: 25,
   },
   text2: { 
     color: '#2596be',
-    fontSize: 12,
-    top:120,
-    marginLeft:120,
+    top:115,
   },
   text3: { 
     color: '#2596be',

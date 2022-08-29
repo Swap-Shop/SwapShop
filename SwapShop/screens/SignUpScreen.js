@@ -1,26 +1,28 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import {
-    View,
-    Text,
-    TouchableOpacity,
-    Image,
-    Platform,
-    StyleSheet,
-    ScrollView,
-    TextInput
-  } from 'react-native';
-  import auth from '@react-native-firebase/auth';
-  import { useNavigation } from '@react-navigation/native';
+import React, { useState} from 'react';
+import {View,Text,TouchableOpacity,StyleSheet,TextInput,LogBox , ImageBackground, Modal} from 'react-native';
+import auth from '@react-native-firebase/auth';
+import { useNavigation } from '@react-navigation/native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
+const SignUpScreen = () => {
+  LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
+  LogBox.ignoreAllLogs();//Ignore all log notifications
+  
+  const [data, setData] = useState({
+    username: '',
+    password: '',
+    ConfirmPassword: '',
+  });
+  const navigation = useNavigation();
 
-  const SignUpFunction = (username, password) => {
+  const SignUpFunction = () => {
 
     auth()
-    .createUserWithEmailAndPassword(username.trim(), password.trim())
+    .createUserWithEmailAndPassword(data.username.trim().toLowerCase(), data.password.trim().toLowerCase())
     .then(() => {
       console.log('User account created');
       alert ('Success!, you have created an account')
-      navigation.navigate('Navigate')
+      navigation.navigate('Login')
     })
     .catch(error => {
       if (error.code === 'auth/email-already-in-use') {
@@ -37,72 +39,100 @@ import {
     });
   }
 
-  const checkSignUp = (username, password, ConfirmPassword) =>{
-    if(!username.trim() || !password.trim() || !ConfirmPassword.trim()){
-      alert("Please enter all the fields")
+  const checkSignUp = () =>{
+    if(data.username.length == 0 || data.password.length == 0)
+    {
+      alert("Please enter all fields!")
     }
-    if(password.length < 6){
-      alert("Password should be 6 or more characters")
+    else if(data.password.length < 6){
+      alert ("Paswords must be 6 characters or more")
     }
-    if(password.trim() != ConfirmPassword.trim()){
-      alert("Passwords do not match")
+    else if(data.password.toString() != data.ConfirmPassword.toString()){
+      alert ("Passwords do not match!")
     }
     else{
-        SignUpFunction(username, password)
+      SignUpFunction()
     }
-
+    
   }
 
-const SignUpScreen = ({navigation}) => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [ConfirmPassword, setConfirmPassword] = useState("");
+  const GetTextInput = (val) =>{
+    setData({
+      ...data,
+      username:val,
+    })
+  }
+
+  const GetPasswordInput = (val) =>{
+    setData({
+      ...data,
+      password: val,
+    })
+  }
+
+  const GetConfirmPasswordInput = (val) =>{
+    setData({
+      ...data,
+      ConfirmPassword: val
+    })
+  }
 
   return (
     <View style={style.container}>
-      <Text style = {style.heading} > Sign Up </Text>
+      <ImageBackground source={require('../assets/Image/gradient.jpg')} style={{flex:1}}>
+        {/* <Modal visible={modalOpen} animationType="fade" transparent={true}> */}
+          <SafeAreaView style={{ alignSelf: 'center',justifyContent: 'center',alignItems: 'center',
+                backgroundColor: '#fff',height: 500,width: 350,borderRadius: 20,marginTop: '30%',
+                opacity:2,shadowColor: '#000',shadowOffset: {width: 0,height: 0.5}}}>
 
-      <TextInput placeholder='Enter Username' 
-      style = {style.input} 
-      placeholderTextColor={"#808080"}
-      value = {username}
-      onChangeText = {text => setUsername(text)}
-      />
+                  <Text style = {style.heading} > Sign Up </Text>
 
-      <TextInput placeholder='Enter Password' 
-      style = {style.input} 
-      placeholderTextColor={"#808080"}
-      secureTextEntry={true}
-      value = {password}
-      onChangeText = {value => setPassword(value)}
-      />
+                  <TextInput placeholder='Enter email address' 
+                  style = {style.input} 
+                  placeholderTextColor={"#808080"}
+                  onChangeText = {(e) => GetTextInput(e)}>
+                  </TextInput>
 
-      <TextInput placeholder='Confrim Password' 
-      style = {style.input} 
-      placeholderTextColor={"#808080"}
-      secureTextEntry={true}
-      value = {ConfirmPassword}
-      onChangeText = {value => setConfirmPassword(value)}
-      />
-      <TouchableOpacity style = {style.button} onPress = {() => checkSignUp(username, password, ConfirmPassword)}>
-        <Text style = {style.text}> Sign Up </Text>
-      </TouchableOpacity>
+                  <TextInput placeholder='Enter Password' 
+                  style = {style.input} 
+                  placeholderTextColor={"#808080"}
+                  secureTextEntry={true}
+                  onChangeText = {(e) => GetPasswordInput(e)}
+                  />
+
+                  <TextInput placeholder='Confrim Password' 
+                  style = {style.input} 
+                  placeholderTextColor={"#808080"}
+                  secureTextEntry={true}
+                  onChangeText = {(e) => GetConfirmPasswordInput(e)}
+                  />
+
+
+                  <TouchableOpacity style = {style.button} onPress = {() => checkSignUp()}>
+                    <Text style = {style.text}> Sign Up </Text>
+                  </TouchableOpacity>
+                  <Text style={{color: '#2596be',}} onPress={() => navigation.navigate('Login')}>
+                    Already have an account? login here</Text>
+          </SafeAreaView>
+       
+      </ImageBackground>
+      
     </View>
   );
 };
 
 const style = StyleSheet.create({
   container: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '515052'
+    flex: 2,
   },
   input: {
-    borderWidth: 1,
-    borderRadius: 30,
+    marginLeft:15,
+    borderWidth: 3,
+    borderRadius: 15,
+    borderColor:'#A9A9A9',
     width:250,
-    top:70,
-    margin:20,
+    backgroundColor:'#FFFFFF',
+    margin:10,
   },
   button: {
     margin: 15,
@@ -110,25 +140,28 @@ const style = StyleSheet.create({
     width: 250,
     alignItems: 'center',
     alignSelf:'center',
-    top:100,
+    top:5,
     justifyContent: 'center',
-    borderRadius: 30,
-    backgroundColor: '#2596be',
+    borderRadius: 10,
+    backgroundColor: '#A9A9A9',
   },
   heading:{
     width: 375,
     height: 100, 
-    top:30,
     fontSize: 60,
     fontStyle:'italic',
     fontWeight:'bold',
-    color: '#2596be',
-    marginLeft: 135
+    color:'#A9A9A9',
+    marginLeft: 130,
   },
   text: { 
-    color: 'black',
+    color: 'white',
     fontSize: 25,
   },
+  errorMsg: {
+    color: '#FF0000',
+    fontSize: 14,
+},
 })
 
 export default SignUpScreen;

@@ -1,16 +1,8 @@
-import React, { useState, useEffect, useCallback } from 'react'; 
-import { ImageBackground, 
-  SafeAreaView, 
-  Text, 
-  View, 
-  StyleSheet, 
-  TextInput,  
-  Image } from 'react-native';
+import React, { useState, useEffect} from 'react'; 
+import { ImageBackground, SafeAreaView, Text, View,  Image } from 'react-native';
 import { Button } from '@rneui/themed';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import auth from '@react-native-firebase/auth';
-// import "@fontsource/league-spartan";
+// import "fontsource-league-spartan";
 
 
 const Welcome_Page = ({navigation}) => {
@@ -39,30 +31,29 @@ const Welcome_Page = ({navigation}) => {
     }
 
     if (user) {
-      navigation.navigate('Login')
+      navigation.navigate('Navigate')
       console.log(user.uid)
     }
   }
   return (
-    <SafeAreaView style={{flex: 2,  borderRadius:20}}>
-       <ImageBackground source={require('../assests/Images/gradient.jpg')} style={{flex:1}}   >
+    <SafeAreaView style={{flex: 2}}>
+       <ImageBackground source={require('../assets/Image/gradient.jpg')} style={{flex:1}}   >
 
           <View style={{ alignItems: 'center'}}>
-
                <Text style={{color:'#A9A9A9' ,fontSize: 55,paddingTop:55, fontWeight:'bold', fontFamily:'League Spartan'}}>Welcome</Text>   
-               <Image style={{width: 300,height:300}} source={require('../assests/Images/image.png')}/>
+               <Image style={{width: 300,height:300}} source={require('../assets/Image/image.png')}/>
           </View>
 
           <View style={{alignItems:'center', marginHorizontal:60}}>
                 <Button 
-                title='SignUp'
+                title='Sign Up'
                 onPress = {() => navigation.navigate('Signup')}
                 titleStyle={{ fontWeight: 'bold', fontSize: 23 , fontFamily:'League Spartan'}}
                 buttonStyle={{backgroundColor: '#A9A9A9', borderRadius: 10}}
                 containerStyle={{
                   marginHorizontal: 50,
                   height: 50,
-                  width: 200,
+                  width: 250,
                   marginVertical: 10,
                 }}
                 >
@@ -76,8 +67,8 @@ const Welcome_Page = ({navigation}) => {
                 containerStyle={{
                   marginHorizontal: 50,
                   height: 50,
-                  width: 200,
-              marginVertical: 10,
+                  width: 250,
+                  marginVertical: 10,
             }}></Button>
           </View>
       </ImageBackground>
