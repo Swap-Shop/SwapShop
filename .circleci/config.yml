@@ -10,11 +10,7 @@ orbs:
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 jobs:
   build_and_test:
-    parameter:
-      app-dir:
-      type: string
-      default: "."
-      description: Path to the directory containing your package.json file. Not needed if package.json lives in the root.
+  
     executor: node/default
     working_directory: ~/SwapShop
     steps:
