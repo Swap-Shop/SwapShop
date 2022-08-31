@@ -17,7 +17,7 @@ jobs:
       - checkout
          
       - node/install-packages:
-          app-dir:  ~/SwapShop
+          app-dir:  /SwapShop
           cache-version: v1
           cache-path: node_modules
           pkg-manager: npm
@@ -36,7 +36,7 @@ jobs:
           command: bash <(curl -s https://codecov.io/bash) -F $CIRCLE_JOB
 
 workflows:
-  version: 2
+
   build_and_test:
     jobs:
       -  build_and_test
