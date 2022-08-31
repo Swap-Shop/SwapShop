@@ -12,7 +12,7 @@ jobs:
   build_and_test:
   
     executor: node/default
-    working_directory: ~/SwapShop
+    working_directory: /SwapShop
     steps:
       - checkout
          
@@ -36,7 +36,7 @@ jobs:
           command: bash <(curl -s https://codecov.io/bash) -F $CIRCLE_JOB
 
 workflows:
-  version: 2.1
+  version: 2
   build_and_test:
     jobs:
       - build_and_test
