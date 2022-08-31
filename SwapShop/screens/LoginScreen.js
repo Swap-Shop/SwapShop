@@ -131,6 +131,7 @@ const style = StyleSheet.create({
     width:250,
     backgroundColor:'#FFFFFF',
     margin:10,
+    color:'#000'
   },
   heading:{
     width: 375,
