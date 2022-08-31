@@ -24,12 +24,16 @@ jobs:
       - run:
           name: Run tests and collect coverage
           command: npm run test  
+      - persist_to_workspace:
+          root: ~/SwapShop  
+          paths: 
+            - .  
       - run:
           name: Upload coverage report to Codecov  
           command: bash <(curl -s https://codecov.io/bash) -F $CIRCLE_JOB
 
 workflows:
-  swapshop:
+  build_and_test:
     jobs:
       - build_and_test
       
