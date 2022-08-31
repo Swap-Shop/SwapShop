@@ -7,15 +7,15 @@ import auth from '@react-native-firebase/auth';
 
 const Welcome_Page = ({navigation}) => {
   
-  const [initializing, setInitializing] = useState(true);
+  const [initializing, setInitializing] = useState(true); // variable declarations 
   const [user, setUser] = useState();
 
-  function onAuthStateChanged(user) {
+  function onAuthStateChanged(user) { // this is called every time the user authentication has changed. 
     setUser(user);
     if (initializing) setInitializing(false);
   }
 
-  useEffect(() => {
+  useEffect(() => { // executed every time the user is on the page and is used to check if the user is successfully logged in to help with automatic login
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
     return subscriber; // unsubscribe on unmount
   }, []);
@@ -26,12 +26,12 @@ const Welcome_Page = ({navigation}) => {
       return null
     };
   
-    if (!user) {
+    if (!user) { // if the user is a first time user then the useEffect will return false and user will be directed to login page 
       navigation.navigate('Login')
     }
 
     if (user) {
-      navigation.navigate('Navigate')
+      navigation.navigate('Navigate') // if the user has already logged on before then the app will automatically send the user to the home page.
       console.log(user.uid)
     }
   }

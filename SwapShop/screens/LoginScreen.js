@@ -7,26 +7,26 @@ import {View,Text, TouchableOpacity,SafeAreaView,StyleSheet, ImageBackground, Te
 
   
 const LoginScreen = () => {
-  LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
+  LogBox.ignoreLogs(['Warning: ...']); // the two lines of code is used to hide error messages from react native
   LogBox.ignoreAllLogs();//Ignore all log notifications
-  const [data, setData] = useState({
+
+  const [data, setData] = useState({ // variable declarations 
     username: '',
     password: '',
   });
   const navigation = useNavigation();
-  const user = auth().currentUser; 
+  const user = auth().currentUser; // code used to retrieve the user ID from firebase 
   
 
-    const LoginFunction = () => {
+    const LoginFunction = () => { // this function is used to communicate with the firebase authentication database
 
-      auth()
-      .signInWithEmailAndPassword(data.username.trim().toLowerCase(), data.password.trim().toLowerCase())
+      auth() // the auth() function is used to make a request to the firebase database.
+      .signInWithEmailAndPassword(data.username.trim().toLowerCase(), data.password.trim().toLowerCase()) // the signin function is used to check if the given email and password is on the database
       .then(() => {
-        console.log('Sign Successful');
-        alert ('Sign successful')
-        navigation.navigate('Navigate')
+        console.log('Sign Successful');  
+        navigation.navigate('Navigate')// if the user details are in the database then the user is directed to the home page of the app.
       })
-      .catch(error => {
+      .catch(error => { // these are the various errors that will be displayed if they is a fault with the user input.
         if (error.code === 'auth/wrong-password') {
           console.log('password is invalid for the given email');
           alert("Incorrect password")
@@ -34,44 +34,38 @@ const LoginScreen = () => {
 
         if (error.code === 'auth/user-not-found') {
           console.log('there is no user corresponding to the given email');
-          alert("This account does not exist, please sign up")
+          alert("Oops! ¯\_(ツ)_/¯......Account does not exist. Sign Up to start using SwapShop")
+        }
+
+        if (error.code === 'auth/invalid-email') {
+          console.log('Email not in the right format');
+          alert("Please enter a valid email")
         }
     
         console.error(error);
       });
     }
 
-    const ResetPassword = () =>{
-      auth()
-      .sendPasswordResetEmail(user.email)
-      .then(() => {
-        alert("A reset link has been sent to your email")
-      })
-      .catch(error => {
-        console.error(error);
-      });
-    }
-
-    const checkLogin = () =>{
+    const checkLogin = () =>{ // this function is used to check if the user input is valid. 
       if(data.username.length == 0 || data.password.length == 0){
-        alert("Please enter all the fields")
+        alert("Please enter all the fields") // alert error that will appear 
       }
       else if(data.password.length < 6){
-        alert("Password should be 6 or more characters")
+        alert("Password should be 6 or more characters") // alert error that will appear 
       }
-      else{
-          LoginFunction()
+      else{ 
+          LoginFunction() // if no errors then the user input can then be processed by using this function 
       }
     }
 
-    const GetTextInput = (val) =>{
+    const GetTextInput = (val) =>{ // this function is used to get the email that the user entered. 
       setData({
         ...data,
         username:val,
       })
     }
   
-    const GetPasswordInput = (val) =>{
+    const GetPasswordInput = (val) =>{ // this function is used to get the password that the user entered. 
       setData({
         ...data,
         password: val,
@@ -91,20 +85,20 @@ const LoginScreen = () => {
                 <TextInput placeholder='Email' 
                 style = {style.input} 
                 placeholderTextColor={"#808080"}
-                onChangeText = {(e) => GetTextInput(e)}
+                onChangeText = {(e) => GetTextInput(e)} // called everytime the email is changed
                 />
 
                 <TextInput placeholder='Password' 
                 style = {style.input} 
                 placeholderTextColor={"#808080"}
                 secureTextEntry={true}
-                onChangeText = {(e) => GetPasswordInput(e)}
+                onChangeText = {(e) => GetPasswordInput(e)} // called everytime the password is changed
                 />
 
                 
                 <Text style = {{  color: '#2596be',marginLeft:140}} onPress={() => navigation.navigate('password')} > 
-                Forgot Password? </Text>
-
+                Forgot Password? </Text> 
+                
                 <TouchableOpacity style = {style.button} onPress = {() => checkLogin()}>
                   <Text style = {style.text}> Login </Text>
                 </TouchableOpacity>

@@ -1,20 +1,48 @@
-import React from "react";
+import React, { useState} from 'react';
 import {View,Text, TouchableOpacity,SafeAreaView,StyleSheet, ImageBackground, TextInput, Modal} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import auth from '@react-native-firebase/auth';
 
 const Password = () =>{
 
+    const [data, setData] = useState({ // variable declarations 
+      username: ''
+    });
     const navigation = useNavigation();
-    const user = auth().currentUser; 
+
+    const GetTextInput = (val) =>{ // this function is used to get the email that the user entered. 
+      setData({
+        ...data,
+        username:val,
+      })
+    }
+
+    const checkEmail = () =>{ // this function is used to check if the user input is valid. 
+      if(data.username.length == 0){
+        alert("Please enter your email") // alert error that will appear 
+      }
+      else{ 
+          ResetPassword() // if no errors then the user input can then be processed by using this function 
+      }
+    }
    
-    const ResetPassword = () =>{
+    const ResetPassword = () =>{ // this function is used to reset the users password
       auth()
-      .sendPasswordResetEmail(user.email)
+      .sendPasswordResetEmail(data.username.toLowerCase()) // the email is sent to the firebase database to check if the user does exist.
       .then(() => {
-        alert("A reset link has been sent to your email")
+        alert("A reset link has been sent to your email") // if successful a reset link is sent to the user to reset their password.
       })
       .catch(error => {
+        if (error.code === 'auth/invalid-email') { // if unsuccessful errors will appear and link will not be sent.
+          console.log(error);
+          alert("Please enter a valid email address")
+        }
+
+        if (error.code === 'auth/user-not-found') {
+          console.log(error);
+          alert("Oops! ¯\_(ツ)_/¯......Account does not exist. Sign Up to start using SwapShop")
+        }
+
         console.error(error);
       });
     }
@@ -24,14 +52,20 @@ const Password = () =>{
         <ImageBackground source={require('../assets/Image/gradient.jpg')} style={{flex:1}}>
 
               <SafeAreaView style={{ alignSelf: 'center',justifyContent: 'center',alignItems: 'center',
-                  backgroundColor: '#fff',height: 310,width: 350,borderRadius: 20,marginTop: '50%',
+                  backgroundColor: '#fff',height: 370,width: 350,borderRadius: 20,marginTop: '50%',
                   opacity:5,shadowColor: '#000',shadowOffset: {width: 0,height: 0.5}}}>
   
                   <Text style = {style.heading} >Password Reset</Text>
+
+                  <TextInput placeholder='Email' 
+                    style = {style.input} 
+                    placeholderTextColor={"#808080"}
+                    onChangeText = {(e) => GetTextInput(e)} // called everytime the email is changed
+                />
   
                   <Text style = {style.text2}  onPress = {() => navigation.navigate('Login')}> Go back to Login </Text>
                   
-                  <TouchableOpacity style = {style.button} onPress = {() => ResetPassword()}>
+                  <TouchableOpacity style = {style.button} onPress = {() => checkEmail()}>
                     <Text style = {style.text}>Reset</Text>
                   </TouchableOpacity>
 
@@ -70,7 +104,6 @@ const style = StyleSheet.create({
       fontStyle:'italic',
       fontWeight:'bold',
       color:'#A9A9A9',
-      
     },
     button: {
       margin: 15,

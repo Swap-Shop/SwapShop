@@ -5,26 +5,26 @@ import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 const SignUpScreen = () => {
-  LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
+  LogBox.ignoreLogs(['Warning: ...']); // the two lines of code is used to hide error messages from react native
   LogBox.ignoreAllLogs();//Ignore all log notifications
   
-  const [data, setData] = useState({
+  const [data, setData] = useState({ // variable declarations 
     username: '',
     password: '',
     ConfirmPassword: '',
   });
-  const navigation = useNavigation();
+  const navigation = useNavigation(); // variable used to help in navigation 
+ 
+  const SignUpFunction = () => { // this function is used to communicate with the firebase authentication database
 
-  const SignUpFunction = () => {
-
-    auth()
-    .createUserWithEmailAndPassword(data.username.trim().toLowerCase(), data.password.trim().toLowerCase())
-    .then(() => {
+    auth() // the auth() function is used to make a request to the firebase database.
+    .createUserWithEmailAndPassword(data.username.trim().toLowerCase(), data.password.trim().toLowerCase()) // the signup function is used save the email and password onto the firebase authentication database.
+    .then(() => { // executed if the details are successfully saved on the database. 
       console.log('User account created');
       alert ('Success!, you have created an account')
-      navigation.navigate('Login')
+      navigation.navigate('Navigate') // if the user details are in the database then the user is directed to the home page of the app.
     })
-    .catch(error => {
+    .catch(error => { // executed when errors occur in storing details on firebase database, user will not be able to access app.
       if (error.code === 'auth/email-already-in-use') {
         console.log('That email address is already in use!');
         alert ('That email address is already in use!')
@@ -39,7 +39,7 @@ const SignUpScreen = () => {
     });
   }
 
-  const checkSignUp = () =>{
+  const checkSignUp = () =>{ // used to check if the user input is valid.
     if(data.username.length == 0 || data.password.length == 0)
     {
       alert("Please enter all fields!")
@@ -51,26 +51,26 @@ const SignUpScreen = () => {
       alert ("Passwords do not match!")
     }
     else{
-      SignUpFunction()
+      SignUpFunction() // if no errors then a request will be made to the firebase database
     }
     
   }
 
-  const GetTextInput = (val) =>{
+  const GetTextInput = (val) =>{ // this function is used to get the email that the user entered.
     setData({
       ...data,
       username:val,
     })
   }
 
-  const GetPasswordInput = (val) =>{
+  const GetPasswordInput = (val) =>{ // this function is used to get the password that the user entered.
     setData({
       ...data,
       password: val,
     })
   }
 
-  const GetConfirmPasswordInput = (val) =>{
+  const GetConfirmPasswordInput = (val) =>{ // this function is used to get the confirm password that the user entered.
     setData({
       ...data,
       ConfirmPassword: val
