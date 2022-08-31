@@ -17,9 +17,9 @@ jobs:
       - checkout
          
       - node/install-packages:
-          app-dir:  /SwapShop
-          cache-version: v1
-          cache-path: node_modules
+          # app-dir:  /SwapShop
+          # cache-version: v1
+          # cache-path: node_modules
           pkg-manager: npm
       - run:
           name: Install Dependencies
