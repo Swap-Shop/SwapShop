@@ -36,6 +36,7 @@ jobs:
           command: bash <(curl -s https://codecov.io/bash) -F $CIRCLE_JOB
 
 workflows:
+  version: 2.1
   build_and_test:
     jobs:
       - build_and_test
