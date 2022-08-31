@@ -9,11 +9,11 @@ on:
     branches: [ main ]
 jobs:
   build_and_test:
-    parameters:
-       app-dir:
-        type: string
-        default: '~/SwapShop'
-        description: Path to the directory containing your package.json file. Not needed if package.json lives in the root.
+    # parameters:
+    #    app-dir:
+    #     type: string
+    #     default: '~/SwapShop'
+    #     description: Path to the directory containing your package.json file. Not needed if package.json lives in the root.
   
     executor: node/default
     # working_directory: ~/SwapShop
