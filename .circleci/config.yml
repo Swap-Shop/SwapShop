@@ -7,12 +7,12 @@ jobs:
   build_and_test:
   
     executor: node/default
-    working_directory: ~/SwapShop
+    working_directory: ./SwapShop
     steps:
       - checkout
          
       - node/install-packages:
-          app-dir:  ~/SwapShop
+          app-dir:  ./SwapShop
           cache-version: v1
           cache-path: node_modules
           pkg-manager: npm
