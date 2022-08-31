@@ -2,13 +2,17 @@ version: 2.1
 
 orbs:
   node: circleci/node@4.7
-
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 jobs:
   build_and_test:
     parameters:
        app-dir:
         type: string
-        default: '.'
+        default: './SwapShop'
         description: Path to the directory containing your package.json file. Not needed if package.json lives in the root.
   
     executor: node/default
