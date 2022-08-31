@@ -11,7 +11,6 @@ on:
 jobs:
   build_and_test:
     docker:
-      # replace with your preferred image
       - image: cimg/base:stable
   
     executor: node/default
