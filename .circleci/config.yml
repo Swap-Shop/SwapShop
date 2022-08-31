@@ -11,8 +11,10 @@ orbs:
 jobs:
   build_and_test:
     executor: node/default
+    working_directory: ~/SwapShop
     steps:
       - checkout
+          path: ~/SwapShop
       - node/install-package:
           pkg-manager: npm
       - run:
@@ -24,10 +26,7 @@ jobs:
       - run:
           name: Run tests and collect coverage
           command: npm run test  
-      - persist_to_workspace:
-          root: ~/SwapShop  
-          paths: 
-            - .  
+     
       - run:
           name: Upload coverage report to Codecov  
           command: bash <(curl -s https://codecov.io/bash) -F $CIRCLE_JOB
