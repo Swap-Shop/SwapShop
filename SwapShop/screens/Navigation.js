@@ -33,10 +33,11 @@ const Navigation = () =>{
                         style={{
                         width: 25,
                         height: 25,
-                        tintColor: focused ? '#A9A9A9' : '#000'
+                        tintColor: focused ? '#000' : '#000',
+                        top: 10
                         }}
                     />
-                    <Text style={{color: focused ? '#A9A9A9' : '#000', fontSize: 12, top: 5}}>Home</Text>
+                    <Text style={{color: focused ? '#000' : '#000', fontSize: 12, top: 15}}>Home</Text>
                     </View>
                 ),
                 }}
@@ -54,10 +55,11 @@ const Navigation = () =>{
                         style={{
                         width: 25,
                         height: 25,
-                        tintColor: focused ? '#A9A9A9' : '#000'
+                        tintColor: focused ? '#000' : '#000',
+                        top: 10
                         }}
                     />
-                    <Text style={{color: focused ? '#A9A9A9': '#000', fontSize: 12, top: 5}}>Add</Text>
+                    <Text style={{color: focused ? '#000' : '#000', fontSize: 12, top: 15}}>Add</Text>
                     </View>
                 ),
                 }}
@@ -74,10 +76,11 @@ const Navigation = () =>{
                         style={{
                         width: 25,
                         height: 25,
-                        tintColor: focused ? '#A9A9A9' : '#000'
+                        tintColor: focused ? '#000' : '#000',
+                        top: 10,
                         }}
                     />
-                    <Text style={{color: focused ? '#A9A9A9': '#000', fontSize: 12, top: 5}}>Settings</Text>
+                    <Text style={{color: focused ? '#000' : '#000', fontSize: 12, top: 15}}>Settings</Text>
                     </View>
                 ),
                 }}
