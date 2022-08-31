@@ -12,7 +12,7 @@ jobs:
   build_and_test:
   
     executor: node/default
-    working_directory: /SwapShop
+    working_directory: ~/SwapShop
     steps:
       - checkout
          
