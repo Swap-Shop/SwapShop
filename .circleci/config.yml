@@ -16,7 +16,7 @@ jobs:
         description: Path to the directory containing your package.json file. Not needed if package.json lives in the root.
   
     executor: node/default
-    working_directory: ~/SwapShop
+    # working_directory: ~/SwapShop
     steps:
       - checkout
          
