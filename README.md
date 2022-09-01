@@ -1,6 +1,6 @@
 # SwapShop
 
-![image](SwapShop/screens/image.png)
+![image](SwapShop/assets/Image/image.png)
 
 ## What is SwapShop?
 
