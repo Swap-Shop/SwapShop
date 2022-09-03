@@ -28,10 +28,11 @@ jobs:
         cache: 'npm'
         cache-dependency-path: package-lock.json
     # - run: npm ci
-    - run: npm run build --if-present
+    - name: Install dependencies
+      run: npm install
 
-    - name: Running Jest tests
-      run: npm run test --if-present
+    - name: Run the tests
+      run: npm test -- --coverage
 
-    - name: Uploading coverage to Codecov
-      uses: codecov/codecov-action@v2
+    - name: Codecov
+      uses: codecov/codecov-action@v3.1.0
