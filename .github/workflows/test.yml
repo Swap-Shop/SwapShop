@@ -37,8 +37,9 @@ jobs:
       - name: Run tests
         run: npm run test-cov
 
-      - name: Coveralls
-        uses: coverallsapp/github-action@main
+      - name: Coveralls GitHub Action
+        uses: coverallsapp/github-action@1.1.3
+
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           flag-name: ${{matrix.os}}-node-${{ matrix.node }}
@@ -49,7 +50,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Coveralls Finished
-        uses: coverallsapp/github-action@main
+        uses: coverallsapp/github-action@1.1.3
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           parallel-finished: true
