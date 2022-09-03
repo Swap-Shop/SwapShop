@@ -17,6 +17,9 @@ jobs:
       fail-fast: false
       matrix:
         node-version: [16.x]
+        test_number:
+          - 1
+          - 2
 
     steps:
       - name: Checkout
@@ -37,6 +40,8 @@ jobs:
 
       # - name: Run lint
       #   run: npm run lint
+      - name: Test ${{ matrix.test_number }}
+        run: make test-coverage-${{ matrix.test_number }}
 
       - name: Run tests
         run: npm test
@@ -53,7 +58,8 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     steps:
-      - name: Coveralls Finished
-        uses: coverallsapp/github-action@master
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          parallel-finished: true
+    - name: Coveralls Finished
+      uses: coverallsapp/github-action@master
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        parallel-finished: true
