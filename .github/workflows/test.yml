@@ -35,16 +35,13 @@ jobs:
       - run: npm ci
       - run: npm run build --if-present
 
-      # - name: Run lint
-      #   run: npm run lint
-  
 
       - name: Run tests
         run: npm test
-
-      - name: Coveralls
-        uses: coverallsapp/github-action@master
-
+      
+      - name: Uploading coverage to Codecov
+        uses: codecov/codecov-action@v2
+     
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           flag-name: ${{matrix.os}}-node-${{ matrix.node }}
@@ -54,8 +51,9 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     steps:
-    - name: Coveralls Finished
-      uses: coverallsapp/github-action@master
+    - name: Uploading coverage to Codecov
+      uses: codecov/codecov-action@v2
+   
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         parallel-finished: true
