@@ -9,15 +9,14 @@ env:
   CI: true
 
 jobs:
-  test:
-    # name: Node ${{ matrix.node }} on ${{ matrix.os }}
-    # runs-on: ${{ matrix.os }}
+  build:
+
     runs-on: ubuntu-latest
+
     strategy:
-      fail-fast: false
       matrix:
         node-version: [16.x]
-     
+
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -33,25 +32,10 @@ jobs:
       - run: npm ci
       - run: npm run build --if-present
 
-
-      - name: Run tests
+      - name: Running Jest tests
         run: npm test
-      
+
       - name: Uploading coverage to Codecov
         uses: codecov/codecov-action@v2
-     
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          flag-name: ${{matrix.os}}-node-${{ matrix.node }}
-          parallel: true
 
-  finish:
-    needs: test
-    runs-on: ubuntu-latest
-    steps:
-    - name: Uploading coverage to Codecov
-      uses: codecov/codecov-action@v2
-   
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        parallel-finished: true
+  
