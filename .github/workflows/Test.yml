@@ -20,12 +20,6 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
 
-    - name: Create env file
-      run: 'echo "$DB_URL" > .env'
-      shell: bash
-      env:
-        DB_URL : DATABASE_URL=${{secrets.DATABASE_URL}}
-
     - name: Buidling using Node.js ${{ matrix.node-version }}.
       env:
         CI: true
@@ -41,4 +35,4 @@ jobs:
       run: npm test
 
     - name: Codecov
-      uses: codecov/codecov-action@v3.1.0
+      uses: Swap-Shop/SwapShop@v3.1.0
