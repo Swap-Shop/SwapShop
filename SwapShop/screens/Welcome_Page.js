@@ -38,6 +38,7 @@ const Welcome_Page = ({navigation}) => {
     <SafeAreaView style={{flex: 2}}>
        <ImageBackground source={require('../assets/Image/gradient.jpg')} style={{flex:1}}   >
 
+          {/* a SwapShop logo */}
           <View style={{ alignItems: 'center'}}>
                <Text style={{color:'#A9A9A9' ,fontSize: 55,paddingTop:55, fontWeight:'bold', fontFamily:'League Spartan'}}>Welcome</Text>   
                <Image style={{width: 300,height:300}} source={require('../assets/Image/image.png')}/>

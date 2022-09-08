@@ -6,7 +6,7 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
-    "test": "jest",
+    "test": "jest --coverage",
     "lint": "eslint .",
     "build:ios": "react-native bundle --entry-file='index.js' --bundle-output='./ios/main.jsbundle' --dev=false --platform='ios'"
   },
@@ -42,9 +42,9 @@
   "jest": {
     "preset": "jest-react-native",
     "collectCoverage": true,
+    "coverageDirectory": "./coverage/",
     "coverageReporters": [
-      "json",
-      "html"
+      "json-summary"
     ],
     "setupFilesAfterEnv": [
       "@testing-library/jest-native/extend-expect"

@@ -102,6 +102,7 @@ const LoginScreen = ({navigation}) => {
                   <Text style = {style.text}> Login </Text>
                 </TouchableOpacity>
 
+                {/* a clickable text to redirect user to signup page */}
                 <Text style={{color: '#2596be',}} onPress={() => navigation.navigate('Signup')} testID='signUpLink'>
                     Don't have an account? signup here</Text>
             </SafeAreaView>

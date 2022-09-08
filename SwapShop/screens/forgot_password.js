@@ -62,9 +62,10 @@ const Password = ({navigation}) =>{
                     placeholderTextColor={"#808080"}
                     onChangeText = {(e) => GetTextInput(e)} // called everytime the email is changed
                 />
-  
+                  {/* a clickable text which  redirect user back to the login page */}
                   <Text style = {style.text2}  onPress = {() => navigation.navigate('Login')}> Go back to Login </Text>
                   
+                  {/* a button to render the check email function */}
                   <TouchableOpacity style = {style.button} onPress = {() => checkEmail()}>
                     <Text style = {style.text}>Reset</Text>
                   </TouchableOpacity>

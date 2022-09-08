@@ -107,10 +107,12 @@ const SignUpScreen = ({navigation}) => {
                   onChangeText = {(e) => GetConfirmPasswordInput(e)}
                   />
 
-
+                    {/* a button to render checkSignup function, which then add the user to  the database */}
                   <TouchableOpacity style = {style.button} onPress = {() => checkSignUp()}>
                     <Text style = {style.text}> Sign Up </Text>
                   </TouchableOpacity>
+                  
+                  {/* a clickable text to redirect the user to the login page  */}
                   <Text style={{color: '#2596be',}} onPress={() => navigation.navigate('Login')}>
                     Already have an account? login here</Text>
           </SafeAreaView>

@@ -12,7 +12,7 @@ import Settings from "./settings_page";
 const Tab = createBottomTabNavigator();
 const Navigation = () =>{
     return(
-        // <Text>Welcome</Text>
+        // A bottom navigation menu
         <Tab.Navigator screenOptions={{tabBarHideOnKeyboard: true,header: () => null,tabBarShowLabel: false,
             tabBarStyle: {
               position: 'absolute',
@@ -21,6 +21,7 @@ const Navigation = () =>{
             }
           }
         }>
+                {/* a clickable home icon label which redirect user to home page */}
                 <Tab.Screen
                 name="Home"
                 component={Home}
@@ -42,7 +43,7 @@ const Navigation = () =>{
                 ),
                 }}
             />
-
+                 {/* a clickable add icon label which redirect user to add page */}
                 <Tab.Screen
                 name="AddPage"
                 component={AddPage}
@@ -64,6 +65,7 @@ const Navigation = () =>{
                 ),
                 }}
             />
+             {/* a clickable settings icon label which redirect user to settings page */}
              <Tab.Screen
                 name="Settings"
                 component={Settings}
