@@ -47,19 +47,31 @@ test('welcome page should go to signUp page', () =>{
   expect(navigation.navigate).toHaveBeenCalledWith("Signup");
 });
 
-/*
-test('sign up link works properly', () =>{
+
+test('sign up link works properly on Login page', () =>{
   const navigation = {navigate:()=>{}}
   spyOn(navigation, 'navigate');
 
   const page = render(<LoginScreen navigation={navigation}/>)
-  const loginButton = page.getByTestId('signUpButton');
+  const signUpLink = page.getByTestId('signUpLink');
 
-  fireEvent.press(loginButton);
+  fireEvent.press(signUpLink);
 
   expect(navigation.navigate).toHaveBeenCalledWith("Signup");
 });
-*/
+
+test('login link works properly on Sign Up page', () =>{
+  const navigation = {navigate:()=>{}}
+  spyOn(navigation, 'navigate');
+
+  const page = render(<SignUpScreen navigation={navigation}/>)
+  const loginLink = page.getByTestId('loginLink');
+
+  fireEvent.press(loginLink);
+
+  expect(navigation.navigate).toHaveBeenCalledWith("Login");
+});
+
 
 
 /*
