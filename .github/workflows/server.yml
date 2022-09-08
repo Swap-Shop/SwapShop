@@ -42,5 +42,4 @@ jobs:
 
     - name: Codecov
       uses: codecov/codecov-action@v3.1.0
-      with:
-          github-token: ${{ secrets.GITHUB_TOKEN }} # This is required so codecov knows the repo
+    

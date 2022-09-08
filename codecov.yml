@@ -1,0 +1,3 @@
+ignore:
+    - "**/forgot_password.js"
+ 
