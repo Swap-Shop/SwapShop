@@ -2,7 +2,7 @@ import React from "react";
 import LoginScreen from "../screens/LoginScreen";
 import Welcome_Page from "../screens/Welcome_Page";
 import SignUpScreen from "../screens/SignUpScreen";
-import forgot_password from "../screens/forgot_password";
+import ForgetPasswordPage from "../screens/forgot_password";
 import { Alert } from 'react-native';
 import { render, screen, renderHook, fireEvent} from '@testing-library/react-native';
 
@@ -30,7 +30,7 @@ test('SignUp screen should render correctly', () => {
 
 test('ForgetPassword screen should render correctly', () => { 
     
-  const page = render(<forgot_password/>);
+  const page = render(<ForgetPasswordPage/>);
 
 });
 // the following lines are used to check if all the pages are rendering properly 
@@ -72,21 +72,17 @@ test('login link works properly on Sign Up page', () =>{
   expect(navigation.navigate).toHaveBeenCalledWith("Login");
 });
 
+test('link back to login page from password reset', () =>{
+  const navigation = {navigate:()=>{}}
+  spyOn(navigation, 'navigate');
 
+  const page = render(<ForgetPasswordPage navigation={navigation}/>)
+  const forgotPasswordLink = page.getByTestId('forgetpassLink');
 
-/*
-test('welcome page should go to Login page', () =>{
-  const checkSignIn= {checkSignIn:()=>{}}
-  spyOn(checkSignIn, 'checkSignIn');
+  fireEvent.press(forgotPasswordLink);
 
-  const page = render(<Welcome_Page checkSignIn={checkSignIn}/>)
-  const loginButton = page.getByTestId('loginButton');
-
-  fireEvent.press(loginButton);
-
-  expect(checkSignIn.checkSignIn).toHaveBeenCalled();
+  expect(navigation.navigate).toHaveBeenCalledWith("Login");
 });
-*/
 
 
 

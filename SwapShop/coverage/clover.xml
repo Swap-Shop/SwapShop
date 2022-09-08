@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1662636929408" clover="3.2.0">
-  <project timestamp="1662636929408" name="All files">
-    <metrics statements="116" coveredstatements="36" conditionals="38" coveredconditionals="0" methods="40" coveredmethods="7" elements="194" coveredelements="43" complexity="0" loc="116" ncloc="116" packages="2" files="6" classes="6"/>
+<coverage generated="1662643052692" clover="3.2.0">
+  <project timestamp="1662643052692" name="All files">
+    <metrics statements="116" coveredstatements="42" conditionals="38" coveredconditionals="0" methods="40" coveredmethods="9" elements="194" coveredelements="51" complexity="0" loc="116" ncloc="116" packages="2" files="6" classes="6"/>
     <package name="assets.Image">
       <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="gradient.jpg" path="C:\Users\malvi\Documents\GitHub\SwapShop1\SwapShop\assets\Image\gradient.jpg">
@@ -14,7 +14,7 @@
       </file>
     </package>
     <package name="screens">
-      <metrics statements="114" coveredstatements="34" conditionals="38" coveredconditionals="0" methods="40" coveredmethods="7"/>
+      <metrics statements="114" coveredstatements="40" conditionals="38" coveredconditionals="0" methods="40" coveredmethods="9"/>
       <file name="LoginScreen.js" path="C:\Users\malvi\Documents\GitHub\SwapShop1\SwapShop\screens\LoginScreen.js">
         <metrics statements="35" coveredstatements="11" conditionals="12" coveredconditionals="0" methods="12" coveredmethods="2"/>
         <line num="8" count="1" type="stmt"/>
@@ -116,16 +116,16 @@
         <line num="58" count="0" type="stmt"/>
       </file>
       <file name="forgot_password.js" path="C:\Users\malvi\Documents\GitHub\SwapShop1\SwapShop\screens\forgot_password.js">
-        <metrics statements="23" coveredstatements="2" conditionals="6" coveredconditionals="0" methods="9" coveredmethods="0"/>
+        <metrics statements="23" coveredstatements="8" conditionals="6" coveredconditionals="0" methods="9" coveredmethods="2"/>
         <line num="6" count="1" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
-        <line num="13" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="13" count="2" type="stmt"/>
         <line num="14" count="0" type="stmt"/>
-        <line num="20" count="0" type="stmt"/>
+        <line num="20" count="2" type="stmt"/>
         <line num="21" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="22" count="0" type="stmt"/>
         <line num="25" count="0" type="stmt"/>
-        <line num="29" count="0" type="stmt"/>
+        <line num="29" count="2" type="stmt"/>
         <line num="30" count="0" type="stmt"/>
         <line num="33" count="0" type="stmt"/>
         <line num="36" count="0" type="cond" truecount="0" falsecount="2"/>
@@ -135,9 +135,9 @@
         <line num="42" count="0" type="stmt"/>
         <line num="43" count="0" type="stmt"/>
         <line num="46" count="0" type="stmt"/>
-        <line num="50" count="0" type="stmt"/>
+        <line num="50" count="2" type="stmt"/>
         <line num="63" count="0" type="stmt"/>
-        <line num="66" count="0" type="stmt"/>
+        <line num="66" count="1" type="stmt"/>
         <line num="69" count="0" type="stmt"/>
         <line num="80" count="1" type="stmt"/>
       </file>

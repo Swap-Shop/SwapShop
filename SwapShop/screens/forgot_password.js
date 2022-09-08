@@ -63,7 +63,7 @@ const Password = ({navigation}) =>{
                     onChangeText = {(e) => GetTextInput(e)} // called everytime the email is changed
                 />
                   {/* a clickable text which  redirect user back to the login page */}
-                  <Text style = {style.text2}  onPress = {() => navigation.navigate('Login')}> Go back to Login </Text>
+                  <Text style = {style.text2}  onPress = {() => navigation.navigate('Login')} testID='forgetpassLink'> Go back to Login </Text>
                   
                   {/* a button to render the check email function */}
                   <TouchableOpacity style = {style.button} onPress = {() => checkEmail()}>

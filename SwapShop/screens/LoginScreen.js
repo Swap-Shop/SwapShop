@@ -1,7 +1,7 @@
 import React, { useState} from 'react'; 
 import { useNavigation } from '@react-navigation/native';
 import auth from '@react-native-firebase/auth';
-import {View,Text, TouchableOpacity,SafeAreaView,StyleSheet, ImageBackground, TextInput, LogBox ,Modal} from 'react-native';
+import {View,KeyboardAvoidingView,Text, TouchableOpacity,SafeAreaView,StyleSheet, ImageBackground,alert, TextInput, LogBox ,Modal} from 'react-native';
 
 
   
@@ -72,7 +72,7 @@ const LoginScreen = ({navigation}) => {
     }
 
   return (
-    <View style={style.container}>
+    <KeyboardAvoidingView style={style.container}>
       <ImageBackground source={require('../assets/Image/gradient.jpg')} style={{flex:1}}>
       
             <SafeAreaView style={{ alignSelf: 'center',justifyContent: 'center',alignItems: 'center',
@@ -98,7 +98,7 @@ const LoginScreen = ({navigation}) => {
                 <Text style = {{  color: '#2596be',marginLeft:140}} onPress={() => navigation.navigate('password')} > 
                 Forgot Password? </Text> 
                 
-                <TouchableOpacity style = {style.button} onPress = {() => checkLogin()}>
+                <TouchableOpacity style = {style.button} onPress = {() => checkLogin()} testID='Login.Button'>
                   <Text style = {style.text}> Login </Text>
                 </TouchableOpacity>
 
@@ -108,7 +108,7 @@ const LoginScreen = ({navigation}) => {
             </SafeAreaView>
 
       </ImageBackground>
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 

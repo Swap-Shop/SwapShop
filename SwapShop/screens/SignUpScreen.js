@@ -1,5 +1,5 @@
 import React, { useState} from 'react';
-import {View,Text,TouchableOpacity,StyleSheet,TextInput,LogBox , ImageBackground, Modal} from 'react-native';
+import {View,Text,TouchableOpacity,StyleSheet,TextInput,LogBox , ImageBackground, Modal, KeyboardAvoidingView} from 'react-native';
 import auth from '@react-native-firebase/auth';
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -78,7 +78,7 @@ const SignUpScreen = ({navigation}) => {
   }
 
   return (
-    <View style={style.container}>
+    <KeyboardAvoidingView style={style.container}>
       <ImageBackground source={require('../assets/Image/gradient.jpg')} style={{flex:1}}>
         {/* <Modal visible={modalOpen} animationType="fade" transparent={true}> */}
           <SafeAreaView style={{ alignSelf: 'center',justifyContent: 'center',alignItems: 'center',
@@ -119,7 +119,7 @@ const SignUpScreen = ({navigation}) => {
        
       </ImageBackground>
       
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 

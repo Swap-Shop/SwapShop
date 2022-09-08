@@ -2,6 +2,7 @@ jest.mock('@react-native-firebase/app', () => {
   return () => ({
     onNotification: jest.fn(),
     onNotificationDisplayed: jest.fn(),
+    alert: jest.fn()
   })
 });
 
@@ -10,5 +11,6 @@ jest.mock('@react-native-firebase/auth', () => {
     onAuthStateChanged: jest.fn(),
     signInWithEmailAndPassword: jest.fn(),
     createUserWithEmailAndPassword: jest.fn(),
+    alert: jest.fn()
   })
 });
