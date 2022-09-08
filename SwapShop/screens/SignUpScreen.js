@@ -111,13 +111,9 @@ const SignUpScreen = ({navigation}) => {
                   <TouchableOpacity style = {style.button} onPress = {() => checkSignUp()}>
                     <Text style = {style.text}> Sign Up </Text>
                   </TouchableOpacity>
-<<<<<<< Updated upstream
                   
                   {/* a clickable text to redirect the user to the login page  */}
-                  <Text style={{color: '#2596be',}} onPress={() => navigation.navigate('Login')}>
-=======
                   <Text style={{color: '#2596be',}} onPress={() => navigation.navigate('Login')} testID='loginLink'>
->>>>>>> Stashed changes
                     Already have an account? login here</Text>
           </SafeAreaView>
        
