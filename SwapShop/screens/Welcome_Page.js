@@ -1,6 +1,5 @@
 import React, { useState, useEffect} from 'react'; 
-import { ImageBackground, SafeAreaView, Text, View,  Image } from 'react-native';
-import { Button } from '@rneui/themed';
+import { ImageBackground, SafeAreaView, Text, View,  Image, TouchableOpacity } from 'react-native';
 import auth from '@react-native-firebase/auth';
 // import "fontsource-league-spartan";
 
@@ -45,31 +44,19 @@ const Welcome_Page = ({navigation}) => {
           </View>
 
           <View style={{alignItems:'center', marginHorizontal:60}}>
-                <Button 
-                title='Sign Up'
-                onPress = {() => navigation.navigate('Signup')}
-                titleStyle={{ fontWeight: 'bold', fontSize: 23 , fontFamily:'League Spartan'}}
-                buttonStyle={{backgroundColor: '#A9A9A9', borderRadius: 10}}
-                containerStyle={{
-                  marginHorizontal: 50,
-                  height: 50,
-                  width: 250,
-                  marginVertical: 10,
-                }}
-                >
-                </Button>
+            <TouchableOpacity style={{backgroundColor:"#A9A9A9", borderRadius:10, height: 50, 
+            marginHorizontal:50, width:250, marginVertical:10}} 
+            testID='signUpButton' onPress={() => 
+            navigation.navigate('Signup')}>
+              <Text style={{fontWeight:"bold", fontSize: 23, textAlign: 'center', top:7, color:'white'}}> Sign Up</Text>
+            </TouchableOpacity>
 
-                <Button
-                title='Login'
-                onPress = {() => checkSignIn()}
-                titleStyle={{ fontWeight: 'bold', fontSize: 23, fontfamily: "League Spartan"}}
-                buttonStyle={{backgroundColor: '#A9A9A9', borderRadius: 10}}
-                containerStyle={{
-                  marginHorizontal: 50,
-                  height: 50,
-                  width: 250,
-                  marginVertical: 10,
-            }}></Button>
+            <TouchableOpacity style={{backgroundColor:"#A9A9A9", borderRadius:10, height: 50, 
+            marginHorizontal:50, width:250, marginVertical:10}} 
+            testID='loginButton' onPress={() => 
+            checkSignIn()}>
+              <Text style={{fontWeight:"bold", fontSize: 23, textAlign: 'center', top:7, color:'white'}}> Login </Text>
+            </TouchableOpacity>
           </View>
       </ImageBackground>
     </SafeAreaView>

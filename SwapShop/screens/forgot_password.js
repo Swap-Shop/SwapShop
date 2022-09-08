@@ -3,12 +3,12 @@ import {View,Text, TouchableOpacity,SafeAreaView,StyleSheet, ImageBackground, Te
 import { useNavigation } from '@react-navigation/native';
 import auth from '@react-native-firebase/auth';
 
-const Password = () =>{
+const Password = ({navigation}) =>{
 
     const [data, setData] = useState({ // variable declarations 
       username: ''
     });
-    const navigation = useNavigation();
+    //const navigation = useNavigation();
 
     const GetTextInput = (val) =>{ // this function is used to get the email that the user entered. 
       setData({

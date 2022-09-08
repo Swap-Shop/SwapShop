@@ -1,12 +1,11 @@
 import React, { useState} from 'react'; 
-
 import { useNavigation } from '@react-navigation/native';
 import auth from '@react-native-firebase/auth';
 import {View,Text, TouchableOpacity,SafeAreaView,StyleSheet, ImageBackground, TextInput, LogBox ,Modal} from 'react-native';
 
 
   
-const LoginScreen = () => {
+const LoginScreen = ({navigation}) => {
   LogBox.ignoreLogs(['Warning: ...']); // the two lines of code is used to hide error messages from react native
   LogBox.ignoreAllLogs();//Ignore all log notifications
 
@@ -14,8 +13,8 @@ const LoginScreen = () => {
     username: '',
     password: '',
   });
-  const navigation = useNavigation();
-  const user = auth().currentUser; // code used to retrieve the user ID from firebase 
+  //const navigation = useNavigation();
+  //const user = auth().currentUser; // code used to retrieve the user ID from firebase 
   
 
     const LoginFunction = () => { // this function is used to communicate with the firebase authentication database
@@ -103,7 +102,7 @@ const LoginScreen = () => {
                   <Text style = {style.text}> Login </Text>
                 </TouchableOpacity>
 
-                <Text style={{color: '#2596be',}} onPress={() => navigation.navigate('Signup')}>
+                <Text style={{color: '#2596be',}} onPress={() => navigation.navigate('Signup')} testID='signUpLink'>
                     Don't have an account? signup here</Text>
             </SafeAreaView>
 

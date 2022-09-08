@@ -4,7 +4,7 @@ import auth from '@react-native-firebase/auth';
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-const SignUpScreen = () => {
+const SignUpScreen = ({navigation}) => {
   LogBox.ignoreLogs(['Warning: ...']); // the two lines of code is used to hide error messages from react native
   LogBox.ignoreAllLogs();//Ignore all log notifications
   
@@ -13,7 +13,7 @@ const SignUpScreen = () => {
     password: '',
     ConfirmPassword: '',
   });
-  const navigation = useNavigation(); // variable used to help in navigation 
+  //const navigation = useNavigation(); // variable used to help in navigation 
  
   const SignUpFunction = () => { // this function is used to communicate with the firebase authentication database
 
