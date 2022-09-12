@@ -1,7 +1,7 @@
 import React, { useState} from 'react'; 
 import { useNavigation } from '@react-navigation/native';
 import auth from '@react-native-firebase/auth';
-import {View,KeyboardAvoidingView,Text, TouchableOpacity,SafeAreaView,StyleSheet, ImageBackground,alert, TextInput, LogBox ,Modal} from 'react-native';
+import {View,KeyboardAvoidingView,Text, TouchableOpacity,SafeAreaView,StyleSheet, ImageBackground, TextInput, LogBox ,Modal} from 'react-native';
 
 
   
