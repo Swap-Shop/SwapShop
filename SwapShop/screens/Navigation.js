@@ -6,7 +6,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import { ImageBackground, SafeAreaView, Text, View,  Image } from 'react-native';
 
 import Home from "./home_page";
-import AddPage from "./add_page";
+import Messages from "./messagesPage";
 import Settings from "./settings_page";
 
 const Tab = createBottomTabNavigator();
@@ -38,29 +38,29 @@ const Navigation = () =>{
                         top: 10
                         }}
                     />
-                    <Text style={{color: focused ? '#000' : '#000', fontSize: 12, top: 15}}>Home</Text>
+                    <Text style={{color: focused ? '#000' : '#000', fontSize: 12, top: 15}}> Home </Text>
                     </View>
                 ),
                 }}
             />
                  {/* a clickable add icon label which redirect user to add page */}
                 <Tab.Screen
-                name="AddPage"
-                component={AddPage}
+                name="Messages"
+                component={Messages}
                 options={{
                 tabBarIcon: ({focused}) => (
                     <View style={{alignItems: 'center', justifyContent: 'center', top: 10}}>
                     <Image 
-                        source={require('../assets/Icon/icons8-add-50.png')} 
+                        source={require('../assets/Icon/icons8-chating-64.png')} 
                         resizeMode='contain'
                         style={{
-                        width: 25,
-                        height: 25,
+                        width: 30,
+                        height: 30,
                         tintColor: focused ? '#000' : '#000',
                         top: 10
                         }}
                     />
-                    <Text style={{color: focused ? '#000' : '#000', fontSize: 12, top: 15}}>Add</Text>
+                    <Text style={{color: focused ? '#000' : '#000', fontSize: 12, top: 15}}>Messages</Text>
                     </View>
                 ),
                 }}

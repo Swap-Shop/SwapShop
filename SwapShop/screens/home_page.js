@@ -1,8 +1,9 @@
 import React from "react";
-import { ImageBackground, SafeAreaView, Text, View,  Image, FlatList } from 'react-native';
+import { ImageBackground, SafeAreaView, Text, View,  Image, FlatList, TouchableOpacity } from 'react-native';
 import PostCard from '../components/PostCard';
-import {Container
+import {Container, AddPageWrapper, AddPageButton
 } from '../styles/HomePageStyle';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const Posts = [
    {
@@ -52,10 +53,17 @@ const Posts = [
     },
  ];
 
-const Home = () => 
+const Home = ({navigation}) => 
 {
    return(
          <Container>
+            <SafeAreaView style ={{height:30}}>
+            <Image style={{width: 120,height:50, bottom: 20, marginLeft: 100}} source={require('../assets/Image/image.png')}/>
+            <TouchableOpacity style={{marginLeft: 340, bottom: 60}} onPress={() => 
+            navigation.navigate('AddPage')}>
+               <Icon name = "add-circle-outline" size={30} color={"#000000"}/>
+            </TouchableOpacity>
+            </SafeAreaView>
             <FlatList
             data={Posts}
             renderItem = {({item}) => <PostCard item={item} />}

@@ -81,3 +81,6 @@ export const InteractionText = styled.Text`
     color: ${props => props.active ? '#2e64e5' : '#333'};
     margin-left: 2px;
 `;
+
+
+
