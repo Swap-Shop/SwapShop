@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import { ImageBackground, SafeAreaView, Text, View,  Image, FlatList, TouchableOpacity } from 'react-native';
 import PostCard from '../components/PostCard';
 import {Container, AddPageWrapper, AddPageButton
