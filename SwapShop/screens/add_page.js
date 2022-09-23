@@ -9,6 +9,7 @@ import {
   TextInput,
   KeyboardAvoidingView,
   Alert,
+  ActivityIndicator,
   TouchableOpacity,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -16,12 +17,16 @@ import storage from '@react-native-firebase/storage';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import ImagePicker from 'react-native-image-crop-picker';
+import {
+  StatusWrapper
+} from '../styles/AddPageStyles';
 
 
 
 const AddPage = ({navigation}) => {
   const [image, setImage] = useState(null);
-
+  const [uploading, setUploading] = useState(false);
+  const [transferred, setTransferred] = useState(0);
   const [data, setData] = useState({
     // variable declarations
     product_name: '',
@@ -31,6 +36,7 @@ const AddPage = ({navigation}) => {
     image_URL: '',
     userId: null,
     filename: '',
+    
   });
 
   useEffect(() => {
@@ -92,32 +98,57 @@ const AddPage = ({navigation}) => {
   };
 
   const uploadImage = async () => {
+    let downloadURL;
     const uploadUri = image.path.toString();
-    let filename = uploadUri.substring(uploadUri.lastIndexOf('/') + 1);
+    data.filename = uploadUri.substring(uploadUri.lastIndexOf('/') + 1);
+
+    setUploading(true);
+    setTransferred(0);
+
+    const storageRef = storage().ref(data.filename);
+    const task = storageRef.putFile(uploadUri);
+
+    task.on('state_changed', (taskSnapshot) => {
+      console.log(
+        `${taskSnapshot.bytesTransferred} transferred out of ${taskSnapshot.totalBytes}`,
+      );
+
+      setTransferred(
+        Math.round(taskSnapshot.bytesTransferred / taskSnapshot.totalBytes) *
+          100,
+      );
+    });
+
     try {
-      await storage().ref(filename).putFile(uploadUri);
-      data.image_URL = await storage().ref(filename).getDownloadURL();
-      console.log(data.image_URL);
+      await task;
+      downloadURL = await storageRef.getDownloadURL();
+
+      setUploading(false);
+      setImage(null);
+      
     } catch (e) {
       console.log(e);
     }
+
+    return downloadURL;
   };
 
-  const SubmitData = async () => {
+  const SubmitData = async (url) => {
     firestore()
       .collection('Products')
-      .doc(data.userId)
-      .set({
+      .add({
+        userID: data.userId,
         firstname: data.firstname,
         surname: data.surname,
         Product_Name: data.product_name,
         Product_Description: data.product_desc,
-        Product_URL: data.image_URL,
+        Product_URL: url,
         Post_Time: firestore.Timestamp.fromDate(new Date()),
       })
       .then(() => {
         console.log('Post added!');
-        Alert.alert('Post added');
+        Alert.alert('Post published!',
+        'Your post has been published Successfully!');
         navigation.navigate('Navigate');
       })
       .catch(error => {
@@ -125,7 +156,7 @@ const AddPage = ({navigation}) => {
       });
   };
 
-  const checkInput = () => {
+  const checkInput = async() => {
     if (data.product_desc.length == 0 || data.product_name.length == 0) {
       Alert.alert('Oops! ¯_(ツ)_/¯......', 'Please enter all fields');
     } else if (image == null) {
@@ -134,8 +165,8 @@ const AddPage = ({navigation}) => {
         'Please provide an image of the product',
       );
     } else {
-      uploadImage();
-      SubmitData();
+      const url = await uploadImage();
+      SubmitData(url);
     }
   };
 
@@ -203,7 +234,13 @@ const AddPage = ({navigation}) => {
           <Icon name="image-outline" size={20} />
         </TouchableOpacity>
 
-        <TouchableOpacity
+        {uploading ? (
+          <StatusWrapper>
+            <Text style={{fontWeight: 'normal', color: '#000000'}}>{transferred} % Completed!</Text>
+            <ActivityIndicator size="large" color="#333333" />
+          </StatusWrapper>
+        ) : (
+          <TouchableOpacity
           style={style.AddPostbutton}
           onPress={() => checkInput()}>
           <Text
@@ -217,6 +254,8 @@ const AddPage = ({navigation}) => {
             Add Post{' '}
           </Text>
         </TouchableOpacity>
+        )}
+
       </SafeAreaView>
     </ImageBackground>
   );

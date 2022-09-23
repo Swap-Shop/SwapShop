@@ -151,6 +151,7 @@ const LoginScreen = ({navigation}) => {
             iconWidth={40}
             inputStyle={{color: 'black'}}
             labelStyle={{color: 'grey'}}
+            secureTextEntry={true}
             style={{
               width: 320,
               backgroundColor: '#F9F9F3',
