@@ -11,9 +11,17 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 import auth from '@react-native-firebase/auth';
-import {useNavigation} from '@react-navigation/native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import firestore from '@react-native-firebase/firestore';
+import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
+import {Fumi} from 'react-native-textinput-effects';
+import Icon from 'react-native-vector-icons/Ionicons';
+import MaterialsIcon from 'react-native-vector-icons/MaterialIcons';
+
+
+import {BarPasswordStrengthDisplay} from 'react-native-password-strength-meter';
+
+
 
 const SignUpScreen = ({navigation}) => {
   LogBox.ignoreLogs(['Warning: ...']); // the two lines of code is used to hide error messages from react native
@@ -160,9 +168,9 @@ const SignUpScreen = ({navigation}) => {
             alignSelf: 'center',
             justifyContent: 'center',
             alignItems: 'center',
-            backgroundColor: '#fff',
+            backgroundColor: '#F2F3F4',
             height: 650,
-            width: 350,
+            width: 370,
             borderRadius: 20,
             marginTop: '10%',
             opacity: 2,
@@ -176,8 +184,147 @@ const SignUpScreen = ({navigation}) => {
             elevation: 24,
           }}>
           <Text style={style.heading}> Sign Up </Text>
+          <Fumi
+            label={'First Name'}
+            iconClass={Icon}
+            iconName={'person-sharp'}
+            iconColor={'#f95a25'}
+            iconSize={20}
+            iconWidth={40}
+            inputStyle={{color: 'black'}}
+            labelStyle={{color: 'grey'}}
+            style={{
+              width: 320,
+              backgroundColor: '#F9F9F3',
+              opacity: 2,
+              shadowColor: '#000',
+              shadowOffset: {
+                width: 0,
+                height: 12,
+              },
+              shadowOpacity: 0.58,
+              shadowRadius: 16.0,
+              elevation: 24,
+            }}
+            inputPadding={16}
+            onChangeText={e => GetFirstName(e)}
+          />
+          <Fumi
+            label={'Last Name'}
+            iconClass={Icon}
+            iconName={'person-sharp'}
+            iconColor={'#f95a25'}
+            iconSize={20}
+            iconWidth={40}
+            inputStyle={{color: 'black'}}
+            labelStyle={{color: 'grey'}}
+            style={{
+              width: 320,
+              backgroundColor: '#F9F9F3',
+              marginTop: 10,
+              opacity: 2,
+              shadowColor: '#000',
+              shadowOffset: {
+                width: 0,
+                height: 12,
+              },
+              shadowOpacity: 0.58,
+              shadowRadius: 16.0,
+              elevation: 24,
+            }}
+            inputPadding={16}
+            onChangeText={e => GetSurname(e)}
+          />
+          <Fumi
+            label={'Email'}
+            iconClass={Icon}
+            iconName={'mail'}
+            iconColor={'#f95a25'}
+            iconSize={20}
+            iconWidth={40}
+            inputStyle={{color: 'black'}}
+            labelStyle={{color: 'grey'}}
+            style={{
+              width: 320,
+              backgroundColor: '#F9F9F3',
+              marginTop: 10,
+              opacity: 2,
+              shadowColor: '#000',
+              shadowOffset: {
+                width: 0,
+                height: 12,
+              },
+              shadowOpacity: 0.58,
+              shadowRadius: 16.0,
+              elevation: 24,
+            }}
+            inputPadding={16}
+            onChangeText={e => GetEmail(e)}
+          />
+          <Fumi
+            label={'Password'}
+            iconClass={Icon}
+            iconName={"key-outline"}
+            iconColor={'#f95a25'}
+            iconSize={20}
+            iconWidth={40}
+            inputStyle={{color: 'black'}}
+            labelStyle={{color: 'grey'}}
+            style={{
+              width: 320,
+              backgroundColor: '#F9F9F3',
+              marginTop: 10,
+              opacity: 2,
+              shadowColor: '#000',
+              shadowOffset: {
+                width: 0,
+                height: 12,
+              },
+              shadowOpacity: 0.58,
+              shadowRadius: 16.0,
+              elevation: 24,
+            }}
+            secureTextEntry={true}
+            inputPadding={16}
+            onChangeText={e => GetPassword(e)}
+          />
 
-          <TextInput
+          <BarPasswordStrengthDisplay password={data.password} width={310} />
+
+          <Fumi
+            label={'Confirm Password'}
+            iconClass={Icon}
+            iconName={"key-outline"}
+            iconColor={'#f95a25'}
+            iconSize={20}
+            iconWidth={40}
+            inputStyle={{color: 'black'}}
+            labelStyle={{color: 'grey'}}
+            style={{
+              width: 320,
+              backgroundColor: '#F9F9F3',
+              marginTop: 15,
+              opacity: 2,
+              shadowColor: '#000',
+              shadowOffset: {
+                width: 0,
+                height: 12,
+              },
+              shadowOpacity: 0.58,
+              shadowRadius: 16.0,
+              elevation: 24,
+            }}
+            inputPadding={16}
+            secureTextEntry={true}
+            onChangeText={e => GetConfirmPassword(e)}
+          />
+
+          <BarPasswordStrengthDisplay
+            password={data.ConfirmPassword}
+            width={310}
+          />
+
+          {/* <TextInput
             placeholder="Enter first name"
             style={style.input}
             placeholderTextColor={'#808080'}
@@ -187,6 +334,7 @@ const SignUpScreen = ({navigation}) => {
             placeholder="Enter surname"
             style={style.input}
             placeholderTextColor={'#808080'}
+            clearButtonMode="always"
             onChangeText={e => GetSurname(e)}></TextInput>
 
           <TextInput
@@ -210,7 +358,7 @@ const SignUpScreen = ({navigation}) => {
             secureTextEntry={true}
             placeholders
             onChangeText={e => GetConfirmPassword(e)}
-          />
+          /> */}
 
           {/* a button to render checkSignup function, which then add the user to  the database */}
           <TouchableOpacity style={style.button} onPress={() => checkSignUp()}>
