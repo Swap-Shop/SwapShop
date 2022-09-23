@@ -9,8 +9,9 @@ import {
   TextInput,
   Modal,
 } from 'react-native';
-import {useNavigation} from '@react-navigation/native';
 import auth from '@react-native-firebase/auth';
+import {Fumi} from 'react-native-textinput-effects';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const Password = ({navigation}) => {
   const [data, setData] = useState({
@@ -71,11 +72,11 @@ const Password = ({navigation}) => {
             alignSelf: 'center',
             justifyContent: 'center',
             alignItems: 'center',
-            backgroundColor: '#fff',
+            backgroundColor: '#F2F3F4',
             height: 370,
-            width: 350,
+            width: 370,
             borderRadius: 20,
-            marginTop: '50%',
+            marginTop: '40%',
             opacity: 5,
             shadowColor: '#000',
             shadowOffset: {
@@ -88,12 +89,39 @@ const Password = ({navigation}) => {
           }}>
           <Text style={style.heading}>Password Reset</Text>
 
-          <TextInput
+          <Fumi
+            label={'Password'}
+            iconClass={Icon}
+            iconName={'key-outline'}
+            iconColor={'#f95a25'}
+            iconSize={20}
+            iconWidth={40}
+            inputStyle={{color: 'black'}}
+            labelStyle={{color: 'grey'}}
+            style={{
+              width: 320,
+              backgroundColor: '#F9F9F3',
+              marginTop: 10,
+              opacity: 2,
+              shadowColor: '#000',
+              shadowOffset: {
+                width: 0,
+                height: 12,
+              },
+              shadowOpacity: 0.58,
+              shadowRadius: 16.0,
+              elevation: 24,
+            }}
+            inputPadding={16}
+            onChangeText={e => GetTextInput(e)} //   onChangeText={e => GetTextInput(e)}  cal
+          />
+
+          {/* <TextInput
             placeholder="Email"
             style={style.input}
             placeholderTextColor={'#808080'}
-            onChangeText={e => GetTextInput(e)} // called everytime the email is changed
-          />
+            onChangeText={e => GetTextInput(e)} //   onChangeText={e => GetTextInput(e)}  called everytime the email is changed
+          /> */}
           {/* a clickable text which  redirect user back to the login page */}
           <Text
             style={style.text2}

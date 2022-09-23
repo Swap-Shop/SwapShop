@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   ImageBackground,
   SafeAreaView,
@@ -8,8 +8,30 @@ import {
   Pressable,
   TouchableOpacity,
 } from 'react-native';
-
+import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
 const Settings = ({navigation}) => {
+  const [data, setData] = useState({
+    // variable declarations
+    username: '',
+    password: '',
+  });
+  //const navigation = useNavigation();
+  //const user = auth().currentUser; // code used to retrieve the user ID from firebase
+
+  const LoginFunction = () => {
+    // this function is used to communicate with the firebase authentication database
+
+    auth() // the auth() function is used to make a request to the firebase database.
+      .signInWithEmailAndPassword(
+        data.username.trim().toLowerCase(),
+        data.password.trim().toLowerCase(),
+      ) // the signin function is used to check if the given email and password is on the database
+      .then(() => {
+        console.log('Sign Successful');
+        navigation.navigate('Navigate'); // if the user details are in the database then the user is directed to the home page of the app.
+      });
+  };
   return (
     <ImageBackground
       source={require('../assets/Image/gradient.jpg')}
@@ -35,8 +57,7 @@ const Settings = ({navigation}) => {
           shadowRadius: 16.0,
           elevation: 24,
         }}>
-        <Image
-          source={require('../assets/Icon/no-photos.png')}
+        <TouchableOpacity
           style={{
             height: 150,
             width: 150,
@@ -45,7 +66,12 @@ const Settings = ({navigation}) => {
 
             borderColor: '#D3D3D3',
             backgroundColor: '#D3D3D3',
-          }}></Image>
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <Text style={{fontSize: 15}}>Upload Image</Text>
+        </TouchableOpacity>
+
         <Text style={{fontWeight: '900', fontSize: 35}}>User Name</Text>
         <TouchableOpacity onPress={() => navigation.navigate('edits')}>
           <Text

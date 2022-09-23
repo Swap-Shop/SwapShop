@@ -16,7 +16,8 @@ import storage from '@react-native-firebase/storage';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import ImagePicker from 'react-native-image-crop-picker';
-import {waitFor} from '@testing-library/react-native';
+
+
 
 const AddPage = ({navigation}) => {
   const [image, setImage] = useState(null);
@@ -147,7 +148,7 @@ const AddPage = ({navigation}) => {
           alignSelf: 'center',
           justifyContent: 'center',
           alignItems: 'center',
-          backgroundColor: '#fff',
+          backgroundColor: '#F2F3F4',
           height: 600,
           width: 350,
           borderRadius: 20,
@@ -162,6 +163,7 @@ const AddPage = ({navigation}) => {
           shadowRadius: 16.0,
           elevation: 24,
         }}>
+       
         <TextInput
           placeholder="Name of product"
           style={style.inputProductName}

@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import auth from '@react-native-firebase/auth';
-// import "fontsource-league-spartan";
+
 
 const Welcome_Page = ({navigation}) => {
   const [initializing, setInitializing] = useState(true); // variable declarations
@@ -45,7 +45,8 @@ const Welcome_Page = ({navigation}) => {
     <SafeAreaView style={{flex: 2}}>
       <ImageBackground
         source={require('../assets/Image/gradient.jpg')}
-        style={{flex: 1}}>
+        style={{flex: 1}}
+        blurRadius={2}>
         {/* a SwapShop logo */}
         <View style={{alignItems: 'center'}}>
           <Text
@@ -64,7 +65,7 @@ const Welcome_Page = ({navigation}) => {
             source={require('../assets/Image/image.png')}
           />
         </View>
-
+       
         <View style={{alignItems: 'center', marginHorizontal: 60}}>
           <TouchableOpacity
             style={{

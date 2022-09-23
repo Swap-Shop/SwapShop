@@ -12,7 +12,8 @@ import {
   LogBox,
   Modal,
 } from 'react-native';
-
+import Icon from 'react-native-vector-icons/Ionicons';
+import {Fumi} from 'react-native-textinput-effects';
 const LoginScreen = ({navigation}) => {
   LogBox.ignoreLogs(['Warning: ...']); // the two lines of code is used to hide error messages from react native
   LogBox.ignoreAllLogs(); //Ignore all log notifications
@@ -97,9 +98,9 @@ const LoginScreen = ({navigation}) => {
             alignSelf: 'center',
             justifyContent: 'center',
             alignItems: 'center',
-            backgroundColor: '#fff',
+            backgroundColor: '#F2F3F4',
             height: 490,
-            width: 350,
+            width: 370,
             borderRadius: 20,
             marginTop: '30%',
             opacity: 2,
@@ -114,7 +115,61 @@ const LoginScreen = ({navigation}) => {
           }}>
           <Text style={style.heading}>Login</Text>
 
-          <TextInput
+          <Fumi
+            label={'Email'}
+            iconClass={Icon}
+            iconName={'mail'}
+            iconColor={'#f95a25'}
+            iconSize={20}
+            iconWidth={40}
+            inputStyle={{color: 'black'}}
+            labelStyle={{color: 'grey'}}
+            style={{
+              width: 320,
+              backgroundColor: '#F9F9F3',
+              marginTop: 10,
+              opacity: 2,
+              shadowColor: '#000',
+              shadowOffset: {
+                width: 0,
+                height: 12,
+              },
+              shadowOpacity: 0.58,
+              shadowRadius: 16.0,
+              elevation: 24,
+            }}
+            inputPadding={16}
+            onChangeText={e => GetTextInput(e)} // called everytime the email is changed
+          />
+
+          <Fumi
+            label={'Password'}
+            iconClass={Icon}
+            iconName={'key-outline'}
+            iconColor={'#f95a25'}
+            iconSize={20}
+            iconWidth={40}
+            inputStyle={{color: 'black'}}
+            labelStyle={{color: 'grey'}}
+            style={{
+              width: 320,
+              backgroundColor: '#F9F9F3',
+              marginTop: 10,
+              opacity: 2,
+              shadowColor: '#000',
+              shadowOffset: {
+                width: 0,
+                height: 12,
+              },
+              shadowOpacity: 0.58,
+              shadowRadius: 16.0,
+              elevation: 24,
+            }}
+            inputPadding={16}
+            onChangeText={e => GetPasswordInput(e)} // called everytime the password is changed
+          />
+
+          {/* <TextInput
             placeholder="Email"
             style={style.input}
             placeholderTextColor={'#808080'}
@@ -127,10 +182,10 @@ const LoginScreen = ({navigation}) => {
             placeholderTextColor={'#808080'}
             secureTextEntry={true}
             onChangeText={e => GetPasswordInput(e)} // called everytime the password is changed
-          />
+          /> */}
 
           <Text
-            style={{color: '#2596be', marginLeft: 140}}
+            style={{color: '#2596be', marginLeft: 170, marginTop: 20}}
             onPress={() => navigation.navigate('password')}>
             Forgot Password?{' '}
           </Text>
@@ -193,6 +248,7 @@ const style = StyleSheet.create({
     fontWeight: 'bold',
     color: '#A9A9A9',
     marginLeft: 220,
+
     fontWeight: 'bold',
   },
   button: {

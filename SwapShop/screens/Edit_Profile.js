@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useState} from 'react';
+
 import {
   ImageBackground,
   SafeAreaView,
@@ -8,25 +9,101 @@ import {
   TextInput,
   TouchableOpacity,
 } from 'react-native';
+
+import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
+import {Akira} from 'react-native-textinput-effects';
 // import { Sae } from 'react-native-textinput-effects';
 
 const Edit = () => {
+  const [data, setData] = useState({
+    // variable declarations
+    firstname: '',
+    surname: '',
+    email: '',
+  });
+  //const navigation = useNavigation();
+
+  const GetFirstName = val => {
+    // this function is used to get the email that the user entered.
+    setData({
+      ...data,
+      firstname: val,
+    });
+  };
+
+  const GetSurname = val => {
+    // this function is used to get the email that the user entered.
+    setData({
+      ...data,
+      surname: val,
+    });
+  };
+
+  const GetEmail = val => {
+    // this function is used to get the email that the user entered.
+    setData({
+      ...data,
+      email: val,
+    });
+  };
+  const Update_User = (userId, firstname, surname, email) => {
+    firestore()
+      .collection('Users')
+      .doc(userId)
+      .update({
+        firstname: firstname,
+        surname: surname,
+        email: email,
+      })
+      .then(() => {
+        console.log('Profile Updated');
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+  const UpdateFunction = () => {
+    console.log('User account updated');
+    const user = auth().currentUser;
+    Update_User(
+      user.uid,
+      data.firstname.trim(),
+      data.surname.trim(),
+      data.email.trim().toLowerCase(),
+    );
+  };
+
+  const checkUpdate = () => {
+    // used to check if the user input is valid.
+    if (
+      data.firstname.length == 0 ||
+      data.surname.length == 0 ||
+      data.email.length == 0
+    ) {
+      alert('Please enter all fields!');
+    } else {
+      UpdateFunction(); // if no errors then a request will be made to the firebase database
+    }
+  };
+
   return (
     <ImageBackground
       source={require('../assets/Image/gradient.jpg')}
-      style={{flex: 1}}>
+      style={{flex: 1}}
+      blurRadius={0.5}>
       {/* <Modal visible={modalOpen} animationType="fade" transparent={true}> */}
       <SafeAreaView
         style={{
           alignSelf: 'center',
           //   justifyContent: 'center',
           alignItems: 'center',
-          backgroundColor: '#fff',
+          backgroundColor: '#F2F3F4',
           height: 560,
           width: 350,
           borderRadius: 20,
           opacity: 1,
-          marginTop: '15%',
+          marginTop: '20%',
           shadowColor: '#000',
           shadowOffset: {
             width: 0,
@@ -43,16 +120,42 @@ const Edit = () => {
             width: 150,
             borderRadius: 70,
             borderWidth: 1,
-
+            marginTop: 20,
             borderColor: '#D3D3D3',
             backgroundColor: '#D3D3D3',
           }}></Image>
 
-        <Text style={{fontSize: 20, fontWeight: 'normal', top: 10}}>
+        <Text style={{fontSize: 20, fontWeight: 'normal', top: 20}}>
           Account information
         </Text>
-
-        <View style={{flexDirection: 'row', marginTop: 20}}>
+        <Akira
+          label={'First Name'}
+          // this is used as active and passive border color
+          borderColor={'#A9A9A9'}
+          inputPadding={16}
+          labelHeight={24}
+          style={{width: 250, marginTop: 20}}
+          labelStyle={{color: 'grey'}}
+        />
+        <Akira
+          label={'Last Name'}
+          // this is used as active and passive border color
+          borderColor={'#A9A9A9'}
+          inputPadding={16}
+          labelHeight={24}
+          style={{width: 250}}
+          labelStyle={{color: 'grey'}}
+        />
+        <Akira
+          label={'Email'}
+          // this is used as active and passive border color
+          borderColor={'#A9A9A9'}
+          inputPadding={16}
+          labelHeight={24}
+          style={{width: 250}}
+          labelStyle={{color: 'grey'}}
+        />
+        {/* <View style={{flexDirection: 'row', marginTop: 40}}>
           <View style={{marginTop: 30, marginRight: 30}}>
             <Text
               style={{fontSize: 15, fontWeight: 'normal', color: '#333333'}}>
@@ -76,7 +179,8 @@ const Edit = () => {
 
                 elevation: 12,
               }}
-              placeholderTextColor={'#333333'}></TextInput>
+              placeholderTextColor={'#333333'}
+              onChangeText={e => GetFirstName(e)}></TextInput>
           </View>
         </View>
         <View style={{flexDirection: 'row', marginTop: 5}}>
@@ -103,11 +207,13 @@ const Edit = () => {
 
                 elevation: 12,
               }}
-              placeholderTextColor={'#333333'}></TextInput>
+              placeholderTextColor={'#333333'}
+              onChangeText={e => GetSurname(e)}></TextInput>
           </View>
         </View>
+       
         <View style={{flexDirection: 'row', marginTop: 5}}>
-          <View style={{marginTop: 30, marginRight: 32}}>
+          <View style={{marginTop: 30, marginRight: 10}}>
             <Text
               style={{fontSize: 15, fontWeight: 'normal', color: '#333333'}}>
               Email
@@ -130,36 +236,10 @@ const Edit = () => {
 
                 elevation: 12,
               }}
-              placeholderTextColor={'#333333'}></TextInput>
+              placeholderTextColor={'#333333'}
+              onChangeText={e => GetEmail(e)}></TextInput>
           </View>
-        </View>
-        <View style={{flexDirection: 'row', marginTop: 5}}>
-          <View style={{marginTop: 30, marginRight: 5}}>
-            <Text
-              style={{fontSize: 15, fontWeight: 'normal', color: '#333333'}}>
-              Password
-            </Text>
-          </View>
-          <View style={{marginLeft: 0}}>
-            <TextInput
-              style={{
-                backgroundColor: '#fff',
-                borderBottomWidth: 1,
-
-                width: 180,
-                shadowColor: '#000',
-                shadowOffset: {
-                  width: 0,
-                  height: 6,
-                },
-                shadowOpacity: 0.37,
-                shadowRadius: 7.49,
-
-                elevation: 12,
-              }}
-              placeholderTextColor={'#333333'}></TextInput>
-          </View>
-        </View>
+        </View> */}
 
         <TouchableOpacity
           style={{
@@ -177,8 +257,9 @@ const Edit = () => {
             marginHorizontal: 50,
             width: 250,
             marginVertical: 10,
-            marginTop: 50,
-          }}>
+            marginTop: 40,
+          }}
+          onPress={() => checkUpdate()}>
           <Text
             style={{
               textAlign: 'center',
