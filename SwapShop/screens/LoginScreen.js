@@ -170,21 +170,7 @@ const LoginScreen = ({navigation}) => {
             onChangeText={e => GetPasswordInput(e)} // called everytime the password is changed
           />
 
-          {/* <TextInput
-            placeholder="Email"
-            style={style.input}
-            placeholderTextColor={'#808080'}
-            onChangeText={e => GetTextInput(e)} // called everytime the email is changed
-          />
-
-          <TextInput
-            placeholder="Password"
-            style={style.input}
-            placeholderTextColor={'#808080'}
-            secureTextEntry={true}
-            onChangeText={e => GetPasswordInput(e)} // called everytime the password is changed
-          /> */}
-
+        
           <Text
             style={{color: '#2596be', marginLeft: 170, marginTop: 20}}
             onPress={() => navigation.navigate('password')}>

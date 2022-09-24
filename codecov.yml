@@ -1,6 +1,6 @@
-ignore:
-    - "**/forgot_password.js"
-    - "**/LoginScreen.js"
-    - "**/SignUpScreen.js"
+# ignore:
+#     - "**/forgot_password.js"
+#     - "**/LoginScreen.js"
+#     - "**/SignUpScreen.js"
     
     
