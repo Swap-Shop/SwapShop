@@ -9,6 +9,7 @@ import Navigation from '../screens/Navigation';
 import Password from '../screens/forgot_password';
 import AddPage from '../screens/add_page';
 import Edit from '../screens/Edit_Profile';
+import Settings from '../screens/settings_page';
 
 const Stack = createNativeStackNavigator();
 
@@ -23,6 +24,7 @@ const App = () => {
         <Stack.Screen name="Navigate" component={Navigation} />
         <Stack.Screen name="password" component={Password} />
         <Stack.Screen name="edits" component={Edit} />
+        <Stack.Screen name="setting" component={Settings} />
       </Stack.Navigator>
     </NavigationContainer>
   );

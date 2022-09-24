@@ -1,37 +1,55 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   ImageBackground,
   SafeAreaView,
   Text,
-  View,
-  Image,
-  Pressable,
+  FlatList,
   TouchableOpacity,
 } from 'react-native';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 const Settings = ({navigation}) => {
-  const [data, setData] = useState({
-    // variable declarations
-    username: '',
-    password: '',
-  });
-  //const navigation = useNavigation();
-  //const user = auth().currentUser; // code used to retrieve the user ID from firebase
+  // const user = auth().currentUser;
+  const [credential, setCredential] = useState(true);
+  const [loading, setLoading] = useState(true);
+ const signOut =() => {
+  auth()
+  .signOut()
+  .then(() => 
+  
+  console.log('User signed out!'));
+  navigation.navigate('Welcome');
+ }
+  useEffect(() => {
+    const list = [];
+    const Credentials = async () => {
+      try {
+       await firestore()
+          .collection('Users')
+          .get()
+          .then(querySnapshot => {
+            console.log('Total users: ', querySnapshot.size);
 
-  const LoginFunction = () => {
-    // this function is used to communicate with the firebase authentication database
+            querySnapshot.forEach(doc => {
+              list.push({
+                id: doc.id,
+                firstname: doc.data().firstname,
+                surname: doc.data().surname,
+              });
+              console.log('User ID: ', doc.id, doc.data());
+            });
+          });
+        setCredential(list);
+        // console.log('list', setCredential(list));
 
-    auth() // the auth() function is used to make a request to the firebase database.
-      .signInWithEmailAndPassword(
-        data.username.trim().toLowerCase(),
-        data.password.trim().toLowerCase(),
-      ) // the signin function is used to check if the given email and password is on the database
-      .then(() => {
-        console.log('Sign Successful');
-        navigation.navigate('Navigate'); // if the user details are in the database then the user is directed to the home page of the app.
-      });
-  };
+        if (loading) {
+          setLoading(false);
+        }
+        console.log('list', list);
+      } catch (error) {}
+    };
+    Credentials();
+  }, []);
   return (
     <ImageBackground
       source={require('../assets/Image/gradient.jpg')}
@@ -57,26 +75,53 @@ const Settings = ({navigation}) => {
           shadowRadius: 16.0,
           elevation: 24,
         }}>
-        <TouchableOpacity
-          style={{
-            height: 150,
-            width: 150,
-            borderRadius: 70,
-            borderWidth: 1,
+        <FlatList
+          data={credential}
+          renderItem={({item}) => (
+            <Text style={{fontWeight: '900', fontSize: 35, color: '#555555'}}>
+            {item.firstname} {item.surname}
+          </Text>
 
-            borderColor: '#D3D3D3',
-            backgroundColor: '#D3D3D3',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          <Text style={{fontSize: 15}}>Upload Image</Text>
-        </TouchableOpacity>
-
-        <Text style={{fontWeight: '900', fontSize: 35, color: '#555555' }}>User Name</Text>
+          )}
+          keyExtractor={item => item.id}
+          style={{marginTop:40}}
+        />
+       
         <TouchableOpacity onPress={() => navigation.navigate('edits')}>
           <Text
-            style={{marginBottom: 10, color: '#555555', fontWeight: 'bold'}}>
+            style={{marginBottom: 40,  color: '#2596be',fontWeight: 'bold'}}>
             Edit profile
+          </Text>
+          
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={{
+            backgroundColor: '#A9A9A9',
+            borderRadius: 10,
+            height: 50,
+            shadowColor: '#000',
+            shadowOffset: {
+              width: 0,
+              height: 12,
+            },
+            shadowOpacity: 0.58,
+            shadowRadius: 16.0,
+            elevation: 24,
+            marginHorizontal: 50,
+            width: 250,
+            marginVertical: 10,
+            marginTop: 10,
+          }}
+          onPress={() =>signOut()}>
+          <Text
+            style={{
+              textAlign: 'center',
+              color: 'white',
+              top: 10,
+              fontSize: 20,
+              fontWeight: '900',
+            }}>
+            Log Out
           </Text>
         </TouchableOpacity>
       </SafeAreaView>

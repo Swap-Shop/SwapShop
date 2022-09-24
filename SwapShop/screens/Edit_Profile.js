@@ -4,9 +4,6 @@ import {
   ImageBackground,
   SafeAreaView,
   Text,
-  View,
-  Image,
-  TextInput,
   TouchableOpacity,
 } from 'react-native';
 
@@ -14,8 +11,8 @@ import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import {Akira} from 'react-native-textinput-effects';
 // import { Sae } from 'react-native-textinput-effects';
-
-const Edit = () => {
+console.reportErrorAsExceptions = false;
+const Edit = ({navigation}) => {
   const [data, setData] = useState({
     // variable declarations
     firstname: '',
@@ -40,14 +37,22 @@ const Edit = () => {
     });
   };
 
-
-  const Update_User = (userId, firstname, surname) => {
+  const GetEmail = val => {
+    // this function is used to get the email that the user entered.
+    setData({
+      ...data,
+      email: val,
+    });
+  };
+  // await auth().currentUser.updateEmail('joe.bloggs@new-email.com')
+  const Update_User = (userId, firstname, surname, email) => {
     firestore()
       .collection('Users')
       .doc(userId)
       .update({
         firstname: firstname,
         surname: surname,
+        email: email,
       })
       .then(() => {
         console.log('Profile Updated');
@@ -63,7 +68,7 @@ const Edit = () => {
       user.uid,
       data.firstname.trim(),
       data.surname.trim(),
-  
+      data.email.trim().toLowerCase(),
     );
   };
 
@@ -71,12 +76,30 @@ const Edit = () => {
     // used to check if the user input is valid.
     if (
       data.firstname.length == 0 ||
-      data.surname.length == 0 
-          ) {
+      data.surname.length == 0 ||
+      data.email.length == 0
+    ) {
       alert('Please enter all fields!');
     } else {
+      UpdateEmail();
       UpdateFunction(); // if no errors then a request will be made to the firebase database
     }
+  };
+  const UpdateEmail = async () => {
+    // const user = auth().currentUser;
+    await auth()
+      .currentUser.updateEmail(data.email)
+      .then(() => {
+        // Email updated!
+        console.log('Email Updated');
+        // ...
+        navigation.navigate('setting');
+      })
+      .catch(error => {
+        // An error occurred
+        console.log(' An error occurred');
+        // ...
+      });
   };
 
   return (
@@ -84,11 +107,10 @@ const Edit = () => {
       source={require('../assets/Image/gradient.jpg')}
       style={{flex: 1}}
       blurRadius={0.5}>
-      {/* <Modal visible={modalOpen} animationType="fade" transparent={true}> */}
       <SafeAreaView
         style={{
           alignSelf: 'center',
-            justifyContent: 'center',
+          justifyContent: 'center',
           alignItems: 'center',
           backgroundColor: '#F2F3F4',
           height: 400,
@@ -105,9 +127,14 @@ const Edit = () => {
           shadowRadius: 16.0,
           elevation: 24,
         }}>
-      
-        <Text style={{fontSize: 20, fontWeight: 'normal', top: 20, color: '#555555'}}>
-         Edit Account information
+        <Text
+          style={{
+            fontSize: 20,
+            fontWeight: 'normal',
+            top: 20,
+            color: '#555555',
+          }}>
+          Edit Account information
         </Text>
         <Akira
           label={'First Name'}
@@ -117,7 +144,7 @@ const Edit = () => {
           labelHeight={24}
           style={{width: 250, marginTop: 20}}
           labelStyle={{color: 'grey'}}
-          onChangeText={e => GetFirstName(e)} 
+          onChangeText={e => GetFirstName(e)}
         />
         <Akira
           label={'Last Name'}
@@ -127,94 +154,18 @@ const Edit = () => {
           labelHeight={24}
           style={{width: 250}}
           labelStyle={{color: 'grey'}}
-          onChangeText={e => GetSurname(e)} 
+          onChangeText={e => GetSurname(e)}
         />
-       
-        {/* <View style={{flexDirection: 'row', marginTop: 40}}>
-          <View style={{marginTop: 30, marginRight: 30}}>
-            <Text
-              style={{fontSize: 15, fontWeight: 'normal', color: '#333333'}}>
-              Name
-            </Text>
-          </View>
-          <View style={{marginLeft: 0}}>
-            <TextInput
-              style={{
-                borderBottomWidth: 1,
-                backgroundColor: '#fff',
-
-                width: 180,
-                shadowColor: '#000',
-                shadowOffset: {
-                  width: 0,
-                  height: 6,
-                },
-                shadowOpacity: 0.37,
-                shadowRadius: 7.49,
-
-                elevation: 12,
-              }}
-              placeholderTextColor={'#333333'}
-              onChangeText={e => GetFirstName(e)}></TextInput>
-          </View>
-        </View>
-        <View style={{flexDirection: 'row', marginTop: 5}}>
-          <View style={{marginTop: 30, marginRight: 10}}>
-            <Text
-              style={{fontSize: 15, fontWeight: 'normal', color: '#333333'}}>
-              Surname
-            </Text>
-          </View>
-          <View style={{marginLeft: 0}}>
-            <TextInput
-              style={{
-                backgroundColor: '#fff',
-                borderBottomWidth: 1,
-                marginLeft: 0,
-                width: 180,
-                shadowColor: '#000',
-                shadowOffset: {
-                  width: 0,
-                  height: 6,
-                },
-                shadowOpacity: 0.37,
-                shadowRadius: 7.49,
-
-                elevation: 12,
-              }}
-              placeholderTextColor={'#333333'}
-              onChangeText={e => GetSurname(e)}></TextInput>
-          </View>
-        </View>
-       
-        <View style={{flexDirection: 'row', marginTop: 5}}>
-          <View style={{marginTop: 30, marginRight: 10}}>
-            <Text
-              style={{fontSize: 15, fontWeight: 'normal', color: '#333333'}}>
-              Email
-            </Text>
-          </View>
-          <View style={{marginLeft: 0}}>
-            <TextInput
-              style={{
-                backgroundColor: '#fff',
-                borderBottomWidth: 1,
-                marginLeft: 0,
-                width: 180,
-                shadowColor: '#000',
-                shadowOffset: {
-                  width: 0,
-                  height: 6,
-                },
-                shadowOpacity: 0.37,
-                shadowRadius: 7.49,
-
-                elevation: 12,
-              }}
-              placeholderTextColor={'#333333'}
-              onChangeText={e => GetEmail(e)}></TextInput>
-          </View>
-        </View> */}
+        <Akira
+          label={'Email'}
+          // this is used as active and passive border color
+          borderColor={'#A9A9A9'}
+          inputPadding={16}
+          labelHeight={24}
+          style={{width: 250}}
+          labelStyle={{color: 'grey'}}
+          onChangeText={e => GetEmail(e)}
+        />
 
         <TouchableOpacity
           style={{
