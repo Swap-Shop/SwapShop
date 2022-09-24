@@ -40,21 +40,14 @@ const Edit = () => {
     });
   };
 
-  const GetEmail = val => {
-    // this function is used to get the email that the user entered.
-    setData({
-      ...data,
-      email: val,
-    });
-  };
-  const Update_User = (userId, firstname, surname, email) => {
+
+  const Update_User = (userId, firstname, surname) => {
     firestore()
       .collection('Users')
       .doc(userId)
       .update({
         firstname: firstname,
         surname: surname,
-        email: email,
       })
       .then(() => {
         console.log('Profile Updated');
@@ -70,7 +63,7 @@ const Edit = () => {
       user.uid,
       data.firstname.trim(),
       data.surname.trim(),
-      data.email.trim().toLowerCase(),
+  
     );
   };
 
@@ -78,9 +71,8 @@ const Edit = () => {
     // used to check if the user input is valid.
     if (
       data.firstname.length == 0 ||
-      data.surname.length == 0 ||
-      data.email.length == 0
-    ) {
+      data.surname.length == 0 
+          ) {
       alert('Please enter all fields!');
     } else {
       UpdateFunction(); // if no errors then a request will be made to the firebase database
@@ -96,14 +88,14 @@ const Edit = () => {
       <SafeAreaView
         style={{
           alignSelf: 'center',
-          //   justifyContent: 'center',
+            justifyContent: 'center',
           alignItems: 'center',
           backgroundColor: '#F2F3F4',
-          height: 560,
+          height: 400,
           width: 350,
           borderRadius: 20,
           opacity: 1,
-          marginTop: '20%',
+          marginTop: '40%',
           shadowColor: '#000',
           shadowOffset: {
             width: 0,
@@ -113,20 +105,9 @@ const Edit = () => {
           shadowRadius: 16.0,
           elevation: 24,
         }}>
-        <Image
-          source={require('../assets/Icon/no-photos.png')}
-          style={{
-            height: 150,
-            width: 150,
-            borderRadius: 70,
-            borderWidth: 1,
-            marginTop: 20,
-            borderColor: '#D3D3D3',
-            backgroundColor: '#D3D3D3',
-          }}></Image>
-
+      
         <Text style={{fontSize: 20, fontWeight: 'normal', top: 20}}>
-          Account information
+         Edit Account information
         </Text>
         <Akira
           label={'First Name'}
@@ -136,6 +117,7 @@ const Edit = () => {
           labelHeight={24}
           style={{width: 250, marginTop: 20}}
           labelStyle={{color: 'grey'}}
+          onChangeText={e => GetFirstName(e)} 
         />
         <Akira
           label={'Last Name'}
@@ -145,16 +127,9 @@ const Edit = () => {
           labelHeight={24}
           style={{width: 250}}
           labelStyle={{color: 'grey'}}
+          onChangeText={e => GetSurname(e)} 
         />
-        <Akira
-          label={'Email'}
-          // this is used as active and passive border color
-          borderColor={'#A9A9A9'}
-          inputPadding={16}
-          labelHeight={24}
-          style={{width: 250}}
-          labelStyle={{color: 'grey'}}
-        />
+       
         {/* <View style={{flexDirection: 'row', marginTop: 40}}>
           <View style={{marginTop: 30, marginRight: 30}}>
             <Text
