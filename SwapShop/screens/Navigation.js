@@ -20,7 +20,7 @@ const Navigation = () => {
         tabBarShowLabel: false,
         tabBarStyle: {
           position: 'absolute',
-          height: 80,
+          height: 30,
           paddingBottom: 50,
           backgroundColor: '#D3D3D3',
           shadowColor: '#000',
@@ -40,7 +40,7 @@ const Navigation = () => {
         options={{
           tabBarIcon: ({focused}) => (
             <View
-              style={{alignItems: 'center', justifyContent: 'center', top: 10}}>
+              style={{alignItems: 'center', justifyContent: 'center', top: 15}}>
               <Image
                 source={require('../assets/Icon/icons8-home-64.png')}
                 resizeMode="contain"
@@ -52,16 +52,6 @@ const Navigation = () => {
                   fontWeight: 'bold',
                 }}
               />
-              <Text
-                style={{
-                  color: focused ? '#000' : '#000',
-                  fontSize: 12,
-                  top: 15,
-                  fontWeight: 'bold',
-                }}>
-                {' '}
-                Home{' '}
-              </Text>
             </View>
           ),
         }}
@@ -73,7 +63,7 @@ const Navigation = () => {
         options={{
           tabBarIcon: ({focused}) => (
             <View
-              style={{alignItems: 'center', justifyContent: 'center', top: 10}}>
+              style={{alignItems: 'center', justifyContent: 'center', top: 15}}>
               <Image
                 source={require('../assets/Icon/icons8-chating-64.png')}
                 resizeMode="contain"
@@ -85,15 +75,6 @@ const Navigation = () => {
                   fontWeight: 'bold',
                 }}
               />
-              <Text
-                style={{
-                  color: focused ? '#000' : '#000',
-                  fontSize: 12,
-                  top: 15,
-                  fontWeight: 'bold',
-                }}>
-                Messages
-              </Text>
             </View>
           ),
         }}
@@ -105,7 +86,7 @@ const Navigation = () => {
         options={{
           tabBarIcon: ({focused}) => (
             <View
-              style={{alignItems: 'center', justifyContent: 'center', top: 10}}>
+              style={{alignItems: 'center', justifyContent: 'center', top: 15}}>
               <Image
                 source={require('../assets/Icon/profile.png')}
                 resizeMode="contain"
@@ -117,15 +98,6 @@ const Navigation = () => {
                   fontWeight: 'bold',
                 }}
               />
-              <Text
-                style={{
-                  color: focused ? '#000' : '#000',
-                  fontSize: 12,
-                  top: 15,
-                  fontWeight: 'bold',
-                }}>
-                Profile
-              </Text>
             </View>
           ),
         }}

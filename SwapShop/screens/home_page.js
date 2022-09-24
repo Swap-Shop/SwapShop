@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   ImageBackground,
   SafeAreaView,
@@ -6,6 +6,7 @@ import {
   View,
   Image,
   FlatList,
+  Alert,
   TouchableOpacity,
 } from 'react-native';
 import PostCard from '../components/PostCard';
@@ -15,51 +16,109 @@ import {
   AddPageButton,
 } from '../styles/HomePageStyle';
 import Icon from 'react-native-vector-icons/Ionicons';
-
-const Posts = [
-  {
-    id: '1',
-    userName: 'Jenny Doe',
-    userImg: require('../assets/Image/userProfilePicture.jpg'),
-    postTime: '4 mins ago',
-    post: 'Hey there, this is my test for a post of my social app in React Native.',
-    postImg: require('../assets/Image/post-img-1.jpg'),
-  },
-  {
-    id: '2',
-    userName: 'John Doe',
-    userImg: require('../assets/Image/userProfilePicture2.jpg'),
-    postTime: '2 hours ago',
-    post: 'Hey there, this is my test for a post of my social app in React Native.',
-    postImg: require('../assets/Image/post-img-4.jpg'),
-  },
-  {
-    id: '3',
-    userName: 'Ken William',
-    userImg: require('../assets/Image/userProfilePicture.jpg'),
-    postTime: '1 hours ago',
-    post: 'Hey there, this is my test for a post of my social app in React Native.',
-    postImg: require('../assets/Image/post-img-1.jpg'),
-  },
-  {
-    id: '4',
-    userName: 'Selina Paul',
-    userImg: require('../assets/Image/userProfilePicture.jpg'),
-    postTime: '1 day ago',
-    post: 'Hey there, this is my test for a post of my social app in React Native.',
-    postImg: require('../assets/Image/post-img-1.jpg'),
-  },
-  {
-    id: '5',
-    userName: 'Caribbean Joe',
-    userImg: require('../assets/Image/userProfilePicture3.jpg'),
-    postTime: '7 day ago',
-    post: 'Hey there, this is my test for a post of my social app in React Native.',
-    postImg: require('../assets/Image/post-img-3.jpg'),
-  },
-];
+import firestore from '@react-native-firebase/firestore';
+import storage from '@react-native-firebase/storage';
 
 const Home = ({navigation}) => {
+  const [posts, setPosts] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [data, setData] = useState({
+    // variable declarations
+    refreshing: false
+  });
+  const  list = [];
+
+  const handleRefresh = () => {
+    data.refreshing = true;
+    fetchPosts();
+  };
+
+  const handleDelete = (postID) => {
+    Alert.alert(
+      'Delete post',
+      'Are you sure?',
+      [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed!'),
+          style: 'cancel',
+        },
+        {
+          text: 'Confirm',
+          onPress: () => deletePost(postID),
+        },
+      ],
+      {cancelable: false},
+    );
+  };
+
+  const deletePost = (postID) => {
+    firestore()
+    .collection('Products')
+    .doc(postID)
+    .get()
+    .then((doc) => {
+      const postImg = doc.data().Product_URL;
+
+      if(postImg.length == 0){
+        deleteFirestoreData(postID);
+      }
+
+      let imageRef = storage().refFromURL(postImg);
+
+      imageRef
+      .delete()
+      .then(() => {
+        console.log('Image deleted');
+        deleteFirestoreData(postID);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+    })
+  }
+
+  const deleteFirestoreData = (postID) => {
+    firestore()
+      .collection('Products')
+      .doc(postID)
+      .delete()
+      .then(() => {
+        Alert.alert(
+          'Post deleted!',
+          'Your post has been deleted successfully!',
+        );
+        fetchPosts();
+      })
+      .catch((e) => console.log(e));
+  };
+
+  const fetchPosts = async() =>{
+    await firestore()
+    .collection('Products')
+    .orderBy('Post_Time','desc')
+    .get()
+    .then(querySnapshot => {
+    querySnapshot.forEach(doc => {
+    list.push({
+      id: doc.id,
+      userID: doc.data().userID,
+      userName: doc.data().firstname + " " + doc.data().surname,
+      userImg: require('../assets/Image/userProfilePicture3.jpg'),
+      postTime: doc.data().Post_Time,
+      post: doc.data().Product_Description,
+      postImg: doc.data().Product_URL,
+    });
+  });
+  data.refreshing = false;
+});
+setPosts(list);
+}
+
+  useEffect(() => {
+    fetchPosts();
+  }, [])
+
   return (
     <Container>
       <SafeAreaView style={{height: 30}}>
@@ -80,8 +139,13 @@ const Home = ({navigation}) => {
         </TouchableOpacity>
       </SafeAreaView>
       <FlatList
-        data={Posts}
-        renderItem={({item}) => <PostCard item={item} />}
+        data={posts}
+        refreshing = {data.refreshing}
+        onRefresh = {handleRefresh}
+        renderItem={({item}) => <PostCard 
+        item={item}
+        onDelete={handleDelete}
+        />}
         keyExtractor={item => item.id}
       />
     </Container>
