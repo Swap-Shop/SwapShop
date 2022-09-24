@@ -72,10 +72,10 @@ const Settings = ({navigation}) => {
           <Text style={{fontSize: 15}}>Upload Image</Text>
         </TouchableOpacity>
 
-        <Text style={{fontWeight: '900', fontSize: 35}}>User Name</Text>
+        <Text style={{fontWeight: '900', fontSize: 35, color: '#555555' }}>User Name</Text>
         <TouchableOpacity onPress={() => navigation.navigate('edits')}>
           <Text
-            style={{marginBottom: 10, color: '	#555555', fontWeight: 'bold'}}>
+            style={{marginBottom: 10, color: '#555555', fontWeight: 'bold'}}>
             Edit profile
           </Text>
         </TouchableOpacity>

@@ -106,7 +106,7 @@ const Edit = () => {
           elevation: 24,
         }}>
       
-        <Text style={{fontSize: 20, fontWeight: 'normal', top: 20}}>
+        <Text style={{fontSize: 20, fontWeight: 'normal', top: 20, color: '#555555'}}>
          Edit Account information
         </Text>
         <Akira

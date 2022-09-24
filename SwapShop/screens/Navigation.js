@@ -6,8 +6,8 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {ImageBackground, SafeAreaView, Text, View, Image} from 'react-native';
 
 import Home from './home_page';
-import Messages from './messagesPage';
-import Settings from './settings_page';
+import Messages from './MessagesPage';
+import Settings from './Settings_page';
 
 const Tab = createBottomTabNavigator();
 const Navigation = () => {
