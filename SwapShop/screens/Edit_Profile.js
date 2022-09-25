@@ -98,6 +98,7 @@ const Edit = ({navigation}) => {
       .catch(error => {
         // An error occurred
         console.log(' An error occurred');
+        console.log(error);
         // ...
       });
   };
