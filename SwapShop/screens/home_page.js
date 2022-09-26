@@ -137,6 +137,11 @@ setPosts(list);
           onPress={() => navigation.navigate('AddPage')}>
           <Icon name="add-circle-outline" size={30} color={'#000000'} />
         </TouchableOpacity>
+        <TouchableOpacity
+          style={{marginRight: 310, bottom: 90, fontWeight: 'bold'}}
+          onPress={() => navigation.navigate('SearchPage')}>
+          <Icon name="search-circle-outline" size={30} color={'#000000'} />
+        </TouchableOpacity>
       </SafeAreaView>
       <FlatList
         data={posts}

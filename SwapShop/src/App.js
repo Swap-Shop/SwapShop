@@ -9,7 +9,8 @@ import Navigation from '../screens/Navigation';
 import Password from '../screens/forgot_password';
 import AddPage from '../screens/add_page';
 import Edit from '../screens/Edit_Profile';
-import Settings from '../screens/settings_page';
+import Settings from '../screens/Settings_page';
+import SearchPage from '../screens/SearchPage';
 
 const Stack = createNativeStackNavigator();
 
@@ -21,6 +22,7 @@ const App = () => {
         <Stack.Screen name="Signup" component={SignUpScreen} />
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="AddPage" component={AddPage} />
+        <Stack.Screen name="SearchPage" component={SearchPage} />
         <Stack.Screen name="Navigate" component={Navigation} />
         <Stack.Screen name="password" component={Password} />
         <Stack.Screen name="edits" component={Edit} />
