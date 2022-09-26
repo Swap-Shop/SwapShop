@@ -4,28 +4,31 @@ import {
   SafeAreaView,
   Text,
   FlatList,
+  View,
+  Image,
   TouchableOpacity,
 } from 'react-native';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
+import ImagePicker from 'react-native-image-crop-picker';
+
 const Settings = ({navigation}) => {
   // const user = auth().currentUser;
   const [credential, setCredential] = useState(true);
   const [loading, setLoading] = useState(true);
- const signOut =() => {
-  auth()
-  .signOut()
-  .then(() => 
-  
-  console.log('User signed out!'));
-  navigation.navigate('Welcome');
- }
+  const signOut = () => {
+    auth()
+      .signOut()
+      .then(() => console.log('User signed out!'));
+    navigation.navigate('Welcome');
+  };
+
   useEffect(() => {
     const list = [];
     const Credentials = async () => {
       try {
-       await firestore()
-          .collection('Users')
+        await firestore()
+          .collection('Profile')
           .get()
           .then(querySnapshot => {
             console.log('Total users: ', querySnapshot.size);
@@ -33,8 +36,7 @@ const Settings = ({navigation}) => {
             querySnapshot.forEach(doc => {
               list.push({
                 id: doc.id,
-                firstname: doc.data().firstname,
-                surname: doc.data().surname,
+                Profile_URL: url,
               });
               console.log('User ID: ', doc.id, doc.data());
             });
@@ -61,7 +63,7 @@ const Settings = ({navigation}) => {
           justifyContent: 'center',
           alignItems: 'center',
           backgroundColor: '#fff',
-          height: 250,
+          height: 350,
           width: 350,
           borderRadius: 20,
           marginTop: '50%',
@@ -75,24 +77,70 @@ const Settings = ({navigation}) => {
           shadowRadius: 16.0,
           elevation: 24,
         }}>
-        <FlatList
+        {/* <FlatList
           data={credential}
           renderItem={({item}) => (
-            <Text style={{fontWeight: '900', fontSize: 35, color: '#555555'}}>
-            {item.firstname} {item.surname}
-          </Text>
-
+            <View
+              style={{
+                borderColor: '#A9A9A9',
+                borderRadius: 60,
+                borderWidth: 2,
+                width: 120,
+                height: 120,
+                backgroundColor: '#A9A9A9',
+                shadowColor: '#000',
+                shadowOffset: {
+                  width: 0,
+                  height: 12,
+                },
+                shadowOpacity: 0.58,
+                shadowRadius: 16.0,
+                elevation: 24,
+                // alignContent:'center',
+                // justifyContent:'center',
+                // alignSelf: 'center',
+              }}>
+              <Image source={item.Profile_URL}></Image>
+            </View>
           )}
           keyExtractor={item => item.id}
-          style={{marginTop:40}}
-        />
-       
+          style={{marginTop: 40}}
+        /> */}
+
+        <View
+          style={{
+            borderColor: '#A9A9A9',
+            borderRadius: 60,
+            borderWidth: 2,
+            width: 120,
+            height: 120,
+            backgroundColor: '#A9A9A9',
+            shadowColor: '#000',
+            shadowOffset: {
+              width: 0,
+              height: 12,
+            },
+            shadowOpacity: 0.58,
+            shadowRadius: 16.0,
+            elevation: 24,
+            // alignContent:'center',
+            // justifyContent:'center',
+            // alignSelf: 'center',
+          }}>
+          <Image source={{credential}}></Image>
+          {/* <Text>{item.Profile_URL}</Text> */}
+        </View>
+
         <TouchableOpacity onPress={() => navigation.navigate('edits')}>
           <Text
-            style={{marginBottom: 40,  color: '#2596be',fontWeight: 'bold'}}>
+            style={{
+              marginBottom: 20,
+              top: 10,
+              color: '#2596be',
+              fontWeight: 'bold',
+            }}>
             Edit profile
           </Text>
-          
         </TouchableOpacity>
         <TouchableOpacity
           style={{
@@ -112,7 +160,7 @@ const Settings = ({navigation}) => {
             marginVertical: 10,
             marginTop: 10,
           }}
-          onPress={() =>signOut()}>
+          onPress={() => signOut()}>
           <Text
             style={{
               textAlign: 'center',
