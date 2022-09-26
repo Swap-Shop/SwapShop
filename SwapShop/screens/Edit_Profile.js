@@ -9,9 +9,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import ImagePicker from 'react-native-image-crop-picker';
-import {
-  StatusWrapper
-} from '../styles/AddPageStyles';
+import {StatusWrapper} from '../styles/AddPageStyles';
 
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
@@ -89,17 +87,14 @@ const Edit = ({navigation}) => {
       .catch(error => {
         console.log(error);
       });
-
-     
   };
-  const UpdateFunction = async (url) => {
-  await  auth()
-    .signInWithEmailAndPassword(data.old_email.trim().toLowerCase(), data.password.trim().toLowerCase())
-    .then(function (userCredential) {
-      userCredential.user.updateEmail(data.new_email);
+  const UpdateFunction = async url => {
+    const user = auth().currentUser;
 
-      console.log('User account updated');
-      const user = auth().currentUser;
+    await auth()
+  
+    .user.updateEmail(data.new_email).then(() => {
+      // Email updated!
       Update_User(
         user.uid,
         data.firstname.trim(),
@@ -110,50 +105,36 @@ const Edit = ({navigation}) => {
       alert('Success!, account has been updated');
       console.log('Email Updated');
       navigation.navigate('setting');
-    })
-    .catch(error => {
-      // An error occurred
-      if (error.code === 'auth/wrong-password') {
-        console.log('password is invalid for the given email');
-        alert('Incorrect password');
-      }
-      if (error.code === 'auth/user-not-found') {
-        console.log('there is no user corresponding to the given email');
-        alert(
-          'Oops! ¯_(ツ)_/¯......Account does not exist. Sign Up to start using SwapShop',
-        );
-      }
-      if (error.code === 'auth/invalid-email') {
-        console.log('Email not in the right format');
-        alert('Please enter a valid email');
-      }
-      // console.log(' An error occurred');
-      console.log(error);
       // ...
+    }).catch((error) => {
+      // An error occurred
+      // ...
+      console.log(error);
     });
-    auth()
-      .signOut()
-
-   
   };
 
-  const checkUpdate = async() => {
+  const checkUpdate = async () => {
     // used to check if the user input is valid.
-    if ( data.firstname.length == 0 || data.surname.length == 0 || data.old_email.length == 0 || data.new_email.length == 0 || data.password.length == 0){}
-    else if (data.password.length < 6) {
-      alert('Password should be 6 or more characters'); }
-      else if (image == null) {
-        Alert.alert(
-          'Oops! ¯_(ツ)_/¯......',
-          'Please provide an image of the product',
-        );}
-      else {
+    if (
+      data.firstname.length == 0 ||
+      data.surname.length == 0 ||
+      data.old_email.length == 0 ||
+      data.new_email.length == 0 ||
+      data.password.length == 0
+    ) {
+    } else if (data.password.length < 6) {
+      alert('Password should be 6 or more characters');
+    } else if (image == null) {
+      Alert.alert(
+        'Oops! ¯_(ツ)_/¯......',
+        'Please provide an image of the product',
+      );
+    } else {
       // UpdateEmail();
       const url = await uploadImage();
       UpdateFunction(url); // if no errors then a request will be made to the firebase database
     }
   };
- 
 
   const TakePhotoFromGallery = () => {
     ImagePicker.openPicker({
@@ -216,19 +197,15 @@ const Edit = ({navigation}) => {
 
     return downloadURL;
   };
-  const SubmitProfilePicture = async (url) => {
+  const SubmitProfilePicture = async url => {
     firestore()
       .collection('Profile')
       .add({
         userID: data.userId,
         Profile_URL: url,
-      
       })
       .then(() => {
-       
-        Alert.alert(
-        'Your picture has been added Successfully!');
-      
+        Alert.alert('Your picture has been added Successfully!');
       })
       .catch(error => {
         console.log(error);
@@ -290,12 +267,31 @@ const Edit = ({navigation}) => {
             // justifyContent:'center',
             // alignSelf: 'center',
           }}>
-          <TouchableOpacity style={{marginLeft: 32, marginTop: 20}}  onPress={() => TakePhotoFromCamera()}>
-            <Text style={{fontSize: 12,fontStyle:'normal',fontWeight: '900'}}>Camera</Text>
+          <TouchableOpacity
+            style={{marginLeft: 32, marginTop: 20}}
+            onPress={() => TakePhotoFromCamera()}>
+            <Text
+              style={{fontSize: 12, fontStyle: 'normal', fontWeight: '900'}}>
+              Camera
+            </Text>
           </TouchableOpacity>
-          <Text style={{marginLeft: 0, marginTop: 10,fontSize: 12,fontStyle:'normal',fontWeight: '900'}}>--------- or --------</Text>
-          <TouchableOpacity style={{marginLeft: 30, marginTop: 0}}   onPress={() => TakePhotoFromGallery()}>
-            <Text style={{fontSize: 12,fontStyle:'normal',fontWeight: '900'}}>Upload from gallery</Text>
+          <Text
+            style={{
+              marginLeft: 0,
+              marginTop: 10,
+              fontSize: 12,
+              fontStyle: 'normal',
+              fontWeight: '900',
+            }}>
+            --------- or --------
+          </Text>
+          <TouchableOpacity
+            style={{marginLeft: 30, marginTop: 0}}
+            onPress={() => TakePhotoFromGallery()}>
+            <Text
+              style={{fontSize: 12, fontStyle: 'normal', fontWeight: '900'}}>
+              Upload from gallery
+            </Text>
           </TouchableOpacity>
         </View>
         <Akira
@@ -348,42 +344,45 @@ const Edit = ({navigation}) => {
           labelStyle={{color: 'grey'}}
           onChangeText={e => GetNewEmail(e)}
         />
- {uploading ? (
+        {uploading ? (
           <StatusWrapper>
-            <Text style={{fontWeight: 'normal', color: '#000000'}}>{transferred} % Completed!</Text>
+            <Text style={{fontWeight: 'normal', color: '#000000'}}>
+              {transferred} % Completed!
+            </Text>
             <ActivityIndicator size="large" color="#333333" />
           </StatusWrapper>
-        ) :(<TouchableOpacity
-          style={{
-            backgroundColor: '#A9A9A9',
-            borderRadius: 10,
-            height: 50,
-            shadowColor: '#000',
-            shadowOffset: {
-              width: 0,
-              height: 12,
-            },
-            shadowOpacity: 0.58,
-            shadowRadius: 16.0,
-            elevation: 24,
-            marginHorizontal: 50,
-            width: 250,
-            marginVertical: 10,
-            marginTop: 40,
-          }}
-          onPress={() => checkUpdate()}>
-          <Text
+        ) : (
+          <TouchableOpacity
             style={{
-              textAlign: 'center',
-              color: 'white',
-              top: 10,
-              fontSize: 20,
-              fontWeight: '900',
-            }}>
-            Update
-          </Text>
-        </TouchableOpacity>)}
-        
+              backgroundColor: '#A9A9A9',
+              borderRadius: 10,
+              height: 50,
+              shadowColor: '#000',
+              shadowOffset: {
+                width: 0,
+                height: 12,
+              },
+              shadowOpacity: 0.58,
+              shadowRadius: 16.0,
+              elevation: 24,
+              marginHorizontal: 50,
+              width: 250,
+              marginVertical: 10,
+              marginTop: 40,
+            }}
+            onPress={() => checkUpdate()}>
+            <Text
+              style={{
+                textAlign: 'center',
+                color: 'white',
+                top: 10,
+                fontSize: 20,
+                fontWeight: '900',
+              }}>
+              Update
+            </Text>
+          </TouchableOpacity>
+        )}
       </SafeAreaView>
     </ImageBackground>
   );

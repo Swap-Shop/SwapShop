@@ -39,8 +39,6 @@
     "@firebase/rules-unit-testing": "^2.0.4",
     "@react-native-community/eslint-config": "^2.0.0",
     "@testing-library/react-native": "^11.0.0",
-    "@types/jest": "^29.0.3",
-    "@types/mocha": "^9.1.1",
     "babel-jest": "^26.6.3",
     "eslint": "^7.32.0",
     "firestore-jest-mock": "^0.19.0",
