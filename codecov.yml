@@ -2,5 +2,6 @@ ignore:
     - "**/forgot_password.js"
     - "**/LoginScreen.js"
     - "**/SignUpScreen.js"
+    -"**/Welcome_Page"
     
     

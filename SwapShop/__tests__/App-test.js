@@ -3,11 +3,11 @@ import LoginScreen from "../screens/LoginScreen";
 import Welcome_Page from "../screens/Welcome_Page";
 import SignUpScreen from "../screens/SignUpScreen";
 import ForgetPasswordPage from "../screens/forgot_password";
+import Settings from "../screens/settings_page";
 import { Alert } from 'react-native';
 import { render, screen, renderHook, fireEvent} from '@testing-library/react-native';
-import firebase from "@react-native-firebase/app";
+// import firebase from "@react-native-firebase/app";
 import auth from "@react-native-firebase/auth";
-
 
 
 
@@ -20,6 +20,10 @@ test('Welcome page should render correctly', () => {
   
 
 });
+test('renders the correct welcome text', () => {
+  const {queryByText} = render(<Welcome_Page/>)
+  expect(queryByText("Welcome")).not.toBeNull();
+})
 // the following lines are used to check if all the pages are rendering properly 
 
 test('welcome page should go to signUp page', () =>{
@@ -34,12 +38,26 @@ test('welcome page should go to signUp page', () =>{
   expect(navigation.navigate).toHaveBeenCalledWith("Signup");
 });
 
+test('welcome page should go to signUp page', () =>{
+  const navigation = {navigate:()=>{}}
+  spyOn(navigation, 'navigate');
+
+  const page = render(<Settings navigation={navigation}/>)
+  const signUpButton = page.getByTestId('editpage');
+
+  fireEvent.press(signUpButton);
+
+  expect(navigation.navigate).toHaveBeenCalledWith("edits");
+});
+
 //login page tests
 test('Login page should render correctly', async() => { 
   
   const page = render(<LoginScreen/>);
   
 });
+
+
 
 // test("Allowed to login", async() =>{
 //   const user = await auth() .signInWithEmailAndPassword('swap@gmail.com', 'Swapshop14/*');
@@ -98,20 +116,4 @@ test('link back to login page from password reset', () =>{
 
   expect(navigation.navigate).toHaveBeenCalledWith("Login");
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
