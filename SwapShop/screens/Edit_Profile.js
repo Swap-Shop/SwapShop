@@ -92,24 +92,42 @@ const Edit = ({navigation}) => {
     const user = auth().currentUser;
 
     await auth()
-  
-    .user.updateEmail(data.new_email).then(() => {
-      // Email updated!
-      Update_User(
-        user.uid,
-        data.firstname.trim(),
-        data.surname.trim(),
-        data.new_email.trim().toLowerCase(),
-      );
-      SubmitProfilePicture(url);
-      alert('Success!, account has been updated');
-      console.log('Email Updated');
-      navigation.navigate('setting');
-      // ...
-    }).catch((error) => {
-      // An error occurred
-      // ...
-      console.log(error);
+    .signInWithEmailAndPassword(data.old_email.trim().toLowerCase(), data.password.trim().toLowerCase())
+    .then(function(userCredential) {
+        userCredential.user.updateEmail(data.new_email.trim().toLowerCase())
+
+        Update_User(
+          user.uid,
+          data.firstname.trim(),
+          data.surname.trim(),
+          data.new_email.trim().toLowerCase(),
+        );
+        SubmitProfilePicture(url);
+      
+        console.log('Email Updated');
+        navigation.navigate('setting');
+        alert('Success!, account has been updated');
+    })
+  .catch((error) => {
+      // these are the various errors that will be displayed if they is a fault with the user input.
+      if (error.code === 'auth/wrong-password') {
+        console.log('password is invalid for the given email');
+        alert('Incorrect password');
+      }
+
+      if (error.code === 'auth/user-not-found') {
+        console.log('there is no user corresponding to the given email');
+        alert(
+          'Oops! ¯_(ツ)_/¯......Account does not exist. Sign Up to start using SwapShop',
+        );
+      }
+
+      if (error.code === 'auth/invalid-email') {
+        console.log('Email not in the right format');
+        alert('Please enter a valid email');
+      }
+
+      console.error(error);
     });
   };
 
