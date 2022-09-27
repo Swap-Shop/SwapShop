@@ -3,7 +3,7 @@ import LoginScreen from "../screens/LoginScreen";
 import Welcome_Page from "../screens/Welcome_Page";
 import SignUpScreen from "../screens/SignUpScreen";
 import ForgetPasswordPage from "../screens/forgot_password";
-import Settings from "../screens/settings_page";
+// import Settings from "../screens/settings_page";
 import { Alert } from 'react-native';
 import { render, screen, renderHook, fireEvent} from '@testing-library/react-native';
 // import firebase from "@react-native-firebase/app";
