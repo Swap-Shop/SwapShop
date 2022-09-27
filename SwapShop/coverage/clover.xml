@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1664237971700" clover="3.2.0">
-  <project timestamp="1664237971700" name="All files">
-    <metrics statements="130" coveredstatements="36" conditionals="42" coveredconditionals="0" methods="47" coveredmethods="6" elements="219" coveredelements="42" complexity="0" loc="130" ncloc="130" packages="2" files="5" classes="5"/>
+<coverage generated="1664233213034" clover="3.2.0">
+  <project timestamp="1664233213034" name="All files">
+    <metrics statements="131" coveredstatements="45" conditionals="42" coveredconditionals="0" methods="47" coveredmethods="9" elements="220" coveredelements="54" complexity="0" loc="131" ncloc="131" packages="2" files="6" classes="6"/>
     <package name="assets.Image">
-      <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="gradient.jpg" path="C:\Users\Surface\Project\SwapShop\SwapShop\assets\Image\gradient.jpg">
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="1" count="1" type="stmt"/>
+      </file>
+      <file name="image.png" path="C:\Users\Surface\Project\SwapShop\SwapShop\assets\Image\image.png">
         <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="1" count="1" type="stmt"/>
       </file>
     </package>
     <package name="screens">
-      <metrics statements="129" coveredstatements="35" conditionals="42" coveredconditionals="0" methods="47" coveredmethods="6"/>
+      <metrics statements="129" coveredstatements="43" conditionals="42" coveredconditionals="0" methods="47" coveredmethods="9"/>
       <file name="LoginScreen.js" path="C:\Users\Surface\Project\SwapShop\SwapShop\screens\LoginScreen.js">
         <metrics statements="35" coveredstatements="11" conditionals="12" coveredconditionals="0" methods="12" coveredmethods="2"/>
         <line num="17" count="1" type="stmt"/>
@@ -105,16 +109,16 @@
         <line num="381" count="1" type="stmt"/>
       </file>
       <file name="Welcome_Page.js" path="C:\Users\Surface\Project\SwapShop\SwapShop\screens\Welcome_Page.js">
-        <metrics statements="19" coveredstatements="1" conditionals="8" coveredconditionals="0" methods="6" coveredmethods="0"/>
+        <metrics statements="19" coveredstatements="9" conditionals="8" coveredconditionals="0" methods="6" coveredmethods="3"/>
         <line num="13" count="1" type="stmt"/>
-        <line num="14" count="0" type="stmt"/>
-        <line num="15" count="0" type="stmt"/>
+        <line num="14" count="2" type="stmt"/>
+        <line num="15" count="2" type="stmt"/>
         <line num="19" count="0" type="stmt"/>
         <line num="20" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="23" count="0" type="stmt"/>
-        <line num="25" count="0" type="stmt"/>
-        <line num="26" count="0" type="stmt"/>
-        <line num="29" count="0" type="stmt"/>
+        <line num="23" count="2" type="stmt"/>
+        <line num="25" count="2" type="stmt"/>
+        <line num="26" count="2" type="stmt"/>
+        <line num="29" count="2" type="stmt"/>
         <line num="30" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="31" count="0" type="stmt"/>
         <line num="34" count="0" type="cond" truecount="0" falsecount="2"/>
@@ -122,8 +126,8 @@
         <line num="39" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="40" count="0" type="stmt"/>
         <line num="41" count="0" type="stmt"/>
-        <line num="44" count="0" type="stmt"/>
-        <line num="88" count="0" type="stmt"/>
+        <line num="44" count="2" type="stmt"/>
+        <line num="88" count="1" type="stmt"/>
         <line num="121" count="0" type="stmt"/>
       </file>
       <file name="forgot_password.js" path="C:\Users\Surface\Project\SwapShop\SwapShop\screens\forgot_password.js">

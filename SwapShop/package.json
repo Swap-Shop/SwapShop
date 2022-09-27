@@ -10,7 +10,6 @@
     "lint": "eslint .",
     "build:ios": "react-native bundle --entry-file='index.js' --bundle-output='./ios/main.jsbundle' --dev=false --platform='ios'"
   },
- 
   "dependencies": {
     "@fontsource/league-spartan": "^4.5.11",
     "@react-native-firebase/app": "^15.6.0",
