@@ -38,17 +38,17 @@ test('welcome page should go to signUp page', () =>{
   expect(navigation.navigate).toHaveBeenCalledWith("Signup");
 });
 
-test('welcome page should go to signUp page', () =>{
-  const navigation = {navigate:()=>{}}
-  spyOn(navigation, 'navigate');
+// test('welcome page should go to signUp page', () =>{
+//   const navigation = {navigate:()=>{}}
+//   spyOn(navigation, 'navigate');
 
-  const page = render(<Settings navigation={navigation}/>)
-  const signUpButton = page.getByTestId('editpage');
+//   const page = render(<Settings navigation={navigation}/>)
+//   const signUpButton = page.getByTestId('editpage');
 
-  fireEvent.press(signUpButton);
+//   fireEvent.press(signUpButton);
 
-  expect(navigation.navigate).toHaveBeenCalledWith("edits");
-});
+//   expect(navigation.navigate).toHaveBeenCalledWith("edits");
+// });
 
 //login page tests
 test('Login page should render correctly', async() => { 
