@@ -11,6 +11,7 @@ import AddPage from '../screens/add_page';
 import Edit from '../screens/Edit_Profile';
 import Settings from '../screens/Settings_page';
 import SearchPage from '../screens/SearchPage';
+import EditEmailPage from '../screens/edit_email';
 
 const Stack = createNativeStackNavigator();
 
@@ -27,6 +28,7 @@ const App = () => {
         <Stack.Screen name="password" component={Password} />
         <Stack.Screen name="edits" component={Edit} />
         <Stack.Screen name="setting" component={Settings} />
+        <Stack.Screen name="emails" component={EditEmailPage} />
       </Stack.Navigator>
     </NavigationContainer>
   );

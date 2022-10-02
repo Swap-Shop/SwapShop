@@ -22,7 +22,7 @@ const SearchPage = ({navigation}) =>
     fetchPosts();
   }, [])
 
-  const fetchPosts = async() =>{
+  const fetchPosts = async() =>{ // another get request to get the data from the database 
     await firestore()
       .collection('Products')
       .get()
@@ -52,14 +52,14 @@ const ItemView = ({item}) => {
     </Text>
   )
 }
-const ItemSeparatorView = () => {
+const ItemSeparatorView = () => { // used to separate the information in the search list
   return(
     <View
       style = {{height: 0.5, width: '100%', backgroundColor: '#c8c8c8' }}
     />
   )
 }
-const searchFilter = (text) => {
+const searchFilter = (text) => { // used to filter the search list. 
   if(text){
     const newData = masterData.filter((item) => {
       const itemData = item.post_name ? item.post_name.toUpperCase() : ''.toUpperCase(); 

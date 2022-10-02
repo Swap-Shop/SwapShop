@@ -28,12 +28,12 @@ const Home = ({navigation}) => {
   });
   const  list = [];
 
-  const handleRefresh = () => {
+  const handleRefresh = () => { // this is used to handle the refresh of the screen. 
     data.refreshing = true;
     fetchPosts();
   };
 
-  const handleDelete = (postID) => {
+  const handleDelete = (postID) => { // this is an interactive alert box that is used to confirm whether a user is sure about deleting a post
     Alert.alert(
       'Delete post',
       'Are you sure?',
@@ -52,7 +52,7 @@ const Home = ({navigation}) => {
     );
   };
 
-  const deletePost = (postID) => {
+  const deletePost = (postID) => { // this is used to delete it from firebase storage. 
     firestore()
     .collection('Products')
     .doc(postID)
@@ -78,7 +78,7 @@ const Home = ({navigation}) => {
     })
   }
 
-  const deleteFirestoreData = (postID) => {
+  const deleteFirestoreData = (postID) => { // this code is used to delete data from the database. 
     firestore()
       .collection('Products')
       .doc(postID)
@@ -93,7 +93,7 @@ const Home = ({navigation}) => {
       .catch((e) => console.log(e));
   };
 
-  const fetchPosts = async() =>{
+  const fetchPosts = async() =>{ // this is a get request made to the database to retrieve the data. 
     await firestore()
     .collection('Products')
     .orderBy('Post_Time','desc')

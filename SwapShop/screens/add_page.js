@@ -54,21 +54,21 @@ const AddPage = ({navigation}) => {
     return () => subscriber();
   }, []);
 
-  const GetProductName = val => {
+  const GetProductName = val => { // used to get the product name
     setData({
       ...data,
       product_name: val,
     });
   };
 
-  const GetProductDesc = val => {
+  const GetProductDesc = val => { // used to get the product description
     setData({
       ...data,
       product_desc: val,
     });
   };
 
-  const TakePhotoFromGallery = () => {
+  const TakePhotoFromGallery = () => { // this is used to load an image from the gallery. 
     ImagePicker.openPicker({
       width: 1200,
       height: 1200,
@@ -83,7 +83,7 @@ const AddPage = ({navigation}) => {
       });
   };
 
-  const TakePhotoFromCamera = () => {
+  const TakePhotoFromCamera = () => { // this is used to take a picture through the camera of the device. 
     ImagePicker.openCamera({
       width: 1200,
       height: 1200,
@@ -108,7 +108,7 @@ const AddPage = ({navigation}) => {
     const storageRef = storage().ref(data.filename);
     const task = storageRef.putFile(uploadUri);
 
-    task.on('state_changed', (taskSnapshot) => {
+    task.on('state_changed', (taskSnapshot) => {// this is used to calculate the bits transfered during the image loading process. 
       console.log(
         `${taskSnapshot.bytesTransferred} transferred out of ${taskSnapshot.totalBytes}`,
       );
@@ -133,7 +133,7 @@ const AddPage = ({navigation}) => {
     return downloadURL;
   };
 
-  const SubmitData = async (url) => {
+  const SubmitData = async (url) => { // this is used to submit the data to the backend 
     firestore()
       .collection('Products')
       .add({
@@ -157,7 +157,7 @@ const AddPage = ({navigation}) => {
   };
 
   const checkInput = async() => {
-    if (data.product_desc.length == 0 || data.product_name.length == 0) {
+    if (data.product_desc.length == 0 || data.product_name.length == 0) { // this code is used to check the input the user has enetered.
       Alert.alert('Oops! ¯_(ツ)_/¯......', 'Please enter all fields');
     } else if (image == null) {
       Alert.alert(
