@@ -52,6 +52,25 @@ const Home = ({navigation}) => {
     );
   };
 
+  const handleWishlist = (userID, name, product_name, product_description, product_img) => { // this is an interactive alert box that is used to confirm whether a user is sure about deleting a post
+    firestore()
+      .collection('Wishlist')
+      .add({
+        userID: userID,
+        Product_Owner: name,
+        Product_Name: product_name,
+        Product_Description: product_description,
+        Product_Img: product_img
+      })
+      .then(() => {
+        console.log('Added to wishlist');
+        Alert.alert('Added to wishlist');
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
   const deletePost = (postID) => { // this is used to delete it from firebase storage. 
     firestore()
     .collection('Products')
@@ -106,6 +125,7 @@ const Home = ({navigation}) => {
       userName: doc.data().firstname + " " + doc.data().surname,
       userImg: require('../assets/Image/userProfilePicture3.jpg'),
       postTime: doc.data().Post_Time,
+      postName: doc.data().Product_Name,
       post: doc.data().Product_Description,
       postImg: doc.data().Product_URL,
     });
@@ -150,6 +170,7 @@ setPosts(list);
         renderItem={({item}) => <PostCard 
         item={item}
         onDelete={handleDelete}
+        onPress = {handleWishlist}
         />}
         keyExtractor={item => item.id}
       />

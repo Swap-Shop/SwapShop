@@ -39,6 +39,9 @@ const PostCard = ({item, onDelete, onPress}) => {
                      <Icon name = "chatbox-outline" size={20} color={"#000000"}/>
                      <InteractionText> Message </InteractionText>
                   </Interaction>
+                  <Interaction onPress={() => onPress(user.uid, item.userName, item.postName, item.post, item.postImg)}>
+                     <Icon name = "bookmark-outline" size={20} color={"#000000"}/>
+                  </Interaction>
                   {user.uid == item.userID ? (
                   <Interaction onPress={() => onDelete(item.id)}>
                   <Icon name="trash-outline" size={20} color={"#000000"} />

@@ -8,6 +8,7 @@ import {ImageBackground, SafeAreaView, Text, View, Image} from 'react-native';
 import Home from './home_page';
 import Messages from './MessagesPage';
 import Settings from './Settings_page';
+import Wishlist from './Wishlist_Page';
 
 const Tab = createBottomTabNavigator();
 const Navigation = () => {
@@ -66,6 +67,28 @@ const Navigation = () => {
               style={{alignItems: 'center', justifyContent: 'center', top: 15}}>
               <Image
                 source={require('../assets/Icon/icons8-chating-64.png')}
+                resizeMode="contain"
+                style={{
+                  width: 30,
+                  height: 30,
+                  tintColor: focused ? '#000' : '#000',
+                  top: 10,
+                  fontWeight: 'bold',
+                }}
+              />
+            </View>
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Wishlist"
+        component={Wishlist}
+        options={{
+          tabBarIcon: ({focused}) => (
+            <View
+              style={{alignItems: 'center', justifyContent: 'center', top: 15}}>
+              <Image
+                source={require('../assets/Icon/icons8-shopping-cart-60.png')}
                 resizeMode="contain"
                 style={{
                   width: 30,
