@@ -12,6 +12,7 @@ import Edit from '../screens/Edit_Profile';
 import Settings from '../screens/Settings_page';
 import SearchPage from '../screens/SearchPage';
 import EditEmailPage from '../screens/edit_email';
+import ViewPostPage from '../screens/ViewPostPage';
 
 const Stack = createNativeStackNavigator();
 
@@ -24,6 +25,7 @@ const App = () => {
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="AddPage" component={AddPage} />
         <Stack.Screen name="SearchPage" component={SearchPage} />
+        <Stack.Screen name="ViewPostPage" component={ViewPostPage} />
         <Stack.Screen name="Navigate" component={Navigation} />
         <Stack.Screen name="password" component={Password} />
         <Stack.Screen name="edits" component={Edit} />

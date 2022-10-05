@@ -17,6 +17,10 @@ const SearchPage = ({navigation}) =>
   const [masterData, setMasterData] = useState([]);
   const [search, setSearch] = useState('');
   const  list = [];
+  const [data, setData] = useState({
+    // variable declarations
+    id:''
+  });
 
   useEffect(() => {
     fetchPosts();
@@ -42,9 +46,19 @@ const SearchPage = ({navigation}) =>
       console.log(error);
     })
 }
+
+const getId = (doc_id) =>{
+  data.id = doc_id; 
+  navigation.navigate('ViewPostPage', {
+    paramKey:data.id
+  });
+} 
+
+
+
 const ItemView = ({item}) => {
   return(
-    <Text style = {style.inputProductName2}>
+    <Text style = {style.inputProductName2} onPress = {() => getId(item.id)}>
       {'Product name: '}{" "}{item.post_name}{'\n'}
       {'Post owner: '}{" "}{item.userName}{'\n'}
       {'Post description: '}{" "}{item.post_desc}
