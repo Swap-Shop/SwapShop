@@ -133,6 +133,8 @@ const Home = ({navigation}) => {
   data.refreshing = false;
 });
 setPosts(list);
+
+
 }
 
   useEffect(() => {
@@ -140,12 +142,12 @@ setPosts(list);
   }, [])
 
   return (
-    <Container>
-      <SafeAreaView style={{height: 30}}>
+    <Container style={{   backgroundColor: '#F2F3F4',}}>
+      <SafeAreaView style={{height: 50}}>
         <Image
           style={{
-            width: 120,
-            height: 50,
+            width: 150,
+            height: 60,
             bottom: 20,
             marginLeft: 100,
             fontWeight: 'bold',
@@ -155,12 +157,30 @@ setPosts(list);
         <TouchableOpacity
           style={{marginLeft: 310, bottom: 60, fontWeight: 'bold'}}
           onPress={() => navigation.navigate('AddPage')}>
-          <Icon name="add-circle-outline" size={30} color={'#000000'} />
+         <Image
+          style={{
+            width: 30,
+            height: 30,
+            // bottom: 20,
+            // marginLeft: 100,
+            fontWeight: 'bold',
+          }}
+          source={require('../assets/Icon/add-64.png')}
+        />
         </TouchableOpacity>
         <TouchableOpacity
           style={{marginRight: 310, bottom: 90, fontWeight: 'bold'}}
           onPress={() => navigation.navigate('SearchPage')}>
-          <Icon name="search-circle-outline" size={30} color={'#000000'} />
+             <Image
+          style={{
+            width: 30,
+            height: 30,
+            // bottom: 20,
+            // marginLeft: 100,
+            fontWeight: 'bold',
+          }}
+          source={require('../assets/Icon/search-in.png')}
+        />
         </TouchableOpacity>
       </SafeAreaView>
       <FlatList

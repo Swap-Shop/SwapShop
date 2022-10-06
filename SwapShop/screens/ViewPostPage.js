@@ -5,13 +5,14 @@ import { ImageBackground,
     View,  
     Image, 
     FlatList,
+    TouchableOpacity,
 } from 'react-native';
 import { Container2 } from "../styles/HomePageStyle";
 import firestore from '@react-native-firebase/firestore';
 import PostCard from '../components/PostCard';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-const ViewPostPage = ({route}) => 
+const ViewPostPage = ({route, navigation}) => 
 {
     const [posts, setPosts] = useState(null);
     const [data, setData] = useState({
@@ -47,17 +48,32 @@ const ViewPostPage = ({route}) =>
       }, [])
 
     return(
-        <Container2>
-            <SafeAreaView style={{height: 30}}>
+        <Container2 style={{   backgroundColor: '#F2F3F4',}}>
+            <SafeAreaView style={{height: 100}}>
         <Image
           style={{
-            width: 120,
-            height: 50,
+            width: 150,
+            height: 60,
             bottom: 20,
-            fontWeight: 'bold',
+            marginLeft: 110
+,            fontWeight: 'bold',
           }}
           source={require('../assets/Image/image.png')}
         />
+         <TouchableOpacity
+          style={{marginRight: 330, bottom: 60, fontWeight: 'bold'}}
+          onPress={() => navigation.navigate('SearchPage')}>
+             <Image
+          style={{
+            width: 20,
+            height: 20,
+            // bottom: 20,
+            // marginLeft: 100,
+            fontWeight: 'bold',
+          }}
+          source={require('../assets/Icon/back-32.png')}
+        />
+        </TouchableOpacity>
       </SafeAreaView>
             <FlatList
                 data={posts}

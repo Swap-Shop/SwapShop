@@ -21,7 +21,7 @@ const WishlistPostCard = ({item, onDelete, onPress}) => {
    const user = auth().currentUser;
 
     return(
-      <Card key={item.id}>
+      <Card key={item.id}style={{     backgroundColor: '#D3D3D3',}}>
          <View style = {{width: 400}}>
          <UserInfo>
                   <UserImg source = {{uri:item.postImg}}/> 

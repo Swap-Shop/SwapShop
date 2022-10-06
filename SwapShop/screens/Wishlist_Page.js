@@ -90,12 +90,12 @@ const WishlistPage = () =>
       
 
     return(
-    <Container>
-            <SafeAreaView style={{height: 30}}>
+    <Container style={{   backgroundColor: '#F2F3F4',}}>
+            <SafeAreaView style={{height: 50}}>
                 <Image
                 style={{
-                    width: 120,
-                    height: 50,
+                    width: 150,
+                    height: 60,
                     bottom: 20,
                     fontWeight: 'bold',
                 }}

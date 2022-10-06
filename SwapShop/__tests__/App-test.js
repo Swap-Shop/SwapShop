@@ -38,17 +38,17 @@ test('welcome page should go to signUp page', () =>{
   expect(navigation.navigate).toHaveBeenCalledWith("Signup");
 });
 
-// test('welcome page should go to signUp page', () =>{
-//   const navigation = {navigate:()=>{}}
-//   spyOn(navigation, 'navigate');
+test('welcome page should go to signUp page', () =>{
+  const navigation = {navigate:()=>{}}
+  spyOn(navigation, 'navigate');
 
-//   const page = render(<Settings navigation={navigation}/>)
-//   const signUpButton = page.getByTestId('editpage');
+  const page = render(<Settings navigation={navigation}/>)
+  const signUpButton = page.getByTestId('editpage');
 
-//   fireEvent.press(signUpButton);
+  fireEvent.press(signUpButton);
 
-//   expect(navigation.navigate).toHaveBeenCalledWith("edits");
-// });
+  expect(navigation.navigate).toHaveBeenCalledWith("edits");
+});
 
 //login page tests
 test('Login page should render correctly', async() => { 
@@ -59,11 +59,11 @@ test('Login page should render correctly', async() => {
 
 
 
-// test("Allowed to login", async() =>{
-//   const user = await auth() .signInWithEmailAndPassword('swap@gmail.com', 'Swapshop14/*');
-//   expect(user).toBeTruthy();
-//   expect(user).toBe(true);
-// })
+test("Allowed to login", async() =>{
+  const user = await auth() .signInWithEmailAndPassword('swap@gmail.com', 'Swapshop14/*');
+  expect(user).toBeTruthy();
+  expect(user).toBe(true);
+})
 // the following lines are used to check if all the pages are rendering properly 
 
 test('login link works properly on Sign Up page', () =>{
