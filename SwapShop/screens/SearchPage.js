@@ -5,9 +5,10 @@ import {
   View,
   StyleSheet,
   FlatList,
+  TextInput,
 } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
-import SearchBar from 'react-native-dynamic-search-bar';
+// import SearchBar from 'react-native-dynamic-search-bar';
 
 const SearchPage = ({navigation}) => {
   const [filterdData, setfilterdData] = useState([]);
@@ -86,6 +87,7 @@ const SearchPage = ({navigation}) => {
             fontStyle: 'normal',
             fontWeight: '900',
           }}
+
           onPress={() => getId(item.id)}>
           {'Product name: '} {item.post_name}
           {'\n'}
@@ -132,16 +134,17 @@ const SearchPage = ({navigation}) => {
         Couldn't find what you were looking for? No problem try search for an
         item here...
       </Text>
-      {/* <View style={style.inputProductName}>
+      <View style={style.inputProductName}>
         <TextInput
           placeholder="Search here"
           placeholderTextColor={'#808080'}
           textAlignVertical="center"
+          testID='search'
           value={search}
           onChangeText={text => searchFilter(text)}
         />
-      </View> */}
-      <SearchBar
+      </View>
+      {/* <SearchBar
         fontColor="#c6c6c6"
         iconColor="#c6c6c6"
         shadowColor="#282828"
@@ -153,7 +156,7 @@ const SearchPage = ({navigation}) => {
         onClearPress={() => searchFilter('')}
         onPress={() => alert('onPress')}
         style={{backgroundColor: '#7f8084'}}
-      />
+      /> */}
       <FlatList
         data={filterdData}
         keyExtractor={(item, index) => index.toString()}
