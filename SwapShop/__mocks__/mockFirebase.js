@@ -14,3 +14,4 @@ jest.mock('@react-native-firebase/auth', () => {
     alert: jest.fn()
   })
 });
+

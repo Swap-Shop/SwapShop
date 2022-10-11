@@ -1,5 +1,11 @@
 ignore:
     - "**/PostCard.js"
-
-    
+    - "**/ buildDocFromHash.js"
+    - "**/ transaction.js"
+    - "**/timestamp.js"
+    - "**/ query.js "
+    - "**/ path.js"
+    - "**/ fieldValue.js "
+    - "**/firestore.js"
+    - "**/  buildQuerySnapShot.js"
     
