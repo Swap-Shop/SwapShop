@@ -22,7 +22,7 @@ import {
 } from '../styles/AddPageStyles';
 
 
-
+// navigation for add page
 const AddPage = ({navigation}) => {
   const [image, setImage] = useState(null);
   const [uploading, setUploading] = useState(false);
@@ -30,7 +30,7 @@ const AddPage = ({navigation}) => {
   const [data, setData] = useState({
     // variable declarations
     product_name: '',
-    product_desc: '',
+    product_desc: '', // product description
     firstname: '',
     surname: '',
     image_URL: '',
@@ -170,6 +170,7 @@ const AddPage = ({navigation}) => {
     }
   };
 
+  //styles for add page
   return (
     <ImageBackground
       source={require('../assets/Image/gradient.jpg')}
