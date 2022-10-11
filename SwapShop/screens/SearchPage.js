@@ -10,6 +10,8 @@ import {
 import firestore from '@react-native-firebase/firestore';
 // import SearchBar from 'react-native-dynamic-search-bar';
 
+//queryig firebase data base to search bar and search page.
+
 const SearchPage = ({navigation}) => {
   const [filterdData, setfilterdData] = useState([]);
   const [masterData, setMasterData] = useState([]);
@@ -21,7 +23,7 @@ const SearchPage = ({navigation}) => {
   });
 
   useEffect(() => {
-    fetchPosts();
+    fetchPosts(); // fetch request to firebase database
   }, []);
 
   const fetchPosts = async () => {
@@ -121,7 +123,7 @@ const SearchPage = ({navigation}) => {
       setSearch(masterData);
     }
   };
-  return (
+  return ( // error message that will be displayed if the itms are not found after database query
     <SafeAreaView style={{backgroundColor: '#DFDFDE'}}>
       <Text
         style={{
@@ -131,9 +133,9 @@ const SearchPage = ({navigation}) => {
           fontWeight: 'bold',
           marginLeft: 15,
         }}>
-        Couldn't find what you were looking for? No problem try search for an
-        item here...
-      </Text>
+        Couldn't find what you were looking for? No problem try search for an 
+        item here... 
+      </Text> 
       <View style={style.inputProductName}>
         <TextInput
           placeholder="Search here"
