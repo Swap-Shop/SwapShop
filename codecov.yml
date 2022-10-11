@@ -1,4 +1,5 @@
 ignore:
+    - "**/mocks"
     - "**/PostCard.js"
     - "**/buildDocFromHash.js"
     - "**/transaction.js"
