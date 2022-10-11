@@ -170,7 +170,7 @@ const AddPage = ({navigation}) => {
     }
   };
 
-  //styles for add page
+
   return (
     <ImageBackground
       source={require('../assets/Image/gradient.jpg')}

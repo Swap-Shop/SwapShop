@@ -9,8 +9,8 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import auth from '@react-native-firebase/auth';
-import firestore from '@react-native-firebase/firestore';
-import ImagePicker from 'react-native-image-crop-picker';
+//import firestore from '@react-native-firebase/firestore';
+//import ImagePicker from 'react-native-image-crop-picker';
 
 const Settings = ({navigation}) => {
   // const user = auth().currentUser;

@@ -10,10 +10,10 @@ import { ImageBackground,
 import {
     Container,
   } from '../styles/HomePageStyle';
-import Icon from 'react-native-vector-icons/Ionicons';
+//import Icon from 'react-native-vector-icons/Ionicons';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
-import storage from '@react-native-firebase/storage';
+//import storage from '@react-native-firebase/storage';
 import PostCard from '../components/WishlistPostCard';
 
 const WishlistPage = () => 
@@ -44,7 +44,7 @@ const WishlistPage = () =>
       data.refreshing = false;
     });
     setPosts(list);
-    }
+    } // adding itms to wishlist
 
     useEffect(() => {
         fetchPosts();
@@ -67,7 +67,7 @@ const WishlistPage = () =>
             fetchPosts();
           })
           .catch((e) => console.log(e));
-      };
+      }; // deleting items from the wishlist
 
       const handleDelete = (postID) => { // this is an interactive alert box that is used to confirm whether a user is sure about deleting a post
         Alert.alert(

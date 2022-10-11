@@ -45,7 +45,7 @@ const ViewPostPage = ({route, navigation}) => {
   };
 
   useEffect(() => {
-    fetchPosts();
+    fetchPosts(); //fetch request for posts
   }, []);
 
   return (
