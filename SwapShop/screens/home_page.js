@@ -19,15 +19,18 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import storage from '@react-native-firebase/storage';
+import auth from '@react-native-firebase/auth';
 
 const Home = ({navigation}) => {
   const [posts, setPosts] = useState(null);
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState({
     // variable declarations
-    refreshing: false
+    refreshing: false,
+    isEmpty: null
   });
   const  list = [];
+  const ActiveUser = auth().currentUser;
 
   const handleRefresh = () => { // this is used to handle the refresh of the screen. 
     data.refreshing = true;
@@ -53,8 +56,14 @@ const Home = ({navigation}) => {
     );
   };
 
-  const handleWishlist = (userID, name, product_name, product_description, product_img) => { // this is an interactive alert box that is used to confirm whether a user is sure about deleting a post
-    firestore()
+  const handleWishlist = async(userID, name, product_name, product_description, product_img) => { // this is an interactive alert box that is used to confirm whether a user is sure about deleting a post
+    await firestore()
+    .collection('Wishlist')
+    .where('Product_Name', '==', product_name)
+    .get()
+    .then(querySnapshot => {
+      if(querySnapshot.size == 0){
+      firestore()
       .collection('Wishlist')
       .add({
         userID: userID,
@@ -70,6 +79,11 @@ const Home = ({navigation}) => {
       .catch(error => {
         console.log(error);
       });
+      }
+      else{
+        Alert.alert('Item already in wishlist');
+      }
+    });
   };
 
   const handleTrade = (docID, Customer_userID, Owner_userID,Owner_Name, product_name, product_description, product_img) => {
@@ -103,6 +117,11 @@ const Home = ({navigation}) => {
       console.log(error);
     })
  };
+  const handleMessageBtn = () =>{ // this is a get request made to the database to retrieve the data. 
+  //console.log(userID);
+  //console.log(ActiveUser.uid);
+  navigation.navigate('ChatPage');
+}
 
   const deletePost = (postID) => { // this is used to delete it from firebase storage. 
     firestore()
@@ -223,6 +242,7 @@ setPosts(list);
         onDelete={handleDelete}
         onPress = {handleWishlist}
         onTrade = {handleTrade}
+        onMessageBtn = {handleMessageBtn}
         />}
         keyExtractor={item => item.id}
       />

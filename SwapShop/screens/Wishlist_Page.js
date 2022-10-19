@@ -26,6 +26,10 @@ const WishlistPage = () =>
       const user = auth().currentUser;
       const  list = [];
 
+      useEffect(() => {
+        fetchPosts();
+      }, [])
+
       const fetchPosts = async() =>{ // this is a get request made to the database to retrieve the data. 
         await firestore()
         .collection('Wishlist')
@@ -45,10 +49,6 @@ const WishlistPage = () =>
     });
     setPosts(list);
     } // adding itms to wishlist
-
-    useEffect(() => {
-        fetchPosts();
-      }, [])
 
     const handleRefresh = () => { // this is used to handle the refresh of the screen. 
         data.refreshing = true;
