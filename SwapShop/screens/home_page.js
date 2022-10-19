@@ -19,7 +19,6 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import storage from '@react-native-firebase/storage';
-import auth from '@react-native-firebase/auth';
 
 const Home = ({navigation}) => {
   const [posts, setPosts] = useState(null);
