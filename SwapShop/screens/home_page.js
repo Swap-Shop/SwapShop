@@ -17,6 +17,7 @@ import {
 } from '../styles/HomePageStyle';
 import Icon from 'react-native-vector-icons/Ionicons';
 import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
 import storage from '@react-native-firebase/storage';
 
 const Home = ({navigation}) => {
@@ -70,6 +71,38 @@ const Home = ({navigation}) => {
         console.log(error);
       });
   };
+
+  const handleTrade = (docID, Customer_userID, Owner_userID,Owner_Name, product_name, product_description, product_img) => {
+    firestore()
+    .collection('Trade')
+    .where('ProductID', '==', docID)
+    .where('CustomerID', '==', Customer_userID)
+    .get()
+    .then(querySnapshot => {
+      if(querySnapshot.size == 0)
+      {
+        navigation.navigate('ItemTobeTradedPage', {
+          ProductID: docID,
+          OwnerID: Owner_userID,
+          CustomerID: Customer_userID,
+          OwnerName: Owner_Name,
+          ProductName: product_name,
+          ProductDescription: product_description,
+          ProductImg: product_img,
+          Outcome: "pending"
+          });
+      }
+      else
+      {
+        Alert.alert('Oops! ¯_(ツ)_/¯......', 
+        'Item has already been requested for trade',
+        )
+      }
+    })
+    .catch(error => {
+      console.log(error);
+    })
+ };
 
   const deletePost = (postID) => { // this is used to delete it from firebase storage. 
     firestore()
@@ -133,8 +166,6 @@ const Home = ({navigation}) => {
   data.refreshing = false;
 });
 setPosts(list);
-
-
 }
 
   useEffect(() => {
@@ -191,6 +222,7 @@ setPosts(list);
         item={item}
         onDelete={handleDelete}
         onPress = {handleWishlist}
+        onTrade = {handleTrade}
         />}
         keyExtractor={item => item.id}
       />

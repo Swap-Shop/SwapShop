@@ -17,7 +17,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import auth from '@react-native-firebase/auth';
 import moment from 'moment';
 
-const PostCard = ({item, onDelete, onPress}) => {
+const PostCard = ({item, onDelete, onPress, onTrade}) => {
   const user = auth().currentUser;
 
   return (
@@ -37,6 +37,21 @@ const PostCard = ({item, onDelete, onPress}) => {
             <Icon name="chatbox-outline" size={20} color={'#000000'} />
             <InteractionText> Message </InteractionText>
           </Interaction>
+          {user.uid != item.userID ? (
+          <Interaction
+            onPress = {() => onTrade(
+              item.id,
+              user.uid,
+              item.userID,
+              item.userName,
+              item.postName,
+              item.post,
+              item.postImg,
+            )}>
+            <Icon name="swap-horizontal-outline" size={20} color={'#000000'} />
+          </Interaction>
+          ) : null}
+          {user.uid != item.userID ? (
           <Interaction
             onPress={() =>
               onPress(
@@ -49,6 +64,7 @@ const PostCard = ({item, onDelete, onPress}) => {
             }>
             <Icon name="bookmark-outline" size={20} color={'#000000'} />
           </Interaction>
+          ) : null}
           {user.uid == item.userID ? (
             <Interaction onPress={() => onDelete(item.id)}>
               <Icon name="trash-outline" size={20} color={'#000000'} />

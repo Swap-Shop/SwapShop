@@ -6,9 +6,10 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {ImageBackground, SafeAreaView, Text, View, Image} from 'react-native';
 
 import Home from './home_page';
-import Messages from './MessagesPage';
-import Settings from './Settings_page';
+import Messages from './messagesPage';
+import Settings from './settings_page';
 import Wishlist from './Wishlist_Page';
+import Trade from './TradePage';
 
 const Tab = createBottomTabNavigator();
 const Navigation = () => {
@@ -67,6 +68,28 @@ const Navigation = () => {
               style={{alignItems: 'center', justifyContent: 'center', top: 15}}>
               <Image
                 source={require('../assets/Icon/icons8-chating-64.png')}
+                resizeMode="contain"
+                style={{
+                  width: 30,
+                  height: 30,
+                  tintColor: focused ? '#000' : '#000',
+                  top: 10,
+                  fontWeight: 'bold',
+                }}
+              />
+            </View>
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Trade"
+        component={Trade}
+        options={{
+          tabBarIcon: ({focused}) => (
+            <View
+              style={{alignItems: 'center', justifyContent: 'center', top: 15}}>
+              <Image
+                source={require('../assets/Icon/icons8-trade-64.png')}
                 resizeMode="contain"
                 style={{
                   width: 30,
