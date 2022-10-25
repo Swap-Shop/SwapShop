@@ -13,4 +13,4 @@ ignore:
     - "**/TradePage.js"
     - "**/SearchPage.js"
     - "**/ViewItemTobeTraded.js"
-    # - "**/ViewItemTobeTraded.js"
+    - "**/components"
