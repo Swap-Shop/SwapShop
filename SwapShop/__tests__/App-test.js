@@ -1,31 +1,247 @@
-import React from "react";
+import React from 'react';
 // import LoginScreen from "../screens/LoginScreen";
-// import Welcome_Page from "../screens/Welcome_Page";
-// import SignUpScreen from "../screens/SignUpScreen";
+import Welcome_Page from '../screens/Welcome_Page';
+// import ViewPostPage from "../screens/ViewPostPage";
+import ViewUserRequestPage from '../screens/ViewUserRequests';
+import ViewItemToBeTraded from '../screens/ViewItemTobeTraded';
+import Home from '../screens/home_page';
+// import TradePage from "../screens/TradePage";
+// import Password from '../screens/forgot_password';
+// import ItemTobeTradedPage from "../screens/ItemTobeTraded";
+// import AddPage from "../screens/add_page";
 // import ForgetPasswordPage from "../screens/forgot_password";
-import SearchPage from "../screens/SearchPage";
-import ViewPostPage from "../screens/ViewPostPage";
-import { Alert } from 'react-native';
-import { render, screen, renderHook, fireEvent} from '@testing-library/react-native';
-// // import firebase from "@react-native-firebase/app";
-import auth from "@react-native-firebase/auth";
+// import SignUpScreen from "../screens/SignUpScreen"
+import SearchPage from '../screens/SearchPage';
+import ViewPostPage from '../screens/ViewPostPage';
+import {Alert, View} from 'react-native';
+import {
+  render,
+  screen,
+  renderHook,
+  fireEvent,
+} from '@testing-library/react-native';
+import {mount} from 'enzyme';
+import {configure, shallow} from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+configure({adapter: new Adapter()});
+
+const eventData = {
+  nativeEvent: {
+    contentOffset: {
+      y: 500,
+    },
+    contentSize: {
+      // Dimensions of the scrollable content
+      height: 500,
+      width: 100,
+    },
+    layoutMeasurement: {
+      // Dimensions of the device
+      height: 100,
+      width: 100,
+    },
+  },
+}
+
+
+//view item to be  ViewItemToBeTraded page
+test('navigate to Navigation page from ViewItemToBeTraded', () => {
+  //test a button to navigate to the navigation page from the from ViewItemToBeTraded page
+
+  const navigation = {navigate: () => {}};
+  spyOn(navigation, 'navigate');
+
+  const page = render(<ViewItemToBeTraded navigation={navigation} />);
+  const button = page.getByTestId('post');
+
+  fireEvent.press(button);
+
+  expect(navigation.navigate).toHaveBeenCalledWith('Navigate');
+});
+it('render item on the ViewItemToBeTraded screen', () => {
+  const {getByTestId} = render(<ViewItemToBeTraded />);
+  const display = getByTestId('postitem');
+  fireEvent.scroll(display, eventData);
+
+  expect(display).toBeTruthy();
+});
+
+
+
+//view request page tests //ViewUserRequestPage
+test('go back to navigation page', () => {
+  //test a button to navigate to the navigation page from the from vewuserRequest page
+
+  const navigation = {navigate: () => {}};
+  spyOn(navigation, 'navigate');
+
+  const page = render(<ViewUserRequestPage navigation={navigation} />);
+  const button = page.getByTestId('post');
+
+  fireEvent.press(button);
+
+  expect(navigation.navigate).toHaveBeenCalledWith('Navigate');
+});
+it('render item on the viewUserRequest screen', () => {
+  const {getByTestId} = render(<ViewItemToBeTraded />);
+  const display = getByTestId('postitem');
+  fireEvent.scroll(display, eventData);
+
+  expect(display).toBeTruthy();
+});
+
 
 // search page unit test
 test('Should apply the value when changing text', () => {
-  const { getByTestId } = render(<SearchPage />);
+  //test whether the user input is applied when when the user types in the input
+  const {getByTestId} = render(<SearchPage />);
   const input = getByTestId('search');
   fireEvent.changeText(input, 'Hisence');
   expect(input.props.value).toBe('Hisence');
 });
 
-test('go back to the serach', () =>{
-  const navigation = {navigate:()=>{}}
+
+
+
+//view psot page tests
+
+test('go back to the search', () => {
+  //test a button to navigate back to the search page from the viewpost page
+
+  const navigation = {navigate: () => {}};
   spyOn(navigation, 'navigate');
 
-  const page = render(<ViewPostPage navigation={navigation}/>)
-  const forgotPasswordLink = page.getByTestId('post');
+  const page = render(<ViewPostPage navigation={navigation} />);
+  const button = page.getByTestId('post');
 
-  fireEvent.press(forgotPasswordLink);
+  fireEvent.press(button);
 
-  expect(navigation.navigate).toHaveBeenCalledWith("SearchPage");
+  expect(navigation.navigate).toHaveBeenCalledWith('SearchPage');
 });
+it('render item', () => {
+  const {getByTestId} = render(<ViewPostPage />);
+  const display = getByTestId('postitem');
+  fireEvent.scroll(display , eventData);
+
+  expect(display).toBeTruthy();
+});
+
+
+
+//home page tests
+test('go  to the search from home page', () => {
+  //test a button to navigate back to the search page from the home page
+
+  const navigation = {navigate: () => {}};
+  spyOn(navigation, 'navigate');
+
+  const page = render(<Home navigation={navigation} />);
+  const button = page.getByTestId('post');
+
+  fireEvent.press(button);
+
+  expect(navigation.navigate).toHaveBeenCalledWith('SearchPage');
+});
+it('render item on the home screen', () => {
+  const {getByTestId} = render(<Home />);
+  const display = getByTestId('render');
+  fireEvent.scroll(display, eventData);
+
+  expect(display).toBeTruthy();
+});
+
+
+
+//welcome page tests
+test('onclick go to signup page', () => {
+  //test a button to navigate  to the signup  page from welcome page
+
+  const navigation = {navigate: () => {}};
+  spyOn(navigation, 'navigate');
+
+  const page = render(<Welcome_Page navigation={navigation} />);
+  const signup = page.getByTestId('signUpButton');
+
+  fireEvent.press(signup);
+
+  expect(navigation.navigate).toHaveBeenCalledWith('Signup');
+});
+
+it('onclick it should redirect to login page or home page', () => {
+  //test a button to navigate  to the home  page if signed up before if not it takes them to log in page from welcome page
+
+  const page = render(<Welcome_Page />);
+  fireEvent.press(page.getByTestId('loginButton'));
+});
+
+// test('onclick go to login page', () =>{
+//   const navigation = {navigate:()=>{}}
+//   spyOn(navigation, 'navigate');
+
+//   const page = render(<SignUpScreen navigation={navigation}/>)
+//   const login = page.getByTestId('loginLink');
+
+//   fireEvent.press(login);
+
+//   expect(navigation.navigate).toHaveBeenCalledWith("Login");
+// });
+
+// it('onclick it should redirect to home page', () => {
+//   const page = render(<SignUpScreen/>);
+//   fireEvent.press(page.getByTestId('register'));
+// });
+
+// it('should find the Itemtrade button via testId', () => {
+
+//   const {getByTestId} = render(<ViewItemToBeTraded />);
+
+//   const foundButton = getByTestId("postitem");
+
+//   expect(foundButton).toBeTruthy();
+// });
+// it('render' ,() => {
+//   const {getByTestId} = render(<SearchPage />);
+//   const display = getByTestId("display");
+//   fireEvent.press(display);
+
+//   // expect(display).toBeTruthy();
+
+// });
+// describe('FlatList', () => {
+//   let list = [
+//       {post_name: 'hisence'},
+//       {post_name: 'samsung A35'},
+//       {post_name: 'KIC'},
+//   ];
+//   it('render' ,() => {
+//     const {getByTestId} = render(<ViewPostPage />);
+//     const display = getByTestId("display");
+//     fireEvent.scroll(display);
+
+//     expect(display).toBeTruthy();
+
+//   })
+
+// })
+
+
+
+// afterEach(cleanup)
+
+// it('scrolls to top and refreshes all items', async () => {
+//   render(<SectionList />)
+//   const {getByText, getByTestId} = screen
+
+//   getByText(/pizza/i)
+//   expect(() => getByText(/the impossible burger/i)).toThrow(
+//     'Unable to find an element with text: /the impossible burger/i',
+//   ) //intially not shown
+//   fireEvent.scroll(getByTestId('flat-list'), eventData)
+//   await waitForElementToBeRemoved(() => getByText(/loading more dishes/i), {
+//     timeout: 1500,
+//   })
+
+//   await waitFor(() => {
+//     expect(getByText(/the impossible burger/i)).toBeTruthy()
+//   })
+// })

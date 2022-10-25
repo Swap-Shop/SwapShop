@@ -26,17 +26,19 @@ const Home = ({navigation}) => {
   const [data, setData] = useState({
     // variable declarations
     refreshing: false,
-    isEmpty: null
+    isEmpty: null,
   });
-  const  list = [];
+  const list = [];
   const ActiveUser = auth().currentUser;
 
-  const handleRefresh = () => { // this is used to handle the refresh of the screen. 
+  const handleRefresh = () => {
+    // this is used to handle the refresh of the screen.
     data.refreshing = true;
     fetchPosts();
   };
 
-  const handleDelete = (postID) => { // this is an interactive alert box that is used to confirm whether a user is sure about deleting a post
+  const handleDelete = postID => {
+    // this is an interactive alert box that is used to confirm whether a user is sure about deleting a post
     Alert.alert(
       'Delete post',
       'Are you sure?',
@@ -55,100 +57,115 @@ const Home = ({navigation}) => {
     );
   };
 
-  const handleWishlist = async(userID, name, product_name, product_description, product_img) => { // this is an interactive alert box that is used to confirm whether a user is sure about deleting a post
+  const handleWishlist = async (
+    userID,
+    name,
+    product_name,
+    product_description,
+    product_img,
+  ) => {
+    // this is an interactive alert box that is used to confirm whether a user is sure about deleting a post
     await firestore()
-    .collection('Wishlist')
-    .where('Product_Name', '==', product_name)
-    .get()
-    .then(querySnapshot => {
-      if(querySnapshot.size == 0){
-      firestore()
       .collection('Wishlist')
-      .add({
-        userID: userID,
-        Product_Owner: name,
-        Product_Name: product_name,
-        Product_Description: product_description,
-        Product_Img: product_img
-      })
-      .then(() => {
-        console.log('Added to wishlist');
-        Alert.alert('Added to wishlist');
+      .where('Product_Name', '==', product_name)
+      .get()
+      .then(querySnapshot => {
+        if (querySnapshot.size == 0) {
+          firestore()
+            .collection('Wishlist')
+            .add({
+              userID: userID,
+              Product_Owner: name,
+              Product_Name: product_name,
+              Product_Description: product_description,
+              Product_Img: product_img,
+            })
+            .then(() => {
+              console.log('Added to wishlist');
+              Alert.alert('Added to wishlist');
+            })
+            .catch(error => {
+              console.log(error);
+            });
+        } else {
+          Alert.alert('Item already in wishlist');
+        }
+      });
+  };
+
+  const handleTrade = (
+    docID,
+    Customer_userID,
+    Owner_userID,
+    Owner_Name,
+    product_name,
+    product_description,
+    product_img,
+  ) => {
+    firestore()
+      .collection('Trade')
+      .where('ProductID', '==', docID)
+      .where('CustomerID', '==', Customer_userID)
+      .get()
+      .then(querySnapshot => {
+        if (querySnapshot.size == 0) {
+          navigation.navigate('ItemTobeTradedPage', {
+            ProductID: docID,
+            OwnerID: Owner_userID,
+            CustomerID: Customer_userID,
+            OwnerName: Owner_Name,
+            ProductName: product_name,
+            ProductDescription: product_description,
+            ProductImg: product_img,
+            Outcome: 'pending',
+          });
+        } else {
+          Alert.alert(
+            'Oops! ¯_(ツ)_/¯......',
+            'Item has already been requested for trade',
+          );
+        }
       })
       .catch(error => {
         console.log(error);
       });
-      }
-      else{
-        Alert.alert('Item already in wishlist');
-      }
-    });
+  };
+  const handleMessageBtn = () => {
+    // this is a get request made to the database to retrieve the data.
+    //console.log(userID);
+    //console.log(ActiveUser.uid);
+    navigation.navigate('ChatPage');
   };
 
-  const handleTrade = (docID, Customer_userID, Owner_userID,Owner_Name, product_name, product_description, product_img) => {
+  const deletePost = postID => {
+    // this is used to delete it from firebase storage.
     firestore()
-    .collection('Trade')
-    .where('ProductID', '==', docID)
-    .where('CustomerID', '==', Customer_userID)
-    .get()
-    .then(querySnapshot => {
-      if(querySnapshot.size == 0)
-      {
-        navigation.navigate('ItemTobeTradedPage', {
-          ProductID: docID,
-          OwnerID: Owner_userID,
-          CustomerID: Customer_userID,
-          OwnerName: Owner_Name,
-          ProductName: product_name,
-          ProductDescription: product_description,
-          ProductImg: product_img,
-          Outcome: "pending"
+      .collection('Products')
+      .doc(postID)
+      .get()
+      .then(doc => {
+        const postImg = doc.data().Product_URL;
+
+        if (postImg.length == 0) {
+          deleteFirestoreData(postID);
+        }
+
+        let imageRef = storage().refFromURL(postImg);
+
+        imageRef
+          .delete()
+          .then(() => {
+            console.log('Image deleted');
+            deleteFirestoreData(postID);
+          })
+          .catch(e => {
+            console.log(e);
           });
-      }
-      else
-      {
-        Alert.alert('Oops! ¯_(ツ)_/¯......', 
-        'Item has already been requested for trade',
-        )
-      }
-    })
-    .catch(error => {
-      console.log(error);
-    })
- };
-  const handleMessageBtn = () =>{ // this is a get request made to the database to retrieve the data. 
-  //console.log(userID);
-  //console.log(ActiveUser.uid);
-  navigation.navigate('ChatPage');
-}
-
-  const deletePost = (postID) => { // this is used to delete it from firebase storage. 
-    firestore()
-    .collection('Products')
-    .doc(postID)
-    .get()
-    .then((doc) => {
-      const postImg = doc.data().Product_URL;
-
-      if(postImg.length == 0){
-        deleteFirestoreData(postID);
-      }
-
-      let imageRef = storage().refFromURL(postImg);
-
-      imageRef
-      .delete()
-      .then(() => {
-        console.log('Image deleted');
-        deleteFirestoreData(postID);
-      })
-      .catch((e) => {
-        console.log(e);
       });
-    })
-  }
+  };
 
-  const deleteFirestoreData = (postID) => { // this code is used to delete data from the database. 
+  const deleteFirestoreData = postID => {
+    // this code is used to delete data from the database.
     firestore()
       .collection('Products')
       .doc(postID)
@@ -160,38 +177,39 @@ const Home = ({navigation}) => {
         );
         fetchPosts();
       })
-      .catch((e) => console.log(e));
+      .catch(e => console.log(e));
   };
 
-  const fetchPosts = async() =>{ // this is a get request made to the database to retrieve the data. 
+  const fetchPosts = async () => {
+    // this is a get request made to the database to retrieve the data.
     await firestore()
-    .collection('Products')
-    .orderBy('Post_Time','desc')
-    .get()
-    .then(querySnapshot => {
-    querySnapshot.forEach(doc => {
-    list.push({
-      id: doc.id,
-      userID: doc.data().userID,
-      userName: doc.data().firstname + " " + doc.data().surname,
-      userImg: require('../assets/Image/userProfilePicture3.jpg'),
-      postTime: doc.data().Post_Time,
-      postName: doc.data().Product_Name,
-      post: doc.data().Product_Description,
-      postImg: doc.data().Product_URL,
-    });
-  });
-  data.refreshing = false;
-});
-setPosts(list);
-}
+      .collection('Products')
+      .orderBy('Post_Time', 'desc')
+      .get()
+      .then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+          list.push({
+            id: doc.id,
+            userID: doc.data().userID,
+            userName: doc.data().firstname + ' ' + doc.data().surname,
+            userImg: require('../assets/Image/userProfilePicture3.jpg'),
+            postTime: doc.data().Post_Time,
+            postName: doc.data().Product_Name,
+            post: doc.data().Product_Description,
+            postImg: doc.data().Product_URL,
+          });
+        });
+        data.refreshing = false;
+      });
+    setPosts(list);
+  };
 
   useEffect(() => {
     fetchPosts();
-  }, [])
+  }, []);
 
   return (
-    <Container style={{   backgroundColor: '#F2F3F4',}}>
+    <Container style={{backgroundColor: '#F2F3F4'}}>
       <SafeAreaView style={{height: 50}}>
         <Image
           style={{
@@ -206,43 +224,47 @@ setPosts(list);
         <TouchableOpacity
           style={{marginLeft: 310, bottom: 60, fontWeight: 'bold'}}
           onPress={() => navigation.navigate('AddPage')}>
-         <Image
-          style={{
-            width: 30,
-            height: 30,
-            // bottom: 20,
-            // marginLeft: 100,
-            fontWeight: 'bold',
-          }}
-          source={require('../assets/Icon/add-64.png')}
-        />
+          <Image
+            style={{
+              width: 30,
+              height: 30,
+              // bottom: 20,
+              // marginLeft: 100,
+              fontWeight: 'bold',
+            }}
+            source={require('../assets/Icon/add-64.png')}
+          />
         </TouchableOpacity>
         <TouchableOpacity
           style={{marginRight: 310, bottom: 90, fontWeight: 'bold'}}
+          testID="post"
           onPress={() => navigation.navigate('SearchPage')}>
-             <Image
-          style={{
-            width: 30,
-            height: 30,
-            // bottom: 20,
-            // marginLeft: 100,
-            fontWeight: 'bold',
-          }}
-          source={require('../assets/Icon/search-in.png')}
-        />
+          <Image
+            style={{
+              width: 30,
+              height: 30,
+              // bottom: 20,
+              // marginLeft: 100,
+              fontWeight: 'bold',
+            }}
+            source={require('../assets/Icon/search-in.png')}
+          />
         </TouchableOpacity>
       </SafeAreaView>
       <FlatList
         data={posts}
-        refreshing = {data.refreshing}
-        onRefresh = {handleRefresh}
-        renderItem={({item}) => <PostCard 
-        item={item}
-        onDelete={handleDelete}
-        onPress = {handleWishlist}
-        onTrade = {handleTrade}
-        onMessageBtn = {handleMessageBtn}
-        />}
+        testID="render"
+        refreshing={data.refreshing}
+        onRefresh={handleRefresh}
+        renderItem={({item}) => (
+          <PostCard
+            item={item}
+            onDelete={handleDelete}
+            onPress={handleWishlist}
+            onTrade={handleTrade}
+            onMessageBtn={handleMessageBtn}
+          />
+        )}
         keyExtractor={item => item.id}
       />
     </Container>

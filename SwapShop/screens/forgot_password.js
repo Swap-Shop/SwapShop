@@ -8,7 +8,9 @@ import {
   ImageBackground,
   TextInput,
   Modal,
+  Alert,
 } from 'react-native';
+
 import auth from '@react-native-firebase/auth';
 import {Fumi} from 'react-native-textinput-effects';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -132,7 +134,8 @@ const Password = ({navigation}) => {
           </Text>
 
           {/* a button to render the check email function */}
-          <TouchableOpacity style={style.button} onPress={() => checkEmail()}>
+          <TouchableOpacity testID="Link"
+            style={style.button} onPress={() => checkEmail()}>
             <Text style={style.text}>Reset</Text>
           </TouchableOpacity>
         </SafeAreaView>

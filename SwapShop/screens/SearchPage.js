@@ -69,8 +69,7 @@ const SearchPage = ({navigation}) => {
           width: 350,
           height: 60,
           backgroundColor: '#F2F3F4',
-        
-        
+
           opacity: 2,
           shadowColor: '#000',
           shadowOffset: {
@@ -89,7 +88,6 @@ const SearchPage = ({navigation}) => {
             fontStyle: 'normal',
             fontWeight: '900',
           }}
-
           onPress={() => getId(item.id)}>
           {'Product name: '} {item.post_name}
           {'\n'}
@@ -123,7 +121,8 @@ const SearchPage = ({navigation}) => {
       setSearch(masterData);
     }
   };
-  return ( // error message that will be displayed if the itms are not found after database query
+  return (
+    // error message that will be displayed if the itms are not found after database query
     <SafeAreaView style={{backgroundColor: '#DFDFDE'}}>
       <Text
         style={{
@@ -133,15 +132,15 @@ const SearchPage = ({navigation}) => {
           fontWeight: 'bold',
           marginLeft: 15,
         }}>
-        Couldn't find what you were looking for? No problem try search for an 
-        item here... 
-      </Text> 
+        Couldn't find what you were looking for? No problem try search for an
+        item here...
+      </Text>
       <View style={style.inputProductName}>
         <TextInput
           placeholder="Search here"
           placeholderTextColor={'#808080'}
           textAlignVertical="center"
-          testID='search'
+          testID="search"
           value={search}
           onChangeText={text => searchFilter(text)}
         />
@@ -164,6 +163,7 @@ const SearchPage = ({navigation}) => {
         keyExtractor={(item, index) => index.toString()}
         ItemSeparatorComponent={ItemSeparatorView}
         renderItem={ItemView}
+        testID="display"
       />
     </SafeAreaView>
   );

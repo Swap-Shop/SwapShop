@@ -9,7 +9,6 @@ import {
 } from 'react-native';
 import auth from '@react-native-firebase/auth';
 
-
 const Welcome_Page = ({navigation}) => {
   const [initializing, setInitializing] = useState(true); // variable declarations
   const [user, setUser] = useState();
@@ -65,7 +64,7 @@ const Welcome_Page = ({navigation}) => {
             source={require('../assets/Image/image.png')}
           />
         </View>
-       
+
         <View style={{alignItems: 'center', marginHorizontal: 60}}>
           <TouchableOpacity
             style={{

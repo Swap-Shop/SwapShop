@@ -39,7 +39,6 @@ describe.each([
   describe('api testing', () => {
     FirestoreMock[mockFunction]({
       database: {
-      
         Products: [
           {
             Post_Time: '24 sep 2022',
@@ -70,7 +69,29 @@ describe.each([
             userId: 'k7tFbwBZE4T19eooPmaSrG2IANJ3',
           },
         ],
-    
+        Trade: [
+          {
+            CustomerID: 'WnnL3oSrXkVjGv9CKUWcAvtjDQp1',
+            Outcome: 'declined',
+            OwnerID: 'k7tFbwBZE4T19eooPmaSrG2IANJ3',
+            OwnerName: 'Kevin Phillips',
+            ProductID: 'rLLrOXUmHmYDhze7Jcqv',
+            ProductImg:
+              'https://firebasestorage.googleapis.com/v0/b/swapshop-6bd9b.appspot.com/o/792b32c0-f70a-4d71-a673-c32206a9c3b0.jpg?alt=media&token=b2b995ea-b622-4c0b-87b1-ec865699bd81',
+            ProductName: 'StudyRoom',
+          },
+        ],
+        ItemToBeTraded: [
+          {
+            CustomerID: 'WnnL3oSrXkVjGv9CKUWcAvtjDQp1',
+            OwnerID: 'k7tFbwBZE4T19eooPmaSrG2IANJ3',
+            ProductDescription: 'this is an example',
+            ProductName: 'example',
+            ProductURL:
+              'https://firebasestorage.googleapis.com/v0/b/swapshop-6bd9b.appspot.com/o/810a2582-fb74-4fdb-9b59-bc5332a9d06f.jpg?alt=media&token=ce453694-aefa-45fd-93f8-c008da9b8750',
+            TokenID: 'rLLrOXUmHmYDhze7Jcqv',
+          },
+        ],
       },
     });
 
@@ -86,7 +107,87 @@ describe.each([
     //   expect(mockSettings).toHaveBeenCalledWith({ ignoreUndefinedProperties: true });
     // });
 
-    describe('Examples from documentation', () => {
+    describe('swapshop API testing', () => {
+      //viewuser request api
+      test('get the data from Trade collection of  the database to display for a specific user', () => {
+        const firestore = new this.Firestore();
+
+        return firestore
+          .collectionGroup('Trade')
+          .where('CustomerID')
+          .get()
+          .then(querySnapshot => {
+            expect(querySnapshot.forEach).toBeTruthy();
+            expect(querySnapshot.docs.length).toBe(1);
+            expect(querySnapshot.size).toBe(querySnapshot.docs.length);
+
+            querySnapshot.forEach(doc => {
+              expect(doc.exists).toBe(true);
+              expect(doc.data()).toBeTruthy();
+            });
+          });
+      });
+      //viewPost api request
+      test('get the data from Product collection of  the database to display for a specific user', () => {
+        const firestore = new this.Firestore();
+
+        return firestore
+          .collectionGroup('Products')
+          .where('userId')
+          .get()
+          .then(querySnapshot => {
+            expect(querySnapshot.forEach).toBeTruthy();
+            expect(querySnapshot.docs.length).toBe(1);
+            expect(querySnapshot.size).toBe(querySnapshot.docs.length);
+
+            querySnapshot.forEach(doc => {
+              expect(doc.exists).toBe(true);
+              expect(doc.data()).toBeTruthy();
+            });
+          });
+      });
+      //viewItemToBeTraded api request
+
+      test('get the data from ItemToBeTraded collection of  the database to display for a specific user', () => {
+        const firestore = new this.Firestore();
+
+        return firestore
+          .collectionGroup('ItemToBeTraded')
+          .where('CustomerID')
+          .where('OwnerID')
+          .where('TokenID')
+          .get()
+          .then(querySnapshot => {
+            expect(querySnapshot.forEach).toBeTruthy();
+            expect(querySnapshot.docs.length).toBe(1);
+            expect(querySnapshot.size).toBe(querySnapshot.docs.length);
+
+            querySnapshot.forEach(doc => {
+              expect(doc.exists).toBe(true);
+              expect(doc.data()).toBeTruthy();
+            });
+          });
+      });
+      //Trade api request
+
+      test('get the data from Trade collection of  the database to display for a specific user', () => {
+        const firestore = new this.Firestore();
+
+        return firestore
+          .collectionGroup('Trade')
+          .where('OwnerID')
+          .get()
+          .then(querySnapshot => {
+            expect(querySnapshot.forEach).toBeTruthy();
+            expect(querySnapshot.docs.length).toBe(1);
+            expect(querySnapshot.size).toBe(querySnapshot.docs.length);
+
+            querySnapshot.forEach(doc => {
+              expect(doc.exists).toBe(true);
+              expect(doc.data()).toBeTruthy();
+            });
+          });
+      });
       test('collection all all the user wishlist information from the database', () => {
         const firestore = new this.Firestore();
 
@@ -112,8 +213,7 @@ describe.each([
           .collection('users')
           .add({
             Post_Time: '28 sep 2022',
-            Product_Description:
-              'A double sized bed',
+            Product_Description: 'A double sized bed',
             Product_Name: 'Bed',
             Product_URL:
               'https://firebasestorage.googleapis.com/v0/b/swapshop-6bd9b.appspot.com/o/74fcfffa-0c6e-4a80-8912-1f010f4f8eea.jpg',
@@ -126,13 +226,6 @@ describe.each([
             expect(docRef).toHaveProperty('id');
           });
       });
-    
-
-     
-
-
-     
-      });
-  
+    });
   });
 });

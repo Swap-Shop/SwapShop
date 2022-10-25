@@ -1,17 +1,8 @@
 import React, {useState, useEffect} from 'react';
-import {
-  ImageBackground,
-  SafeAreaView,
-  Text,
-  View,
-  Image,
-  FlatList,
-  TouchableOpacity,
-} from 'react-native';
+import {SafeAreaView, Image, FlatList, TouchableOpacity} from 'react-native';
 import {Container2} from '../styles/HomePageStyle';
 import firestore from '@react-native-firebase/firestore';
 import PostCard from '../components/PostCard';
-import Icon from 'react-native-vector-icons/Ionicons';
 
 const ViewPostPage = ({route, navigation}) => {
   const [posts, setPosts] = useState(null);
@@ -64,7 +55,6 @@ const ViewPostPage = ({route, navigation}) => {
         <TouchableOpacity
           style={{marginRight: 330, bottom: 60, fontWeight: 'bold'}}
           testID="post"
-
           onPress={() => navigation.navigate('SearchPage')}>
           <Image
             style={{
@@ -80,6 +70,7 @@ const ViewPostPage = ({route, navigation}) => {
       </SafeAreaView>
       <FlatList
         data={posts}
+        testID="postitem"
         renderItem={({item}) => <PostCard item={item} />}
         keyExtractor={item => item.id}
       />
