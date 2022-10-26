@@ -53,7 +53,7 @@ const TradePage = ({navigation}) => {
   const handleRefresh = () => {
     // this is used to handle the refresh of the screen.
     data.refreshing = true;
-    fetchPosts();
+    fetchPosts(); //fetch posts to firebase 
   };
 
   const Reject = postID => {
@@ -134,7 +134,7 @@ const TradePage = ({navigation}) => {
       CustomerID: CustomerID,
     });
   };
-
+   //style sheet for elemnts on page
   return (
     <Container style={{backgroundColor: '#F2F3F4'}}>
       <SafeAreaView style={{height: 50}}>
