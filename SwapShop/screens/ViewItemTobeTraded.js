@@ -9,7 +9,7 @@ const ViewItemToBeTraded = ({route, navigation}) => {
   const list = [];
 
   const fetchPosts = async () => {
-    await firestore()
+    await firestore() // querying the firebase database for customer, owner and token id
       .collection('ItemToBeTraded')
       .where('CustomerID', '==', route.params.CustomerID)
       .where('OwnerID', '==', route.params.OwnerID)
@@ -17,7 +17,7 @@ const ViewItemToBeTraded = ({route, navigation}) => {
       .get()
       .then(querySnapshot => {
         querySnapshot.forEach(doc => {
-          list.push({
+          list.push({ //storing all infor in a list and pushing relevent info
             id: doc.id,
             ProductName: doc.data().ProductName,
             ProductDescription: doc.data().ProductDescription,
