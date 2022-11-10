@@ -41,7 +41,7 @@ const AddPage = ({navigation}) => {
 
   useEffect(() => {
     const userInfo = auth().currentUser;
-    data.userId = userInfo.uid;
+    // data.userId = userInfo.uid;
     const subscriber = firestore()
       .collection('Users')
       .doc(userInfo.uid)
@@ -200,6 +200,8 @@ const AddPage = ({navigation}) => {
           placeholder="Name of product"
           style={style.inputProductName}
           placeholderTextColor={'#808080'}
+          testID="productName"
+
           onChangeText={e => GetProductName(e)}
         />
 

@@ -9,4 +9,8 @@ ignore:
     - "**/fieldValue.js "
     - "**/firestore.js"
     - "**/buildQuerySnapShot.js"
-    
+    - "**/home_page.js"
+    - "**/TradePage.js"
+    - "**/SearchPage.js"
+    - "**/ViewItemTobeTraded.js"
+    - "**/components"

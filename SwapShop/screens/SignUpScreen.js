@@ -1,27 +1,19 @@
 import React, {useState} from 'react';
 import {
-  View,
   Text,
   TouchableOpacity,
   StyleSheet,
-  TextInput,
   LogBox,
   ImageBackground,
-  Modal,
   KeyboardAvoidingView,
 } from 'react-native';
 import auth from '@react-native-firebase/auth';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import firestore from '@react-native-firebase/firestore';
-import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import {Fumi} from 'react-native-textinput-effects';
 import Icon from 'react-native-vector-icons/Ionicons';
-import MaterialsIcon from 'react-native-vector-icons/MaterialIcons';
-
 
 import {BarPasswordStrengthDisplay} from 'react-native-password-strength-meter';
-
-
 
 const SignUpScreen = ({navigation}) => {
   LogBox.ignoreLogs(['Warning: ...']); // the two lines of code is used to hide error messages from react native
@@ -206,6 +198,7 @@ const SignUpScreen = ({navigation}) => {
               shadowRadius: 16.0,
               elevation: 24,
             }}
+            testID="confirmpass"
             inputPadding={16}
             onChangeText={e => GetFirstName(e)}
           />
@@ -264,7 +257,7 @@ const SignUpScreen = ({navigation}) => {
           <Fumi
             label={'Password'}
             iconClass={Icon}
-            iconName={"key-outline"}
+            iconName={'key-outline'}
             iconColor={'#f95a25'}
             iconSize={20}
             iconWidth={40}
@@ -294,7 +287,7 @@ const SignUpScreen = ({navigation}) => {
           <Fumi
             label={'Confirm Password'}
             iconClass={Icon}
-            iconName={"key-outline"}
+            iconName={'key-outline'}
             iconColor={'#f95a25'}
             iconSize={20}
             iconWidth={40}
@@ -361,7 +354,10 @@ const SignUpScreen = ({navigation}) => {
           /> */}
 
           {/* a button to render checkSignup function, which then add the user to  the database */}
-          <TouchableOpacity style={style.button} onPress={() => checkSignUp()}>
+          <TouchableOpacity
+            style={style.button}
+            testID="register"
+            onPress={() => checkSignUp()}>
             <Text style={style.text}> Sign Up </Text>
           </TouchableOpacity>
 

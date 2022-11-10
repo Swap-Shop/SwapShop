@@ -1,13 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {
-  ImageBackground,
-  SafeAreaView,
-  Text,
-  View,
-  Image,
-  FlatList,
-  TouchableOpacity,
-} from 'react-native';
+import {SafeAreaView, Image, FlatList, TouchableOpacity} from 'react-native';
 import {Container} from '../styles/HomePageStyle';
 import firestore from '@react-native-firebase/firestore';
 import PostCard from '../components/ViewItemPostCard';
@@ -31,12 +23,14 @@ const ViewItemToBeTraded = ({route, navigation}) => {
             ProductName: doc.data().ProductName,
             ProductDescription: doc.data().ProductDescription,
             ProductImg: doc.data().ProductURL,
+          });
         });
-    });
-    }).catch(error => 
-      { console.log(error)});
+      })
+      .catch(error => {
+        console.log(error);
+      });
     setPosts(list);
-  }
+  };
 
   useEffect(() => {
     fetchPosts(); //fetch request for posts
@@ -71,6 +65,7 @@ const ViewItemToBeTraded = ({route, navigation}) => {
       </SafeAreaView>
       <FlatList
         data={posts}
+        testID="postitem"
         renderItem={({item}) => <PostCard item={item} />}
         keyExtractor={item => item.id}
       />

@@ -17,10 +17,7 @@ import storage from '@react-native-firebase/storage';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import ImagePicker from 'react-native-image-crop-picker';
-import {
-  StatusWrapper
-} from '../styles/AddPageStyles';
-
+import {StatusWrapper} from '../styles/AddPageStyles';
 
 // navigation for add page
 const ItemTobeTradedPage = ({route, navigation}) => {
@@ -37,21 +34,24 @@ const ItemTobeTradedPage = ({route, navigation}) => {
   const userInfo = auth().currentUser;
   data.userId = userInfo.uid;
 
-  const GetProductName = val => { // used to get the product name
+  const GetProductName = val => {
+    // used to get the product name
     setData({
       ...data,
       product_name: val,
     });
   };
 
-  const GetProductDesc = val => { // used to get the product description
+  const GetProductDesc = val => {
+    // used to get the product description
     setData({
       ...data,
       product_desc: val,
     });
   };
 
-  const TakePhotoFromGallery = () => { // this is used to load an image from the gallery. 
+  const TakePhotoFromGallery = () => {
+    // this is used to load an image from the gallery.
     ImagePicker.openPicker({
       width: 1200,
       height: 1200,
@@ -66,7 +66,8 @@ const ItemTobeTradedPage = ({route, navigation}) => {
       });
   };
 
-  const TakePhotoFromCamera = () => { // this is used to take a picture through the camera of the device. 
+  const TakePhotoFromCamera = () => {
+    // this is used to take a picture through the camera of the device.
     ImagePicker.openCamera({
       width: 1200,
       height: 1200,
@@ -91,7 +92,8 @@ const ItemTobeTradedPage = ({route, navigation}) => {
     const storageRef = storage().ref(data.filename);
     const task = storageRef.putFile(uploadUri);
 
-    task.on('state_changed', (taskSnapshot) => {// this is used to calculate the bits transfered during the image loading process. 
+    task.on('state_changed', taskSnapshot => {
+      // this is used to calculate the bits transfered during the image loading process.
       console.log(
         `${taskSnapshot.bytesTransferred} transferred out of ${taskSnapshot.totalBytes}`,
       );
@@ -108,7 +110,6 @@ const ItemTobeTradedPage = ({route, navigation}) => {
 
       setUploading(false);
       setImage(null);
-      
     } catch (e) {
       console.log(e);
     }
@@ -116,7 +117,8 @@ const ItemTobeTradedPage = ({route, navigation}) => {
     return downloadURL;
   };
 
-  const SubmitData = async (url) => { // this is used to submit the data to the backend 
+  const SubmitData = async url => {
+    // this is used to submit the data to the backend
     firestore()
       .collection('ItemToBeTraded')
       .add({
@@ -129,8 +131,10 @@ const ItemTobeTradedPage = ({route, navigation}) => {
       })
       .then(() => {
         console.log('Product added!');
-        Alert.alert('WooHoo! Request sent',
-        'Request pending, check trade tab for response');
+        Alert.alert(
+          'WooHoo! Request sent',
+          'Request pending, check trade tab for response',
+        );
         navigation.navigate('Navigate');
       })
       .catch(error => {
@@ -138,8 +142,9 @@ const ItemTobeTradedPage = ({route, navigation}) => {
       });
   };
 
-  const checkInput = async() => {
-    if (data.product_desc.length == 0 || data.product_name.length == 0) { // this code is used to check the input the user has enetered.
+  const checkInput = async () => {
+    if (data.product_desc.length == 0 || data.product_name.length == 0) {
+      // this code is used to check the input the user has enetered.
       Alert.alert('Oops! ¯_(ツ)_/¯......', 'Please enter all fields');
     } else if (image == null) {
       Alert.alert(
@@ -153,19 +158,18 @@ const ItemTobeTradedPage = ({route, navigation}) => {
     }
   };
 
-  const returnButton = async() => {
+  const returnButton = async () => {
     Alert.alert(
-      'Are you sure you want to leave?'
-      [
-        {
+      'Are you sure you want to leave?'[
+        ({
           text: 'No',
           onPress: () => console.log('Cancel Pressed!'),
           style: 'cancel',
         },
-        { 
+        {
           text: 'Yes',
-          onPress: () => navigation.navigate('Navigate')
-        }
+          onPress: () => navigation.navigate('Navigate'),
+        })
       ],
       {cancelable: false},
     );
@@ -182,7 +186,7 @@ const ItemTobeTradedPage = ({route, navigation}) => {
         ProductName: route.params.ProductName,
         ProductDescription: route.params.ProductDescription,
         ProductImg: route.params.ProductImg,
-        Outcome: "pending"
+        Outcome: 'pending',
       })
       .then(() => {
         console.log('Added to trade list');
@@ -191,7 +195,6 @@ const ItemTobeTradedPage = ({route, navigation}) => {
         console.log(error);
       });
   };
-
 
   return (
     <ImageBackground
@@ -205,7 +208,7 @@ const ItemTobeTradedPage = ({route, navigation}) => {
           backgroundColor: '#F2F3F4',
           height: 600,
           width: 350,
-          bottom:20,
+          bottom: 20,
           borderRadius: 20,
           marginTop: '15%',
           opacity: 2,
@@ -218,11 +221,11 @@ const ItemTobeTradedPage = ({route, navigation}) => {
           shadowRadius: 16.0,
           elevation: 24,
         }}>
-       
         <TextInput
           placeholder="Name of product"
           style={style.inputProductName}
           placeholderTextColor={'#808080'}
+          testID="productName"
           onChangeText={e => GetProductName(e)}
         />
 
@@ -260,27 +263,30 @@ const ItemTobeTradedPage = ({route, navigation}) => {
 
         {uploading ? (
           <StatusWrapper>
-            <Text style={{fontWeight: 'normal', color: '#000000'}}>{transferred} % Completed!</Text>
+            <Text style={{fontWeight: 'normal', color: '#000000'}}>
+              {transferred} % Completed!
+            </Text>
             <ActivityIndicator size="large" color="#333333" />
           </StatusWrapper>
         ) : (
           <TouchableOpacity
-          style={style.AddPostbutton}
-          onPress={() => checkInput()}>
-          <Text
-            style={{
-              textAlign: 'center',
-              color: 'black',
-              fontSize: 20,
-              fontWeight: '900',
-            }}>
-            {' '}
-            Trade{' '}
-          </Text>
-        </TouchableOpacity>
+            style={style.AddPostbutton}
+            onPress={() => checkInput()}>
+            <Text
+              style={{
+                textAlign: 'center',
+                color: 'black',
+                fontSize: 20,
+                fontWeight: '900',
+              }}>
+              {' '}
+              Trade{' '}
+            </Text>
+          </TouchableOpacity>
         )}
         <TouchableOpacity
           style={style.ReturnPostbutton}
+          testID="post"
           onPress={() => returnButton()}>
           <Text
             style={{
@@ -361,7 +367,7 @@ const style = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 10,
     backgroundColor: '#90EE90',
-    bottom:5,
+    bottom: 5,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -381,7 +387,7 @@ const style = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 10,
     backgroundColor: '#000000',
-    bottom:20,
+    bottom: 20,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -395,8 +401,8 @@ const style = StyleSheet.create({
     margin: 15,
     padding: 15,
     width: 120,
-    height:50,
-    top:10,
+    height: 50,
+    top: 10,
     alignItems: 'center',
     alignSelf: 'center',
     justifyContent: 'center',
@@ -416,8 +422,8 @@ const style = StyleSheet.create({
     margin: 15,
     padding: 15,
     width: 120,
-    height:50,
-    bottom:10,
+    height: 50,
+    bottom: 10,
     alignItems: 'center',
     alignSelf: 'center',
     justifyContent: 'center',
