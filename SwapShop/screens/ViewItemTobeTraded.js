@@ -12,12 +12,13 @@ import {Container} from '../styles/HomePageStyle';
 import firestore from '@react-native-firebase/firestore';
 import PostCard from '../components/ViewItemPostCard';
 
-const ViewPostPage = ({route, navigation}) => {
+const ViewItemToBeTraded = ({route, navigation}) => {
   const [posts, setPosts] = useState(null);
   const list = [];
 
-  const fetchPosts = () =>{  
-    firestore()
+
+  const fetchPosts = async() =>{  
+    await firestore()
     .collection('ItemToBeTraded')
     .where('CustomerID', '==', route.params.CustomerID)
     .where('OwnerID', '==', route.params.OwnerID)
@@ -35,7 +36,7 @@ const ViewPostPage = ({route, navigation}) => {
     }).catch(error => 
       { console.log(error)});
     setPosts(list);
-    }
+  }
 
   useEffect(() => {
     fetchPosts(); //fetch request for posts
@@ -76,4 +77,4 @@ const ViewPostPage = ({route, navigation}) => {
     </Container>
   );
 };
-export default ViewPostPage;
+export default ViewItemToBeTraded;
