@@ -8,4 +8,7 @@ ignore:
     - "**/ViewItemTobeTraded.js"
     - "**/components"
     - "**/add_page.js"
+    - "**/forgot_password.js"
+    - "**/SignUpScreen.js"
+    - "**/LoginScreen.js"
 
