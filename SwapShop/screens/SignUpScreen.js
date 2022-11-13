@@ -1,5 +1,7 @@
 import React, {useState} from 'react';
+
 import {
+  Alert,
   Text,
   TouchableOpacity,
   StyleSheet,
@@ -18,15 +20,20 @@ import {BarPasswordStrengthDisplay} from 'react-native-password-strength-meter';
 const SignUpScreen = ({navigation}) => {
   LogBox.ignoreLogs(['Warning: ...']); // the two lines of code is used to hide error messages from react native
   LogBox.ignoreAllLogs(); //Ignore all log notifications
+  const [firstname, setFirstname] = useState('');
+  const [surname, setSurname] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [ConfirmPassword, setConfirmPassword] = useState('');
 
-  const [data, setData] = useState({
-    // variable declarations
-    firstname: '',
-    surname: '',
-    email: '',
-    password: '',
-    ConfirmPassword: '',
-  });
+  // const [data, setData] = useState({
+  //   // variable declarations
+  //   firstname: '',
+  //   surname: '',
+  //   email: '',
+  //   password: '',
+  //   ConfirmPassword: '',
+  // });
 
   //const navigation = useNavigation(); // variable used to help in navigation
 
@@ -52,8 +59,8 @@ const SignUpScreen = ({navigation}) => {
 
     auth() // the auth() function is used to make a request to the firebase database.
       .createUserWithEmailAndPassword(
-        data.email.trim().toLowerCase(),
-        data.password.trim().toLowerCase(),
+        email.trim().toLowerCase(),
+        password.trim().toLowerCase(),
       ) // the signup function is used save the email and password onto the firebase authentication database.
       .then(() => {
         // executed if the details are successfully saved on the database.
@@ -61,28 +68,28 @@ const SignUpScreen = ({navigation}) => {
         const user = auth().currentUser;
         submitToDatabase(
           user.uid,
-          data.firstname.trim(),
-          data.surname.trim(),
-          data.email.trim().toLowerCase(),
+          firstname.trim(),
+          surname.trim(),
+          email.trim().toLowerCase(),
         );
-        alert('Success!, you have created an account');
+        Alert.alert('Success!, you have created an account');
         navigation.navigate('Navigate'); // if the user details are in the database then the user is directed to the home page of the app.
       })
       .catch(error => {
         // executed when errors occur in storing details on firebase database, user will not be able to access app.
         if (error.code === 'auth/email-already-in-use') {
           console.log('That email address is already in use!');
-          alert('That email address is already in use!');
+          Alert.alert('That email address is already in use!');
         }
 
         if (error.code === 'auth/invalid-email') {
           console.log('That email address is invalid!');
-          alert('That email address is invalid!');
+          Alert.alert('That email address is invalid!');
         }
 
         if (error.code === 'auth/network-request-failed') {
           console.log('No internet connection');
-          alert(
+          Alert.alert(
             'Oops! ¯_(ツ)_/¯...... Cannot swap now, No internet connection',
           );
         }
@@ -94,16 +101,16 @@ const SignUpScreen = ({navigation}) => {
   const checkSignUp = () => {
     // used to check if the user input is valid.
     if (
-      data.email.length == 0 ||
-      data.password.length == 0 ||
-      data.firstname.length == 0 ||
-      data.surname.length == 0
+      email.length == 0 ||
+      password.length == 0 ||
+      firstname.length == 0 ||
+      surname.length == 0
     ) {
-      alert('Please enter all fields!');
-    } else if (data.password.length < 6) {
-      alert('Paswords must be 6 characters or more');
-    } else if (data.password.toString() != data.ConfirmPassword.toString()) {
-      alert('Passwords do not match!');
+      Alert.alert('Please enter all fields!');
+    } else if (password.length < 6) {
+      Alert.alert('Paswords must be 6 characters or more');
+    } else if (password.toString() != ConfirmPassword.toString()) {
+      Alert.alert('Passwords do not match!');
     } else {
       SignUpFunction(); // if no errors then a request will be made to the firebase database
     }
@@ -111,42 +118,27 @@ const SignUpScreen = ({navigation}) => {
 
   const GetFirstName = val => {
     // this function is used to get the email that the user entered.
-    setData({
-      ...data,
-      firstname: val,
-    });
+    setFirstname(val);
   };
 
   const GetSurname = val => {
     // this function is used to get the email that the user entered.
-    setData({
-      ...data,
-      surname: val,
-    });
+    setSurname(val);
   };
 
   const GetEmail = val => {
     // this function is used to get the email that the user entered.
-    setData({
-      ...data,
-      email: val,
-    });
+    setEmail(val);
   };
 
   const GetPassword = val => {
     // this function is used to get the password that the user entered.
-    setData({
-      ...data,
-      password: val,
-    });
+    setPassword(val);
   };
 
   const GetConfirmPassword = val => {
     // this function is used to get the confirm password that the user entered.
-    setData({
-      ...data,
-      ConfirmPassword: val,
-    });
+    setConfirmPassword(val);
   };
 
   return (
@@ -198,7 +190,8 @@ const SignUpScreen = ({navigation}) => {
               shadowRadius: 16.0,
               elevation: 24,
             }}
-            testID="confirmpass"
+            testID="firstname"
+            value={firstname}
             inputPadding={16}
             onChangeText={e => GetFirstName(e)}
           />
@@ -225,6 +218,9 @@ const SignUpScreen = ({navigation}) => {
               shadowRadius: 16.0,
               elevation: 24,
             }}
+            testID="secondname"
+            value={surname}
+
             inputPadding={16}
             onChangeText={e => GetSurname(e)}
           />
@@ -251,6 +247,9 @@ const SignUpScreen = ({navigation}) => {
               shadowRadius: 16.0,
               elevation: 24,
             }}
+            testID="email"
+            value={email}
+
             inputPadding={16}
             onChangeText={e => GetEmail(e)}
           />
@@ -277,12 +276,15 @@ const SignUpScreen = ({navigation}) => {
               shadowRadius: 16.0,
               elevation: 24,
             }}
+            testID="parssword"
+            value={password}
+
             secureTextEntry={true}
             inputPadding={16}
             onChangeText={e => GetPassword(e)}
           />
 
-          <BarPasswordStrengthDisplay password={data.password} width={310} />
+          <BarPasswordStrengthDisplay password={password} width={310} />
 
           <Fumi
             label={'Confirm Password'}
@@ -307,13 +309,16 @@ const SignUpScreen = ({navigation}) => {
               shadowRadius: 16.0,
               elevation: 24,
             }}
+            testID="confirmP"
+            value={ConfirmPassword}
+
             inputPadding={16}
             secureTextEntry={true}
             onChangeText={e => GetConfirmPassword(e)}
           />
 
           <BarPasswordStrengthDisplay
-            password={data.ConfirmPassword}
+            password={ConfirmPassword}
             width={310}
           />
 

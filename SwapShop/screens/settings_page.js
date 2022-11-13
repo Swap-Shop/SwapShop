@@ -17,13 +17,13 @@ const Settings = ({navigation}) => {
   const [credential, setCredential] = useState(true);
   const [loading, setLoading] = useState(true);
 
-  const signOut = () => {
+  const signout = () => {
     auth()
       .signOut()
       .then(() => console.log('User signed out!'));
     navigation.navigate('Welcome');
   };
-  
+
   return (
     <ImageBackground
       source={require('../assets/Image/gradient.jpg')}
@@ -49,9 +49,10 @@ const Settings = ({navigation}) => {
           shadowRadius: 16.0,
           elevation: 24,
         }}>
-          
-        <TouchableOpacity onPress={() => navigation.navigate('edits')}
-        style={{
+        <TouchableOpacity
+          testID="edit"
+          onPress={() => navigation.navigate('edits')}
+          style={{
             backgroundColor: '#A9A9A9',
             borderRadius: 10,
             height: 50,
@@ -97,7 +98,8 @@ const Settings = ({navigation}) => {
             marginVertical: 10,
             marginTop: 10,
           }}
-          onPress={() => signOut()}>
+          testID="signout"
+          onPress={() => signout()}>
           <Text
             style={{
               textAlign: 'center',

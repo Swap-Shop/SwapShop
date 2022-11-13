@@ -34,3 +34,12 @@ export const firebaseStub: (overrides?: StubOverrides, options?: StubOptions) =>
 export const mockFirebase: (overrides?: StubOverrides, options?: StubOptions) => void;
 export const mockInitializeApp: jest.Mock;
 export const mockCert: jest.Mock;
+export default {
+  auth() {
+    console.log('auth real implementation');
+    return this;
+  },
+  async signOut() {
+    console.log('signOut real implementation');
+  },
+};

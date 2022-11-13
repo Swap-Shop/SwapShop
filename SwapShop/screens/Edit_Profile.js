@@ -19,20 +19,8 @@ import {Akira} from 'react-native-textinput-effects';
 
 console.reportErrorAsExceptions = false;
 const Edit = ({navigation}) => {
-  const [image, setImage] = useState(null);
-  const [uploading, setUploading] = useState(false);
-  const [transferred, setTransferred] = useState(0);
+  
 
-  const [data, setData] = useState({
-    // variable declarations
-    firstname: '',
-    surname: '',
-    old_email: '',
-    new_email: '',
-    password: '',
-    userId: null,
-    filename: '',
-  });
 
   return (
     <ImageBackground
@@ -61,6 +49,8 @@ const Edit = ({navigation}) => {
         }}>
         <Text style={style.heading}>Edit Account{"\n"} Information</Text>
         <TouchableOpacity onPress={() => navigation.navigate('emails')}
+                    testID="changeemail"
+
         style={{
             backgroundColor: '#A9A9A9',
             borderRadius: 10,
@@ -107,6 +97,8 @@ const Edit = ({navigation}) => {
             marginVertical: 10,
             marginTop: 10,
           }}
+          testID="changepassword"
+
           onPress={() => navigation.navigate('password')}>
           <Text
             style={{
@@ -137,6 +129,8 @@ const Edit = ({navigation}) => {
             marginVertical: 10,
             marginTop: 10,
           }}
+          testID="settings"
+
           onPress={() => navigation.navigate('setting')}
           >
           <Text

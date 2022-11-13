@@ -1,16 +1,11 @@
 ignore:
     - "**/mocks"
-    - "**/PostCard.js"
     - "**/buildDocFromHash.js"
-    - "**/transaction.js"
-    - "**/timestamp.js"
-    - "**/query.js "
-    - "**/path.js"
-    - "**/fieldValue.js "
-    - "**/firestore.js"
     - "**/buildQuerySnapShot.js"
     - "**/home_page.js"
     - "**/TradePage.js"
     - "**/SearchPage.js"
     - "**/ViewItemTobeTraded.js"
     - "**/components"
+    - "**/add_page.js"
+

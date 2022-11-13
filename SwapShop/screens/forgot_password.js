@@ -6,8 +6,6 @@ import {
   SafeAreaView,
   StyleSheet,
   ImageBackground,
-  TextInput,
-  Modal,
   Alert,
 } from 'react-native';
 
@@ -16,24 +14,22 @@ import {Fumi} from 'react-native-textinput-effects';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 const Password = ({navigation}) => {
-  const [data, setData] = useState({
-    // variable declarations
-    username: '',
-  });
+  const [username, setUsername] = useState('');
+  // const [ setData] = useState({
+  //   // variable declarations
+  //   username: '',
+  // });
   //const navigation = useNavigation();
 
   const GetTextInput = val => {
     // this function is used to get the email that the user entered.
-    setData({
-      ...data,
-      username: val,
-    });
+    setUsername(val);
   };
 
   const checkEmail = () => {
     // this function is used to check if the user input is valid.
-    if (data.username.length == 0) {
-      alert('Please enter your email'); // alert error that will appear
+    if (username.length == 0) {
+      Alert.alert('Please enter your email'); // alert error that will appear
     } else {
       ResetPassword(); // if no errors then the user input can then be processed by using this function
     }
@@ -42,20 +38,20 @@ const Password = ({navigation}) => {
   const ResetPassword = () => {
     // this function is used to reset the users password
     auth()
-      .sendPasswordResetEmail(data.username.toLowerCase()) // the email is sent to the firebase database to check if the user does exist.
+      .sendPasswordResetEmail(username.toLowerCase()) // the email is sent to the firebase database to check if the user does exist.
       .then(() => {
-        alert('A reset link has been sent to your email'); // if successful a reset link is sent to the user to reset their password.
+          Alert.alert('A reset link has been sent to your email'); // if successful a reset link is sent to the user to reset their password.
       })
       .catch(error => {
         if (error.code === 'auth/invalid-email') {
           // if unsuccessful errors will appear and link will not be sent.
           console.log(error);
-          alert('Please enter a valid email address');
+            Alert.alert('Please enter a valid email address');
         }
 
         if (error.code === 'auth/user-not-found') {
           console.log(error);
-          alert(
+            Alert.alert(
             'Oops! ¯_(ツ)_/¯......Account does not exist. Sign Up to start using SwapShop',
           );
         }
@@ -114,6 +110,8 @@ const Password = ({navigation}) => {
               shadowRadius: 16.0,
               elevation: 24,
             }}
+            testID="username"
+            value={username}
             inputPadding={16}
             onChangeText={e => GetTextInput(e)} //   onChangeText={e => GetTextInput(e)}  cal
           />

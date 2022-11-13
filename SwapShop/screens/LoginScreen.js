@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import auth from '@react-native-firebase/auth';
 import {
   View,
+  Alert,
   KeyboardAvoidingView,
   Text,
   TouchableOpacity,
@@ -17,12 +18,13 @@ import {Fumi} from 'react-native-textinput-effects';
 const LoginScreen = ({navigation}) => {
   LogBox.ignoreLogs(['Warning: ...']); // the two lines of code is used to hide error messages from react native
   LogBox.ignoreAllLogs(); //Ignore all log notifications
-
-  const [data, setData] = useState({
-    // variable declarations
-    username: '',
-    password: '',
-  });
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  // const [ setData] = useState({
+  //   // variable declarations
+  //   username: '',
+  //   password: '',
+  // });
   //const navigation = useNavigation();
   //const user = auth().currentUser; // code used to retrieve the user ID from firebase
 
@@ -31,8 +33,8 @@ const LoginScreen = ({navigation}) => {
 
     auth() // the auth() function is used to make a request to the firebase database.
       .signInWithEmailAndPassword(
-        data.username.trim().toLowerCase(),
-        data.password.trim().toLowerCase(),
+        username.trim().toLowerCase(),
+        password.trim().toLowerCase(),
       ) // the signin function is used to check if the given email and password is on the database
       .then(() => {
         console.log('Sign Successful');
@@ -42,19 +44,19 @@ const LoginScreen = ({navigation}) => {
         // these are the various errors that will be displayed if they is a fault with the user input.
         if (error.code === 'auth/wrong-password') {
           console.log('password is invalid for the given email');
-          alert('Incorrect password');
+          Alert.alert('Incorrect password');
         }
 
         if (error.code === 'auth/user-not-found') {
           console.log('there is no user corresponding to the given email');
-          alert(
+          Alert.alert(
             'Oops! ¯_(ツ)_/¯......Account does not exist. Sign Up to start using SwapShop',
           );
         }
 
         if (error.code === 'auth/invalid-email') {
           console.log('Email not in the right format');
-          alert('Please enter a valid email');
+          Alert.alert('Please enter a valid email');
         }
 
         console.error(error);
@@ -63,10 +65,10 @@ const LoginScreen = ({navigation}) => {
 
   const checkLogin = () => {
     // this function is used to check if the user input is valid.
-    if (data.username.length == 0 || data.password.length == 0) {
-      alert('Please enter all the fields'); // alert error that will appear
-    } else if (data.password.length < 6) {
-      alert('Password should be 6 or more characters'); // alert error that will appear
+    if (username.length == 0 || password.length == 0) {
+      Alert.alert('Please enter all the fields'); // Alert.alert error that will appear
+    } else if (password.length < 6) {
+      Alert.alert('Password should be 6 or more characters'); // Alert.alert error that will appear
     } else {
       LoginFunction(); // if no errors then the user input can then be processed by using this function
     }
@@ -74,18 +76,12 @@ const LoginScreen = ({navigation}) => {
 
   const GetTextInput = val => {
     // this function is used to get the email that the user entered.
-    setData({
-      ...data,
-      username: val,
-    });
+    setUsername(val);
   };
 
   const GetPasswordInput = val => {
     // this function is used to get the password that the user entered.
-    setData({
-      ...data,
-      password: val,
-    });
+    setPassword(val);
   };
 
   return (
@@ -138,6 +134,8 @@ const LoginScreen = ({navigation}) => {
               shadowRadius: 16.0,
               elevation: 24,
             }}
+            testID="username"
+            value={username}
             inputPadding={16}
             onChangeText={e => GetTextInput(e)} // called everytime the email is changed
           />
@@ -166,6 +164,8 @@ const LoginScreen = ({navigation}) => {
               shadowRadius: 16.0,
               elevation: 24,
             }}
+            testID="password"
+            value={password}
             inputPadding={16}
             onChangeText={e => GetPasswordInput(e)} // called everytime the password is changed
           />
@@ -173,6 +173,8 @@ const LoginScreen = ({navigation}) => {
         
           <Text
             style={{color: '#2596be', marginLeft: 170, marginTop: 20}}
+            testID="forgotpassword"
+
             onPress={() => navigation.navigate('password')}>
             Forgot Password?{' '}
           </Text>
@@ -180,7 +182,7 @@ const LoginScreen = ({navigation}) => {
           <TouchableOpacity
             style={style.button}
             onPress={() => checkLogin()}
-            testID="Login.Button">
+            testID="LoginButton">
             <Text style={style.text}> Login </Text>
           </TouchableOpacity>
 

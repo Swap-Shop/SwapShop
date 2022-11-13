@@ -5,6 +5,12 @@
 //   launchImageLibrary: jest.fn(),
 // };
 
+// export default () => ({
+//   signInWithEmailAndPassword: jest.fn(),
+//   createUserWithEmailAndPassword: jest.fn(),
+//   signOut: jest.fn(),
+//   sendPasswordResetEmail: jest.fn(),
+// });
 jest.mock('@react-native-firebase/app', () => {
   return () => ({
     onNotification: jest.fn(),

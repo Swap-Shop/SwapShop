@@ -15,39 +15,39 @@ import {Fumi} from 'react-native-textinput-effects';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 const Edit_email = ({navigation}) => {
-  const [data, setData] = useState({
-    // variable declarations
-    email: '',
-  });
-  
+  const [email, setEmail] = useState('');
+
+  // const [data, setData] = useState({
+  //   // variable declarations
+  //   email: '',
+  // });
 
   const GetTextInput = val => {
     // this function is used to get the email that the user entered.
-    setData({
-      ...data,
-      email: val,
-    });
+    setEmail(val);
   };
 
   const checkEmail = () => {
     // this function is used to check if the user input is valid.
-    if (data.email.length == 0) {
-      alert('Please enter your new email'); // alert error that will appear
+    if (email.length == 0) {
+      Alert.alert('Please enter your new email'); // alert error that will appear
     } else {
       ResetEmail(); // if no errors then the user input can then be processed by using this function
     }
   };
 
   const ResetEmail = () => {
-    const user = auth().currentUser; 
-    user.updateEmail(data.email).then(() => {
+    const user = auth().currentUser;
+    user
+      .updateEmail(email)
+      .then(() => {
         Alert.alert('Email updated successfully');
-        navigation.navigate('edits')
-        console.log('success')
-    })
-    .catch((e) => {
-        console.log(e)
-    })
+        navigation.navigate('edits');
+        console.log('success');
+      })
+      .catch(e => {
+        console.log(e);
+      });
     /*
     user.updateEmail(data.email).then(() => {
         console.log("Email Updated")
@@ -108,12 +108,17 @@ const Edit_email = ({navigation}) => {
               shadowRadius: 16.0,
               elevation: 24,
             }}
+            testID="email"
+            value={email}
             inputPadding={16}
             onChangeText={e => GetTextInput(e)}
           />
 
           {/* a button to render the check email function */}
-          <TouchableOpacity style={style.button} onPress={() => checkEmail()}>
+          <TouchableOpacity
+            style={style.button}
+            testID="reset"
+            onPress={() => checkEmail()}>
             <Text style={style.text}>Reset</Text>
           </TouchableOpacity>
         </SafeAreaView>
