@@ -11,4 +11,6 @@ ignore:
     - "**/forgot_password.js"
     - "**/SignUpScreen.js"
     - "**/LoginScreen.js"
+    - "**/edit_email.js"
+    - "**/ViewUserRequests.js"
 
