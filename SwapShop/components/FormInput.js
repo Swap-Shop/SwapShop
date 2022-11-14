@@ -23,6 +23,7 @@ const FormInput = ({labelValue, placeholderText, iconType, ...rest}) => {
 
 export default FormInput;
 
+// styles for form inpute fields.
 const styles = StyleSheet.create({
   inputContainer: {
     marginTop: 5,

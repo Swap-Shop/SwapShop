@@ -1,3 +1,5 @@
+// cards that contain post information
+
 import React from 'react';
 import {View} from 'react-native';
 import {
