@@ -44,4 +44,6 @@ const App = () => {
   );
 };
 
+// adding all elements to navigation container
+
 export default App;

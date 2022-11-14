@@ -12,6 +12,7 @@ const FormButton = ({buttonTitle, ...rest}) => {
 
 export default FormButton;
 
+//style for button on form
 const styles = StyleSheet.create({
   buttonContainer: {
     marginTop: 10,
