@@ -32,7 +32,7 @@ const TradePostCard = ({item, onDeclined, onAccepted, onImage}) => {
                </PostText>
                   </UserInfoText>
         </UserInfo>
-        
+
         {item.TradeOutcome == "pending" ? (
         <InteractionWrapper>
             <Interaction onPress={() => onImage(item.ProductID, item.CustomerID, item.OwnerID)}>
@@ -46,7 +46,7 @@ const TradePostCard = ({item, onDeclined, onAccepted, onImage}) => {
         </Interaction>
         </InteractionWrapper>
         ) : null}
-        {item.TradeOutcome == "accepted" ? (
+        {item.TradeOutcome == "accepted" ? ( //
         <InteractionWrapper>
             <Interaction onPress={() => onImage(item.ProductID, item.CustomerID, item.OwnerID)}>
                   <Icon name="image-outline" size={20} color={"#000000"} />
@@ -65,7 +65,7 @@ const TradePostCard = ({item, onDeclined, onAccepted, onImage}) => {
          </View>
       </Card>
     );
-
+            // trade outcomes, accepted, rejected or pending
 };
 
 export default TradePostCard;
